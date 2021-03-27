@@ -112,18 +112,6 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1) {
-
-//		if( flaga1 == 2)
-//		{
-//			flaga2= 4;
-//			flaga3 = 3;
-//		}
-//
-//		if(flaga2 = 8 && flaga3= 14) {
-//
-//			if( flaga 4 )
-//				return ;
-//		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -173,42 +161,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-void vTask1(void *pvParameters) {
-
-	uint_32 bity = xEventGroupWaitBits(xEventGroup, (1 << 4), 1, true,
-	portMAX_DELAY);
-
-	for (;;) {
-
-		if (bity & (1 << 4)) {
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-		}
-		if (bity & (1 << 5)) {
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-		}
-
-	}
-
-}
-
-void vTask2(void *pvParameters) {
-
-	int count = 0;
-
-	for (;;) {
-
-		count += 1;
-
-		if (count == 10) {
-			xEventGroupSetBits(xEventGroup, (1 << 4));
-			count = 0;
-		}
-
-		taskYIELD();
-	}
-
-}
 
 /* USER CODE END 4 */
 
