@@ -18,7 +18,7 @@ module_t modules_cfg[] =
 {
 //		mod_BLE
 	{
-		.init_function = bluetooth_le_init,
+		.init_function = ble_init,
 		.name = "BLUETOOTH LOW ENERGY MODULE",
 		.active = true //this module should be enabled at the start of device init procedure
 	},

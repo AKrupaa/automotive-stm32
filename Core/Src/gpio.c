@@ -52,13 +52,15 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, OUT_INa_ENGINE_LEFT_Pin|OUT_INnb_ENGINE_LEFT_Pin|OUT_SEL0_ENGINE_LEFT_Pin|OUT_BLE_EN_Pin 
-                          |OUT_BLE_TEST_Pin|OUT_ULTRASOUND_TRIG_Pin|OUT_INb_RIGHT_Pin|OUT_LED1_Pin 
-                          |OUT_LED2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, OUT_INa_ENGINE_LEFT_Pin|OUT_INnb_ENGINE_LEFT_Pin|OUT_SEL0_ENGINE_LEFT_Pin|OUT_BLE_TEST_Pin 
+                          |OUT_ULTRASOUND_TRIG_Pin|OUT_INb_RIGHT_Pin|OUT_LED1_Pin|OUT_LED2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, OUT_OPTO_EN_LEFT_Pin|OUT_INa_ENGINE_RIGHT_Pin|OUT_SEL0_ENGINE_RIGHT_Pin|OUT_OPTO_EN_RIGHT_Pin 
                           |OUT_LED0_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : PC13 PC14 PC15 PC12 */
   GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15|GPIO_PIN_12;
@@ -129,6 +131,13 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
 }
 
