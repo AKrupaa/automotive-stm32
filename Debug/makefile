@@ -15,6 +15,8 @@ RM := rm -rf
 -include Drivers/STM32L1xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Core/Application/runtime/tasks/subdir.mk
+-include Core/Application/runtime/device_init/subdir.mk
 -include Core/Application/runtime/subdir.mk
 -include Core/Application/modules/slotted_optocoupler/subdir.mk
 -include Core/Application/modules/proximity_sensor/subdir.mk

@@ -14,7 +14,7 @@ void device_init(void);
 
 typedef struct {
 	bool (*init_function)(void);	///< Pointer to an init function.
-	char const *name;					///< Module name.
+	char const *name;					/// Module name.
 	bool active;						///< Module init enable.
 } module_t;
 

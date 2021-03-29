@@ -7,6 +7,8 @@
 
 #include "device_init.h"
 #include "stdint.h"
+
+
 void device_init(void) {
 
 	uint16_t successCnt = 0;

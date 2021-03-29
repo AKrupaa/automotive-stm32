@@ -24,7 +24,9 @@ Core/Application/modules/hall \
 Core/Application/modules/magnetometer \
 Core/Application/modules/proximity_sensor \
 Core/Application/modules/slotted_optocoupler \
+Core/Application/runtime/device_init \
 Core/Application/runtime \
+Core/Application/runtime/tasks \
 Core/Src \
 Core/Startup \
 Drivers/STM32L1xx_HAL_Driver/Src \

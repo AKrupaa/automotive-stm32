@@ -39,7 +39,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/i2c.h ../Core/Inc/tim.h \
  ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- E:/workplace/STM32/Automotive/Core/Application/runtime/device_init.h
+ E:/workplace/STM32/Automotive/Core/Application/runtime/device_init/device_init.h
 
 ../Core/Inc/main.h:
 
@@ -131,4 +131,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Core/Inc/gpio.h:
 
-E:/workplace/STM32/Automotive/Core/Application/runtime/device_init.h:
+E:/workplace/STM32/Automotive/Core/Application/runtime/device_init/device_init.h:
