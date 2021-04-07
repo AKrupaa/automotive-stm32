@@ -19,6 +19,7 @@ RM := rm -rf
 -include Core/Application/runtime/device_init/subdir.mk
 -include Core/Application/runtime/subdir.mk
 -include Core/Application/modules/slotted_optocoupler/subdir.mk
+-include Core/Application/modules/servo/subdir.mk
 -include Core/Application/modules/proximity_sensor/subdir.mk
 -include Core/Application/modules/magnetometer/subdir.mk
 -include Core/Application/modules/hall/subdir.mk

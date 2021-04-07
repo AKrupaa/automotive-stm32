@@ -109,10 +109,10 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = INPUT_HALL_RIGHT_Pin;
+  GPIO_InitStruct.Pin = INPUT_HALL_LEFT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(INPUT_HALL_RIGHT_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(INPUT_HALL_LEFT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = IN_HALL_FRONT_Pin;
@@ -121,10 +121,10 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(IN_HALL_FRONT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = INPUT_HALL_RIGHTA11_Pin;
+  GPIO_InitStruct.Pin = INPUT_HALL_RIGHT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(INPUT_HALL_RIGHTA11_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(INPUT_HALL_RIGHT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PD2 */
   GPIO_InitStruct.Pin = GPIO_PIN_2;

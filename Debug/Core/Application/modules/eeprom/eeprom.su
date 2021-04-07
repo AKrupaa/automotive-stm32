@@ -1,1 +1,3 @@
-eeprom.c:10:6:eeprom_init	4	static
+eeprom.c:11:6:eeprom_init	4	static
+eeprom.c:21:6:eeprom_write	32	static
+eeprom.c:29:6:eeprom_read	32	static

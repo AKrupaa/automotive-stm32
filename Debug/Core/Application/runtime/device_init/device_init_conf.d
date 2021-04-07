@@ -37,7 +37,8 @@ Core/Application/runtime/device_init/device_init_conf.o: \
  E:/workplace/STM32/Automotive/Core/Application/modules/hall/hall.h \
  E:/workplace/STM32/Automotive/Core/Application/modules/magnetometer/magnetometer.h \
  E:/workplace/STM32/Automotive/Core/Application/modules/proximity_sensor/proximity.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/slotted_optocoupler/optocoupler.h
+ E:/workplace/STM32/Automotive/Core/Application/modules/slotted_optocoupler/optocoupler.h \
+ E:/workplace/STM32/Automotive/Core/Application/modules/servo/servo.h
 
 ../Core/Application/runtime/device_init/device_init.h:
 
@@ -118,3 +119,5 @@ E:/workplace/STM32/Automotive/Core/Application/modules/magnetometer/magnetometer
 E:/workplace/STM32/Automotive/Core/Application/modules/proximity_sensor/proximity.h:
 
 E:/workplace/STM32/Automotive/Core/Application/modules/slotted_optocoupler/optocoupler.h:
+
+E:/workplace/STM32/Automotive/Core/Application/modules/servo/servo.h:

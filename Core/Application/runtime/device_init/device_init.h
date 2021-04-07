@@ -29,6 +29,7 @@ typedef enum {
 	mod_H_bridge,
 	mod_magnetometer,
 	mod_eeprom,
+	mod_servo,
 	mod_N
 } moduleName_t;
 

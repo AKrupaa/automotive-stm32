@@ -7,13 +7,12 @@
 
 #ifndef APPLICATION_MODULES_BLUETOOTH_LOW_ENERGY_BLUETOOTH_LE_H_
 #define APPLICATION_MODULES_BLUETOOTH_LOW_ENERGY_BLUETOOTH_LE_H_
-#include "stdbool.h"
-#include "stdint.h"
+//#include "stdbool.h"
 #include "main.h"
 #include "usart.h"
 #include "string.h"
-#include <stdlib.h>
-#include <stdio.h>
+//#include <stdlib.h>
+//#include <stdio.h>
 
 #define ble_turn_on_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_RESET)
 #define ble_turn_off_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET)
@@ -63,7 +62,7 @@ bool ble_reset_module(void);
 
 bool ble_restore_default_values(void);
 
-bool ble_broadcast_data(char *data, int size);
+bool ble_broadcast_data(uint8_t *data, int size);
 
 //bool ble_set_customized_MAC_address_
 

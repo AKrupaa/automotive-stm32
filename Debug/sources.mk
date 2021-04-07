@@ -23,6 +23,7 @@ Core/Application/modules/eeprom \
 Core/Application/modules/hall \
 Core/Application/modules/magnetometer \
 Core/Application/modules/proximity_sensor \
+Core/Application/modules/servo \
 Core/Application/modules/slotted_optocoupler \
 Core/Application/runtime/device_init \
 Core/Application/runtime \

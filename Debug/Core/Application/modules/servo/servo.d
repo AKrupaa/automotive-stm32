@@ -1,7 +1,7 @@
-Core/Application/modules/eeprom/eeprom.o: \
- ../Core/Application/modules/eeprom/eeprom.c \
- ../Core/Application/modules/eeprom/eeprom.h ../Core/Inc/main.h \
- ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h \
+Core/Application/modules/servo/servo.o: \
+ ../Core/Application/modules/servo/servo.c \
+ ../Core/Application/modules/servo/servo.h ../Core/Inc/tim.h \
+ ../Core/Inc/main.h ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h \
  ../Core/Inc/stm32l1xx_hal_conf.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_def.h \
@@ -29,10 +29,11 @@ Core/Application/modules/eeprom/eeprom.o: \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h \
- ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h \
- ../Core/Inc/i2c.h ../Core/Inc/main.h
+ ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h
 
-../Core/Application/modules/eeprom/eeprom.h:
+../Core/Application/modules/servo/servo.h:
+
+../Core/Inc/tim.h:
 
 ../Core/Inc/main.h:
 
@@ -93,7 +94,3 @@ Core/Application/modules/eeprom/eeprom.o: \
 ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h:
 
 ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h:
-
-../Core/Inc/i2c.h:
-
-../Core/Inc/main.h:

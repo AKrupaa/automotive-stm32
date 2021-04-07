@@ -95,6 +95,10 @@ bool ble_test_command(void) {
 
 }
 
+/**
+ *
+ * @return return MAC address
+ */
 int ble_get_MAC_Address(void) {
 	const char c_get_address[] = "AT + ADDR\r";
 
@@ -121,6 +125,11 @@ int ble_get_MAC_Address(void) {
 	return atoi(c_address);
 }
 
+/**
+ *
+ * @param value MAC address
+ * @return true
+ */
 bool ble_set_MAC(int value) {
 //	const char c_get_address[] = "AT + ADDR";
 	char string_[16];
@@ -151,6 +160,11 @@ bool ble_set_MAC(int value) {
 
 }
 
+/**
+ *
+ * @param value your BOUD
+ * @return true
+ */
 bool ble_set_BOUD(int value) {
 //	AT + BAUD = 19200\r
 	char set_string[16];
@@ -181,6 +195,10 @@ bool ble_set_BOUD(int value) {
 
 }
 
+/**
+ *
+ * @return (int) BOUD
+ */
 int ble_get_BOUD(void) {
 	//	AT + BAUD = 19200\r
 	char set_string[16] = "AT+BAUD\r";
@@ -212,6 +230,11 @@ int ble_get_BOUD(void) {
 // char[2] = '\0';
 // strcpy(name, 'xd');
 // free(name);
+/**
+ *
+ * @param name
+ * @return true
+ */
 bool ble_set_device_name(char *name) {
 	//	AT + BAUD = 19200\r
 	char set_string[30];
@@ -241,6 +264,11 @@ bool ble_set_device_name(char *name) {
 		return false;
 }
 
+/**
+ *
+ * @param buff received device name
+ * @return true
+ */
 bool ble_get_device_name(char *buff) {
 
 	//	AT + BAUD = 19200\r
@@ -275,6 +303,11 @@ bool ble_get_device_name(char *buff) {
 
 }
 
+/**
+ *
+ * @param power ble_transmit_power_t your power
+ * @return true
+ */
 bool ble_set_transmit_power(ble_transmit_power_t power) {
 //	AT + RFPM = 3 \ r
 	char set_string[16];
@@ -304,6 +337,10 @@ bool ble_set_transmit_power(ble_transmit_power_t power) {
 		return false;
 }
 
+/**
+ *
+ * @return true
+ */
 bool ble_reset_module(void) {
 	//	AT + RESET \ r
 	char set_string[16] = "AT+RESET\r";
@@ -333,6 +370,10 @@ bool ble_reset_module(void) {
 		return false;
 }
 
+/**
+ *
+ * @return true
+ */
 bool ble_restore_default_values(void) {
 	char set_string[16] = "AT+DEFAULT\r";
 //			sprintf(set_string, "AT+RFPM=%i\r", power);
@@ -361,9 +402,15 @@ bool ble_restore_default_values(void) {
 		return false;
 }
 
+/**
+ *
+ * @param data your data to send
+ * @param size size of that data
+ * @return true
+ */
 bool ble_broadcast_data(uint8_t *data, int size) {
 	//	AT + RESET \ r
-	uint8_t set_string[size + 8];
+	char set_string[size + 8];
 	sprintf(set_string, "AT+ADD=%s\r", data);
 
 	ble_turn_on_transmittion;
@@ -391,9 +438,13 @@ bool ble_broadcast_data(uint8_t *data, int size) {
 }
 
 //bool ble_set_customized_MAC_address_
-
+/**
+ *
+ * @param interval_in_ms
+ * @return true
+ */
 bool ble_set_broadcast_interval(int interval_in_ms) {
-	uint8_t set_string[16];
+	char set_string[16];
 	sprintf(set_string, "AT+ADP=%i\r", interval_in_ms);
 
 	ble_turn_on_transmittion;
@@ -420,8 +471,12 @@ bool ble_set_broadcast_interval(int interval_in_ms) {
 		return false;
 }
 
+/**
+ *
+ * @return true
+ */
 bool ble_reset_interval(void) {
-	uint8_t set_string[16] = "AT+CIT=300\r"
+	char set_string[16] = "AT+CIT=300\r";
 //	sprintf(set_string, "AT+ADD=%i\r", interval_in_ms);
 
 	ble_turn_on_transmittion;
@@ -448,8 +503,12 @@ bool ble_reset_interval(void) {
 		return false;
 }
 
+/**
+ *
+ * @return true
+ */
 bool ble_low_power_sleep_mode(void) {
-	uint8_t set_string[16] = "AT+SLEEP\r"
+	char set_string[16] = "AT+SLEEP\r";
 //	sprintf(set_string, "AT+ADD=%i\r", interval_in_ms);
 
 	ble_turn_on_transmittion;

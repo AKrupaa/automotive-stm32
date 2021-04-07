@@ -4,6 +4,7 @@
 "Core/Application/modules/hall/hall.o"
 "Core/Application/modules/magnetometer/magnetometer.o"
 "Core/Application/modules/proximity_sensor/proximity.o"
+"Core/Application/modules/servo/servo.o"
 "Core/Application/modules/slotted_optocoupler/optocoupler.o"
 "Core/Application/runtime/device_init/device_init.o"
 "Core/Application/runtime/device_init/device_init_conf.o"

@@ -33,7 +33,10 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdlib.h>
+#include <stdio.h>
+#include "stdbool.h"
+#include "stdint.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -87,8 +90,8 @@ void Error_Handler(void);
 #define IRQ_ULTRASOUND_ECHO_Pin GPIO_PIN_1
 #define IRQ_ULTRASOUND_ECHO_GPIO_Port GPIOB
 #define IRQ_ULTRASOUND_ECHO_EXTI_IRQn EXTI1_IRQn
-#define INPUT_HALL_RIGHT_Pin GPIO_PIN_12
-#define INPUT_HALL_RIGHT_GPIO_Port GPIOB
+#define INPUT_HALL_LEFT_Pin GPIO_PIN_12
+#define INPUT_HALL_LEFT_GPIO_Port GPIOB
 #define PWM_SERVO_Pin GPIO_PIN_14
 #define PWM_SERVO_GPIO_Port GPIOB
 #define ADC_OPTO_RIGHT_Pin GPIO_PIN_15
@@ -107,8 +110,8 @@ void Error_Handler(void);
 #define OUT_SEL0_ENGINE_RIGHT_GPIO_Port GPIOA
 #define OUT_OPTO_EN_RIGHT_Pin GPIO_PIN_10
 #define OUT_OPTO_EN_RIGHT_GPIO_Port GPIOA
-#define INPUT_HALL_RIGHTA11_Pin GPIO_PIN_11
-#define INPUT_HALL_RIGHTA11_GPIO_Port GPIOA
+#define INPUT_HALL_RIGHT_Pin GPIO_PIN_11
+#define INPUT_HALL_RIGHT_GPIO_Port GPIOA
 #define OUT_LED0_Pin GPIO_PIN_15
 #define OUT_LED0_GPIO_Port GPIOA
 #define OUT_LED1_Pin GPIO_PIN_10

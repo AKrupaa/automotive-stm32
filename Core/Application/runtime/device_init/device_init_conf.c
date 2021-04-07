@@ -13,6 +13,7 @@
 #include "magnetometer/magnetometer.h"
 #include "proximity_sensor/proximity.h"
 #include "slotted_optocoupler/optocoupler.h"
+#include "servo/servo.h"
 
 module_t modules_cfg[] =
 {
@@ -56,6 +57,12 @@ module_t modules_cfg[] =
 	{
 		.init_function = eeprom_init,
 		.name = "EEPROM MODULE",
+		.active = true
+	},
+	// mod_servo
+	{
+		.init_function = servo_init,
+		.name = "SERVO MODULE",
 		.active = true
 	},
 };
