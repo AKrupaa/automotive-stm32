@@ -1,1 +1,7 @@
-magnetometer.c:8:6:magnetometer_init	4	static
+magnetometer.c:24:6:magnetometer_init	16	static
+magnetometer.c:32:6:magnetometer_write	24	static
+magnetometer.c:37:6:magnetometer_read	24	static
+magnetometer.c:43:5:magnetometer_get_X	16	static
+magnetometer.c:49:5:magnetometer_get_Y	16	static
+magnetometer.c:55:5:magnetometer_get_Z	16	static
+magnetometer.c:61:5:magnetometer_get_temperature	16	static
