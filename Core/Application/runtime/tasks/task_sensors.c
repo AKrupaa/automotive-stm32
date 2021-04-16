@@ -28,7 +28,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			ultrasound_time = HAL_GetTick();
 			ultrasound_was = true;
 		} else {
-			ultrasound_timer = HAL_GetTick() - ultrasound_timer;
+			ultrasound_time = HAL_GetTick() - ultrasound_time;
 			ultrasound_was = false;
 			rt_evbit_set_from_ISR(rt_evgroup_sensors,
 					evgroup_ultrasound_evbit_echo);
@@ -46,7 +46,6 @@ void task_sensors(void *pvParameters) {
 		// ultrasound measurment
 //		ultrasound_trig();
 //		if ( ultrasound_done ) {
-
 //		}
 
 		evgroup = rt_evbitwait_any(rt_evgroup_sensors);
@@ -55,6 +54,9 @@ void task_sensors(void *pvParameters) {
 			// obsluga sensora ultradzwiekowego
 			// policz odleglosc
 			// na podstawie na danych zareaguj :)
+
+			// jakis tam bit do ustawienia, np skret w lewo - uzupelnic
+			rt_evbit_set(rt_evgroup_state_machine, (1 << 8));
 		}
 
 	}

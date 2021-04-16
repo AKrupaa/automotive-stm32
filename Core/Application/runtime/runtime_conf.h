@@ -33,9 +33,8 @@ typedef enum rt_queue {
 /// RTOS event groups.
 typedef enum rt_evgroup {
 	rt_evgroup_0,
-	rt_evgroup_cos_tam = rt_evgroup_0,
-	rt_evgroup_cos_tam2,
-	rt_evgroup_sensors,
+	rt_evgroup_sensors = 0,
+	rt_evgroup_state_machine,
 	rt_evgroup_N
 } rt_evgroup_t;
 

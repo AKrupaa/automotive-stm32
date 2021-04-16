@@ -63,18 +63,20 @@ void rt_init(void) {
 }
 
 uint32_t rt_evbitwait_any(rt_evgroup_t Ev) {
-	EventGroupHandle_t Evh = g_rt_evgroups[Ev];
+	EventGroupHandle_t Evh = rt_evgroups[Ev];
 
 	return xEventGroupWaitBits(Evh, 0x00FFFFFFu, pdTRUE, pdFALSE, portMAX_DELAY);
 }
 
 void rt_evbit_set(rt_evgroup_t Ev, uint32_t bit) {
 	EventBits_t msk = (1u << bit);
+	EventGroupHandle_t Evh = rt_evgroups[Ev];
 	xEventGroupSetBits(Evh, msk);
 }
 
 void rt_evbit_set_from_ISR(rt_evgroup_t Ev, uint32_t bit) {
 	EventBits_t msk = (1u << bit);
+	EventGroupHandle_t Evh = rt_evgroups[Ev];
 	xEventGroupSetBitsFromISR(Evh, msk, pdFALSE);
 	portYIELD_FROM_ISR(pdFALSE);
 }

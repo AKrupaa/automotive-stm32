@@ -19,9 +19,10 @@
 
 typedef enum {
 
-	evgroup_valve_evbit_BLE_received = 0, evgroup_valve_evbit_N,
+	evgroup_ble_evbit_received = 0,
+	evgroup_ble_evbit_N,
 
-} hd_evgroup_valve_bits_t;
+} ble_evgroup_bits_t;
 
 typedef enum {
 	transmit_power_plus_4_dBm = 0,
