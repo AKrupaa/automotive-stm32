@@ -5,13 +5,13 @@
  *      Author: Arkadiusz
  */
 
+#include <ultrasound_sensor/ultrasound.h>
 #include "device_init.h"
 #include "bluetooth_low_energy/bluetooth_le.h"
 #include "eeprom/eeprom.h"
 #include "H_bridge/h_bridge.h"
 #include "hall/hall.h"
 #include "magnetometer/magnetometer.h"
-#include "proximity_sensor/proximity.h"
 #include "slotted_optocoupler/optocoupler.h"
 #include "servo/servo.h"
 
@@ -37,8 +37,8 @@ module_t modules_cfg[] =
 	},
 	// mod_proximity
 	{
-		.init_function = proximity_init,
-		.name = "PROXIMITY MODULE",
+		.init_function = ultrasound_init,
+		.name = "ULTRASOUND MODULE",
 		.active = true
 	},
 	// mod_H_bridge

@@ -22,9 +22,9 @@ Core/Application/modules/bluetooth_low_energy \
 Core/Application/modules/eeprom \
 Core/Application/modules/hall \
 Core/Application/modules/magnetometer \
-Core/Application/modules/proximity_sensor \
 Core/Application/modules/servo \
 Core/Application/modules/slotted_optocoupler \
+Core/Application/modules/ultrasound_sensor \
 Core/Application/runtime/device_init \
 Core/Application/runtime \
 Core/Application/runtime/tasks \

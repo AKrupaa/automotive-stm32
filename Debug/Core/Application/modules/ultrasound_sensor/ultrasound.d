@@ -1,5 +1,5 @@
-Core/Application/runtime/device_init/device_init_conf.o: \
- ../Core/Application/runtime/device_init/device_init_conf.c \
+Core/Application/modules/ultrasound_sensor/ultrasound.o: \
+ ../Core/Application/modules/ultrasound_sensor/ultrasound.c \
  E:/workplace/STM32/Automotive/Core/Application/modules/ultrasound_sensor/ultrasound.h \
  ../Core/Inc/main.h ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h \
  ../Core/Inc/stm32l1xx_hal_conf.h \
@@ -29,16 +29,7 @@ Core/Application/runtime/device_init/device_init_conf.o: \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h \
- ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h \
- ../Core/Application/runtime/device_init/device_init.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/bluetooth_low_energy/bluetooth_le.h \
- ../Core/Inc/usart.h ../Core/Inc/main.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/eeprom/eeprom.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/H_bridge/h_bridge.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/hall/hall.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/magnetometer/magnetometer.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/slotted_optocoupler/optocoupler.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/servo/servo.h
+ ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h
 
 E:/workplace/STM32/Automotive/Core/Application/modules/ultrasound_sensor/ultrasound.h:
 
@@ -101,23 +92,3 @@ E:/workplace/STM32/Automotive/Core/Application/modules/ultrasound_sensor/ultraso
 ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h:
 
 ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h:
-
-../Core/Application/runtime/device_init/device_init.h:
-
-E:/workplace/STM32/Automotive/Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
-
-../Core/Inc/usart.h:
-
-../Core/Inc/main.h:
-
-E:/workplace/STM32/Automotive/Core/Application/modules/eeprom/eeprom.h:
-
-E:/workplace/STM32/Automotive/Core/Application/modules/H_bridge/h_bridge.h:
-
-E:/workplace/STM32/Automotive/Core/Application/modules/hall/hall.h:
-
-E:/workplace/STM32/Automotive/Core/Application/modules/magnetometer/magnetometer.h:
-
-E:/workplace/STM32/Automotive/Core/Application/modules/slotted_optocoupler/optocoupler.h:
-
-E:/workplace/STM32/Automotive/Core/Application/modules/servo/servo.h:

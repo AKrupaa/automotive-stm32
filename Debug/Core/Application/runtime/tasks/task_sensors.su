@@ -1,1 +1,2 @@
-task_sensors.c:10:6:task_sensors	16	static
+task_sensors.c:23:6:HAL_GPIO_EXTI_Callback	16	static
+task_sensors.c:34:6:task_sensors	16	static

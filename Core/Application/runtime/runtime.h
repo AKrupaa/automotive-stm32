@@ -63,5 +63,8 @@ extern EventGroupHandle_t rt_evgroups[rt_evgroup_N];
 extern TimerHandle_t rt_timers[rt_timer_N];
 
 void rt_init(void);
+uint32_t rt_evbitwait_any(rt_evgroup_t Ev);
+void rt_evbit_set(rt_evgroup_t Ev, uint32_t bit);
+void rt_evbit_set_from_ISR(rt_evgroup_t Ev, uint32_t bit);
 
 #endif /* APPLICATION_RUNTIME_RUNTIME_H_ */

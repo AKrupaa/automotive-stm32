@@ -23,25 +23,25 @@
 #define MAGNETOMETR_CHIP_ID_REGISTER 0x0D
 
 bool magnetometer_init(void) {
-	uint8_t buff;
+	uint8_t buff = 0;
 
-	magnetometer_read(MAGNETOMETR_CHIP_ID_REGISTER, buff, 1);
+	magnetometer_read(MAGNETOMETR_CHIP_ID_REGISTER, &buff, 1);
 	if (buff != 0xFF)
 		return false;
 
 	// soft restart
-	magnetometer_read(MAGNETOMETR_CONTROL2_REGISTER, buff, 1);
+	magnetometer_read(MAGNETOMETR_CONTROL2_REGISTER, &buff, 1);
 	buff |= (0b1 << 7); // soft restart
-	magnetometer_write(MAGNETOMETR_CONTROL2_REGISTER, buff, 1);
+	magnetometer_write(MAGNETOMETR_CONTROL2_REGISTER, &buff, 1);
 
-	magnetometer_read(MAGNETOMETR_CONTROL1_REGISTER, buff, 1);
+	magnetometer_read(MAGNETOMETR_CONTROL1_REGISTER, &buff, 1);
 	buff |= (0b10 << 0); // Continuous mode
-	magnetometer_write(MAGNETOMETR_CONTROL1_REGISTER, buff, 1);
+	magnetometer_write(MAGNETOMETR_CONTROL1_REGISTER, &buff, 1);
 
-	magnetometer_read(MAGNETOMETR_CONTROL2_REGISTER, buff, 1);
+	magnetometer_read(MAGNETOMETR_CONTROL2_REGISTER, &buff, 1);
 	buff |= (0b1 << 0); // disable interrupt PIN
 	buff |= (0b1 << 6); // Enable pointer roll-over function
-	magnetometer_write(MAGNETOMETR_CONTROL2_REGISTER, buff, 1);
+	magnetometer_write(MAGNETOMETR_CONTROL2_REGISTER, &buff, 1);
 	return true;
 }
 
