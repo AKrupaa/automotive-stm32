@@ -7,43 +7,43 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00007b80  08000140  08000140  00010140  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000310  08007cc0  08007cc0  00017cc0  2**2
+  2 .rodata       00000320  08007cc0  08007cc0  00017cc0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08007fd0  08007fd0  000200d4  2**0
+  3 .ARM.extab    00000000  08007fe0  08007fe0  000200d4  2**0
                   CONTENTS
-  4 .ARM          00000000  08007fd0  08007fd0  000200d4  2**0
+  4 .ARM          00000000  08007fe0  08007fe0  000200d4  2**0
                   CONTENTS
-  5 .preinit_array 00000000  08007fd0  08007fd0  000200d4  2**0
+  5 .preinit_array 00000000  08007fe0  08007fe0  000200d4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08007fd0  08007fd0  00017fd0  2**2
+  6 .init_array   00000004  08007fe0  08007fe0  00017fe0  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08007fd4  08007fd4  00017fd4  2**2
+  7 .fini_array   00000004  08007fe4  08007fe4  00017fe4  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         000000d4  20000000  08007fd8  00020000  2**2
+  8 .data         000000d4  20000000  08007fe8  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00001b88  200000d4  080080ac  000200d4  2**2
+  9 .bss          00001b88  200000d4  080080bc  000200d4  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20001c5c  080080ac  00021c5c  2**0
+ 10 ._user_heap_stack 00000604  20001c5c  080080bc  00021c5c  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  000200d4  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0002a4a8  00000000  00000000  000200fd  2**0
+ 12 .debug_info   0002ac7d  00000000  00000000  000200fd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 000055b1  00000000  00000000  0004a5a5  2**0
+ 13 .debug_abbrev 000055dc  00000000  00000000  0004ad7a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 00001978  00000000  00000000  0004fb58  2**3
+ 14 .debug_aranges 00001990  00000000  00000000  00050358  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 000016a0  00000000  00000000  000514d0  2**3
+ 15 .debug_ranges 000016b8  00000000  00000000  00051ce8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  0001eeeb  00000000  00000000  00052b70  2**0
+ 16 .debug_macro  0001f04f  00000000  00000000  000533a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   0001cbb7  00000000  00000000  00071a5b  2**0
+ 17 .debug_line   0001cf15  00000000  00000000  000723ef  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    000a9822  00000000  00000000  0008e612  2**0
+ 18 .debug_str    000a98b5  00000000  00000000  0008f304  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  00137e34  2**0
+ 19 .comment      0000007b  00000000  00000000  00138bb9  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00006534  00000000  00000000  00137eb0  2**2
+ 20 .debug_frame  000065a0  00000000  00000000  00138c34  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -746,7 +746,7 @@ void rt_init(void) {
  8000530:	e01c      	b.n	800056c <rt_init+0xac>
 		rt_queue_def_t const *def = rt_queue_def + queue;
  8000532:	7fbb      	ldrb	r3, [r7, #30]
- 8000534:	00db      	lsls	r3, r3, #3
+ 8000534:	011b      	lsls	r3, r3, #4
  8000536:	4a32      	ldr	r2, [pc, #200]	; (8000600 <rt_init+0x140>)
  8000538:	4413      	add	r3, r2
  800053a:	60fb      	str	r3, [r7, #12]
@@ -879,7 +879,7 @@ void rt_init(void) {
  80005fc:	20001a0c 	.word	0x20001a0c
  8000600:	08007f58 	.word	0x08007f58
  8000604:	20001a30 	.word	0x20001a30
- 8000608:	08007f68 	.word	0x08007f68
+ 8000608:	08007f78 	.word	0x08007f78
  800060c:	20001a20 	.word	0x20001a20
  8000610:	20001a28 	.word	0x20001a28
 
@@ -1452,7 +1452,7 @@ void MX_FREERTOS_Init(void) {
 }
  800092c:	bf00      	nop
  800092e:	bd80      	pop	{r7, pc}
- 8000930:	08007f88 	.word	0x08007f88
+ 8000930:	08007f98 	.word	0x08007f98
  8000934:	0800093d 	.word	0x0800093d
  8000938:	20001a8c 	.word	0x20001a8c
 
@@ -3543,7 +3543,7 @@ LoopFillZerobss:
   bx lr
  80014ba:	4770      	bx	lr
   ldr r3, =_sidata
- 80014bc:	08007fd8 	.word	0x08007fd8
+ 80014bc:	08007fe8 	.word	0x08007fe8
   ldr r0, =_sdata
  80014c0:	20000000 	.word	0x20000000
   ldr r3, =_edata
@@ -8861,7 +8861,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
  8003380:	e019      	b.n	80033b6 <HAL_RCC_OscConfig+0x532>
  8003382:	bf00      	nop
  8003384:	40023800 	.word	0x40023800
- 8003388:	08007fb8 	.word	0x08007fb8
+ 8003388:	08007fc8 	.word	0x08007fc8
  800338c:	20000060 	.word	0x20000060
  8003390:	20000064 	.word	0x20000064
  8003394:	42470020 	.word	0x42470020
@@ -9541,7 +9541,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  8003736:	bf00      	nop
  8003738:	40023c00 	.word	0x40023c00
  800373c:	40023800 	.word	0x40023800
- 8003740:	08007fb8 	.word	0x08007fb8
+ 8003740:	08007fc8 	.word	0x08007fc8
  8003744:	20000060 	.word	0x20000060
  8003748:	20000064 	.word	0x20000064
 
@@ -9668,7 +9668,7 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  80037ec:	40023800 	.word	0x40023800
  80037f0:	00f42400 	.word	0x00f42400
  80037f4:	007a1200 	.word	0x007a1200
- 80037f8:	08007fac 	.word	0x08007fac
+ 80037f8:	08007fbc 	.word	0x08007fbc
 
 080037fc <HAL_RCC_GetHCLKFreq>:
   * @note   The SystemCoreClock CMSIS variable is used to store System Clock Frequency
@@ -9713,7 +9713,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  800382c:	4618      	mov	r0, r3
  800382e:	bd80      	pop	{r7, pc}
  8003830:	40023800 	.word	0x40023800
- 8003834:	08007fc8 	.word	0x08007fc8
+ 8003834:	08007fd8 	.word	0x08007fd8
 
 08003838 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -9739,7 +9739,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8003854:	4618      	mov	r0, r3
  8003856:	bd80      	pop	{r7, pc}
  8003858:	40023800 	.word	0x40023800
- 800385c:	08007fc8 	.word	0x08007fc8
+ 800385c:	08007fd8 	.word	0x08007fd8
 
 08003860 <HAL_RCC_GetClockConfig>:
   * contains the current clock configuration.
@@ -22077,10 +22077,10 @@ uint8_t *puc;
  8007ada:	4798      	blx	r3
  8007adc:	3501      	adds	r5, #1
  8007ade:	e7f2      	b.n	8007ac6 <__libc_init_array+0x1e>
- 8007ae0:	08007fd0 	.word	0x08007fd0
- 8007ae4:	08007fd0 	.word	0x08007fd0
- 8007ae8:	08007fd0 	.word	0x08007fd0
- 8007aec:	08007fd4 	.word	0x08007fd4
+ 8007ae0:	08007fe0 	.word	0x08007fe0
+ 8007ae4:	08007fe0 	.word	0x08007fe0
+ 8007ae8:	08007fe0 	.word	0x08007fe0
+ 8007aec:	08007fe4 	.word	0x08007fe4
 
 08007af0 <malloc>:
  8007af0:	4b02      	ldr	r3, [pc, #8]	; (8007afc <malloc+0xc>)

@@ -11,6 +11,7 @@
 #include "main.h"
 #include "usart.h"
 #include "string.h"
+#include "runtime.h"
 //#include <stdlib.h>
 //#include <stdio.h>
 
@@ -35,6 +36,13 @@ typedef enum {
 	transmit_power_minus_30_dBm,
 	transmit_power_minus_40_dBm,
 } ble_transmit_power_t;
+
+typedef struct {
+	char info[10];
+	uint32_t value;
+} xQueueBleData;
+
+void ble_send_queue(xQueueBleData *data, ble_evgroup_bits_t evbit);
 
 bool ble_init(void);
 

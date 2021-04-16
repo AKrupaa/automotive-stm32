@@ -80,3 +80,29 @@ void rt_evbit_set_from_ISR(rt_evgroup_t Ev, uint32_t bit) {
 	xEventGroupSetBitsFromISR(Evh, msk, pdFALSE);
 	portYIELD_FROM_ISR(pdFALSE);
 }
+
+bool rt_enqueue(rt_queue_t Q, void const *bf) {
+//  assert(Q < rt_queue_N);
+
+	QueueHandle_t Qh = rt_queues[Q];
+	TickType_t to = rt_queue_def[Q].timeout_enq;
+
+	if (xQueueSendToBack(Qh, bf, to) == pdPASS) {
+		return true;
+	}
+
+	return false;
+}
+
+bool rt_dequeue(rt_queue_t Q, void *bf) {
+//  assert(Q < rt_queue_N);
+
+	QueueHandle_t Qh = rt_queues[Q];
+	TickType_t to = rt_queue_def[Q].timeout_deq;
+
+	if (xQueueReceive(Qh, bf, to) == pdPASS) {
+		return true;
+	}
+
+	return false;
+}

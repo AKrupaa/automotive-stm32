@@ -31,10 +31,11 @@ typedef struct rt_task_definition {
 	bool active;
 } rt_task_def_t;
 
-
 typedef struct rt_queue_definition {
 	UBaseType_t uxQueueLength;
 	UBaseType_t uxItemSize;
+	TickType_t timeout_enq;
+	TickType_t timeout_deq;
 } rt_queue_def_t;
 
 //struct rt_evgroup_def {
@@ -48,7 +49,6 @@ typedef struct rt_timer_definition {
 	UBaseType_t uxAutoReload;
 	TimerCallbackFunction_t pxCallbackFunction;
 } rt_timer_def_t;
-
 
 /***********************************************/
 /* definitons are included in runtime_conf.c */
@@ -66,5 +66,7 @@ void rt_init(void);
 uint32_t rt_evbitwait_any(rt_evgroup_t Ev);
 void rt_evbit_set(rt_evgroup_t Ev, uint32_t bit);
 void rt_evbit_set_from_ISR(rt_evgroup_t Ev, uint32_t bit);
+bool rt_enqueue(rt_queue_t Q, void const *bf);
+bool rt_dequeue(rt_queue_t Q, void *bf);
 
 #endif /* APPLICATION_RUNTIME_RUNTIME_H_ */

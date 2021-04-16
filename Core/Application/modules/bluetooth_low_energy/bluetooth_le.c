@@ -22,6 +22,14 @@
 //}
 const char its_OK[] = "OK\r";
 
+void ble_send_queue(xQueueBleData *data, ble_evgroup_bits_t evbit)
+{
+
+//	xQueueBleData bleData = { 0 };
+	rt_enqueue(rt_queue_cos_tam_2, data);
+//	rt_evbitset(rt_evgroup_Valve, evbit);
+}
+
 /**
  *
  * @return true when initialized
