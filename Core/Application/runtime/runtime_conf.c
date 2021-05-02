@@ -18,7 +18,7 @@ rt_task_def_t const rt_task_def[rt_task_N] = {
 				.pvTaskCode = task_ble,
 				.pcName = "BLUETOOTH LOW ENERGY TASK",
 				.pvParameters = NULL,
-				.usStackDepth = 5u * configMINIMAL_STACK_SIZE,
+				.usStackDepth = 1u * configMINIMAL_STACK_SIZE,
 				.uxPriority = 2u,
 				.active = true
 		},
@@ -26,7 +26,7 @@ rt_task_def_t const rt_task_def[rt_task_N] = {
 				.pvTaskCode = task_eyes,
 				.pcName = "EYES TAKS",
 				.pvParameters = NULL,
-				.usStackDepth = 5u * configMINIMAL_STACK_SIZE,
+				.usStackDepth = 1u * configMINIMAL_STACK_SIZE,
 				.uxPriority = 2u,
 				.active = true
 		},
@@ -34,7 +34,7 @@ rt_task_def_t const rt_task_def[rt_task_N] = {
 				.pvTaskCode = task_memory,
 				.pcName = "MEMORY TASK",
 				.pvParameters = NULL,
-				.usStackDepth = 5u * configMINIMAL_STACK_SIZE,
+				.usStackDepth = 1u * configMINIMAL_STACK_SIZE,
 				.uxPriority = 2u,
 				.active = true
 		},
@@ -42,7 +42,7 @@ rt_task_def_t const rt_task_def[rt_task_N] = {
 				.pvTaskCode = task_sensors,
 				.pcName = "SENSORS TASK",
 				.pvParameters = NULL,
-				.usStackDepth = 5u * configMINIMAL_STACK_SIZE,
+				.usStackDepth = 1u * configMINIMAL_STACK_SIZE,
 				.uxPriority = 2u,
 				.active = true
 		},
@@ -50,7 +50,7 @@ rt_task_def_t const rt_task_def[rt_task_N] = {
 				.pvTaskCode = task_state_machine,
 				.pcName = "STATE MACHINE",
 				.pvParameters = NULL,
-				.usStackDepth = 5u * configMINIMAL_STACK_SIZE,
+				.usStackDepth = 1u * configMINIMAL_STACK_SIZE,
 				.uxPriority = 2u,
 				.active = true
 		},

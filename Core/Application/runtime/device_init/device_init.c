@@ -14,7 +14,7 @@ void device_init(void) {
 	uint16_t successCnt = 0;
 	uint16_t modsToInit = 0;
 
-	for (uint16_t i = 0; i < mod_N; i++) {
+	for (uint16_t i = 0; i < /*mod_N*/mod_0; i++) {
 		if (modules_cfg[i].active == true) {
 
 			if (modules_cfg[i].init_function() == true) {

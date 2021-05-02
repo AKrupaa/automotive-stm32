@@ -62,5 +62,10 @@ cmsis_os2.c:1708:10:osMessageQueueGetCount	40	static,ignoring_inline_asm
 cmsis_os2.c:1725:10:osMessageQueueGetSpace	56	static,ignoring_inline_asm
 cmsis_os2.c:1748:12:osMessageQueueReset	40	static,ignoring_inline_asm
 cmsis_os2.c:1766:12:osMessageQueueDelete	40	static,ignoring_inline_asm
+cmsis_os2.c:1805:13:vApplicationIdleHook	4	static
+cmsis_os2.c:1812:14:vApplicationTickHook	4	static
+cmsis_os2.c:1819:13:vApplicationMallocFailedHook	4	static
+cmsis_os2.c:1826:13:vApplicationDaemonTaskStartupHook	4	static
+cmsis_os2.c:1833:13:vApplicationStackOverflowHook	16	static
 cmsis_os2.c:1857:6:vApplicationGetIdleTaskMemory	24	static
 cmsis_os2.c:1867:6:vApplicationGetTimerTaskMemory	24	static

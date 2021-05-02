@@ -21,25 +21,25 @@ module_t modules_cfg[] =
 	{
 		.init_function = ble_init,
 		.name = "BLUETOOTH LOW ENERGY MODULE",
-		.active = true //this module should be enabled at the start of device init procedure
+		.active = false //this module should be enabled at the start of device init procedure
 	},
 	// mod_hall
 	{
 		.init_function = hall_init,
 		.name = "HALL MODULE",
-		.active = true
+		.active = false
 	},
 	// mod_opto
 	{
 		.init_function = optocoupler_init,
 		.name = "OPTOCOUPLER MODULE",
-		.active = true
+		.active = false
 	},
 	// mod_proximity
 	{
 		.init_function = ultrasound_init,
 		.name = "ULTRASOUND MODULE",
-		.active = true
+		.active = false
 	},
 	// mod_H_bridge
 	{
@@ -51,19 +51,19 @@ module_t modules_cfg[] =
 	{
 		.init_function = magnetometer_init,
 		.name = "MAGNETOMETER MODULE",
-		.active = true
+		.active = false
 	},
 	// mod_eeprom
 	{
 		.init_function = eeprom_init,
 		.name = "EEPROM MODULE",
-		.active = true
+		.active = false
 	},
 	// mod_servo
 	{
 		.init_function = servo_init,
 		.name = "SERVO MODULE",
-		.active = true
+		.active = false
 	},
 };
 
