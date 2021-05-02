@@ -7,6 +7,7 @@
 
 //#include "task_ble.h"
 #include "bluetooth_le.h"
+#include "state_machine.h"
 #include <stdio.h>
 extern char ble_pData[MAX_SIZE];
 // working all the time, checking if something is received or sending data to android device
@@ -26,10 +27,35 @@ void task_ble(void *pvParameters) {
 		if (status) {
 			if (receivedBleData.info == ble_received) {
 				memcpy(ble_pData, receivedBleData.value, MAX_SIZE);
-				memset(ble_pData, 0, MAX_SIZE);
 
-				switch(ble_pData[0]) {
-//				case 1 << 0
+				switch (ble_pData[0]) {
+				case BLE_RECEIVED_DO_NOTHING:
+					rt_evbit_set(rt_evgroup_state_machine,
+							evgroup_state_m_do_nothing);
+					break;
+				case BLE_RECEIVED_AUTO_MANUAL:
+					rt_evbit_set(rt_evgroup_state_machine,
+							evgroup_state_m_auto_manual);
+					break;
+				case BLE_RECEIVED_RIGHT:
+					rt_evbit_set(rt_evgroup_state_machine,
+							evgroup_state_m_right);
+					break;
+				case BLE_RECEIVED_FORWARD:
+					rt_evbit_set(rt_evgroup_state_machine,
+							evgroup_state_m_forward);
+					break;
+				case BLE_RECEIVED_LEFT:
+					rt_evbit_set(rt_evgroup_state_machine,
+							evgroup_state_m_left);
+					break;
+				case BLE_RECEIVED_BACK:
+					rt_evbit_set(rt_evgroup_state_machine,
+							evgroup_state_m_back);
+					break;
+				default:
+					memset(ble_pData, 0, MAX_SIZE);
+					break;
 				}
 
 			}

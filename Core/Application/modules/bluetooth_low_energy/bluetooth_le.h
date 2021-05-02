@@ -7,21 +7,14 @@
 
 #ifndef APPLICATION_MODULES_BLUETOOTH_LOW_ENERGY_BLUETOOTH_LE_H_
 #define APPLICATION_MODULES_BLUETOOTH_LOW_ENERGY_BLUETOOTH_LE_H_
-//#include "stdbool.h"
 #include "main.h"
 #include "usart.h"
 #include "string.h"
 #include "runtime.h"
-//#include <stdbool.h>
-//#include <stdlib.h>
-//#include <stdio.h>
 
-// old
 #define ble_turn_on_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_RESET)
 #define ble_turn_off_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET)
 
-//#define ble_turn_off_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_RESET)
-//#define ble_turn_on_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET)
 #define MAX_SIZE  8*4
 
 #define BLE_TERMINATOR "\r"
@@ -48,6 +41,13 @@
 #define BLE_SET_BROADCAST_DATA_COMMAND "AT+ADD=" 		// AT + ADD = 0123456A \ r max 16 bytes
 // [Service UUID: 0x1234]
 //	for ANDROID WRITE 0x1235: Write without response
+
+#define BLE_RECEIVED_DO_NOTHING 0x01
+#define BLE_RECEIVED_AUTO_MANUAL 0x02
+#define BLE_RECEIVED_RIGHT 0x04
+#define BLE_RECEIVED_FORWARD 0x08
+#define BLE_RECEIVED_LEFT 0x10
+#define BLE_RECEIVED_BACK 0x20
 
 typedef enum {
 

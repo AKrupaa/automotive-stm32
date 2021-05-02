@@ -43,7 +43,8 @@ Core/Application/runtime/tasks/task_state_machine.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ E:/workplace/STM32/Automotive/Core/Application/modules/state_machine/state_machine.h
 
 E:/workplace/STM32/Automotive/Core/Application/runtime/runtime.h:
 
@@ -132,3 +133,5 @@ E:/workplace/STM32/Automotive/Core/Application/runtime/runtime_conf.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+
+E:/workplace/STM32/Automotive/Core/Application/modules/state_machine/state_machine.h:

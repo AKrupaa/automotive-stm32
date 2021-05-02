@@ -3,5 +3,5 @@ runtime.c:65:10:rt_evbitwait_any	32	static
 runtime.c:71:6:rt_evbit_set	24	static
 runtime.c:77:6:rt_evbit_set_from_ISR	24	static
 runtime.c:84:6:rt_enqueue	24	static
-runtime.c:97:6:rt_enqueue_ISR	32	static
-runtime.c:111:6:rt_dequeue	24	static
+runtime.c:97:6:rt_enqueue_ISR	24	static
+runtime.c:110:6:rt_dequeue	24	static
