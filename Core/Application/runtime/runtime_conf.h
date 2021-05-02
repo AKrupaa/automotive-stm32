@@ -25,7 +25,7 @@ typedef enum rt_task {
 /// RTOS queues.
 typedef enum rt_queue {
 	rt_queue_0,
-	rt_queue_cos_tam = rt_queue_0,
+	rt_queue_ble = rt_queue_0,
 	rt_queue_cos_tam_2,
 	rt_queue_N
 } rt_queue_t;
@@ -35,6 +35,7 @@ typedef enum rt_evgroup {
 	rt_evgroup_0,
 	rt_evgroup_sensors = 0,
 	rt_evgroup_state_machine,
+	rt_evgroup_ble,
 	rt_evgroup_N
 } rt_evgroup_t;
 

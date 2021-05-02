@@ -43,7 +43,10 @@ Core/Application/runtime/runtime_conf.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ E:/workplace/STM32/Automotive/Core/Application/modules/bluetooth_low_energy/bluetooth_le.h \
+ ../Core/Inc/main.h ../Core/Inc/usart.h ../Core/Inc/main.h \
+ E:/workplace/STM32/Automotive/Core/Application/runtime/runtime.h
 
 ../Core/Application/runtime/runtime.h:
 
@@ -132,3 +135,13 @@ Core/Application/runtime/runtime_conf.o: \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+
+E:/workplace/STM32/Automotive/Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
+
+../Core/Inc/main.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/main.h:
+
+E:/workplace/STM32/Automotive/Core/Application/runtime/runtime.h:

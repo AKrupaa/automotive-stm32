@@ -94,6 +94,20 @@ bool rt_enqueue(rt_queue_t Q, void const *bf) {
 	return false;
 }
 
+bool rt_enqueue_ISR(rt_queue_t Q, void const *bf) {
+//  assert(Q < rt_queue_N);
+
+	QueueHandle_t Qh = rt_queues[Q];
+	TickType_t to = rt_queue_def[Q].timeout_enq;
+	BaseType_t xHigherPriorityTaskWoken;
+	xHigherPriorityTaskWoken = pdFALSE;
+	if (xQueueSendToBackFromISR(Qh, bf, xHigherPriorityTaskWoken) == pdPASS) {
+		return true;
+	}
+
+	return false;
+}
+
 bool rt_dequeue(rt_queue_t Q, void *bf) {
 //  assert(Q < rt_queue_N);
 

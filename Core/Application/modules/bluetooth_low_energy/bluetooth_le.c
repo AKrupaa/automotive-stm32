@@ -21,7 +21,11 @@
 //
 //}
 const char its_OK[] = BLE_OK;
-char pData[MAX_SIZE];
+char ble_pData[MAX_SIZE];
+
+/*
+ * PRIVATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 
 bool ble_send_command(char *command) {
 	ble_turn_on_transmittion;
@@ -41,7 +45,23 @@ bool ble_receive_command(/*char command,*/char *command) {
 //		ble_turn_off_transmittion;
 //		return false;
 //	}
-	if (HAL_UART_Receive(&huart3, (uint8_t*) command, strlen(command), 100)
+//	int no = strlen(command);
+	if (HAL_UART_Receive(&huart3, (uint8_t*) command, MAX_SIZE, 100)
+			!= HAL_OK) {
+		ble_turn_off_transmittion;
+		return false;
+	}
+	ble_turn_off_transmittion;
+	return true;
+}
+
+/*
+ * PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+bool ble_send_data(char *pData) {
+	ble_turn_on_transmittion;
+	if (HAL_UART_Transmit(&huart3, (uint8_t*) pData, strlen(pData), 100)
 			!= HAL_OK) {
 		ble_turn_off_transmittion;
 		return false;
@@ -52,7 +72,7 @@ bool ble_receive_command(/*char command,*/char *command) {
 
 bool ble_receive_data(char *pData) {
 	ble_turn_on_transmittion;
-	if (HAL_UART_Receive(&huart3, (uint8_t*) pData, strlen(pData), 100)
+	if (HAL_UART_Receive(&huart3, (uint8_t*) pData, MAX_SIZE, 100)
 			!= HAL_OK) {
 		ble_turn_off_transmittion;
 		return false;
@@ -69,34 +89,35 @@ void ble_send_queue(xQueueBleData *data, ble_evgroup_bits_t evbit) {
 }
 
 bool ble_init(void) {
-	ble_turn_off_transmittion;
-	ble_turn_on_transmittion;
-
-	bool status = ble_test_command();
-	ble_turn_off_transmittion;
-
-	if (status)
-		return true;
-	else
-		return false;
+//	ble_turn_off_transmittion;
+//	ble_turn_on_transmittion;
+//
+//	bool status = ble_test_command();
+//	ble_turn_off_transmittion;
+//
+//	if (status)
+//		return true;
+//	else
+//		return false;
+	return true;
 }
 
 bool ble_test_command(void) {
 
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, BLE_TEST_COMMAND);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, BLE_TEST_COMMAND);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -106,38 +127,38 @@ bool ble_test_command(void) {
 
 int ble_get_MAC_Address(void) {
 
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, BLE_GET_MAC_COMMAND);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, BLE_GET_MAC_COMMAND);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	return atoi(pData);
+	return atoi(ble_pData);
 }
 
 bool ble_set_MAC(char *value) {
 
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s%s%s", BLE_SET_MAC_COMMAND, value, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s%s%s", BLE_SET_MAC_COMMAND, value, BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -146,20 +167,20 @@ bool ble_set_MAC(char *value) {
 
 bool ble_set_BOUD(int value) {
 
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s%d%s", BLE_SET_BOUD_COMMAND, value, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s%d%s", BLE_SET_BOUD_COMMAND, value, BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -167,38 +188,38 @@ bool ble_set_BOUD(int value) {
 }
 
 int ble_get_BOUD(void) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s", BLE_GET_BOUD_COMMAND);	//, value, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s", BLE_GET_BOUD_COMMAND);	//, value, BLE_TERMINATOR);
 //	strcpy(pData, BLE_GET_MAC_COMMAND);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	return atoi(pData);
+	return atoi(ble_pData);
 }
 
 bool ble_set_device_name(char *name) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s%s%s", BLE_SET_NAME_COMMAND, name, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s%s%s", BLE_SET_NAME_COMMAND, name, BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+//	memset(pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -207,43 +228,43 @@ bool ble_set_device_name(char *name) {
 
 bool ble_get_device_name(char *buff) {
 
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s", BLE_GET_NAME_COMMAND);	//, name, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s", BLE_GET_NAME_COMMAND);	//, name, BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	strcpy(buff, pData);
+	strcpy(buff, ble_pData);
 
 	return true;
 }
 
 bool ble_set_transmit_power(ble_transmit_power_t power) {
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 	char buff[4];
 
 	itoa(power, buff, 10);
-	sprintf(pData, "%s%s%s", BLE_SET_TRANSMIT_POWER_COMMAND, buff,
-			BLE_TERMINATOR);
+	sprintf(ble_pData, "%s%s%s", BLE_SET_TRANSMIT_POWER_COMMAND, buff,
+	BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -251,20 +272,20 @@ bool ble_set_transmit_power(ble_transmit_power_t power) {
 }
 
 bool ble_reset_module(void) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s", BLE_RESET_COMMAND);	//, power, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s", BLE_RESET_COMMAND);	//, power, BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -272,20 +293,20 @@ bool ble_reset_module(void) {
 }
 
 bool ble_restore_default_values(void) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s", BLE_RESET_COMMAND);	//, power, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s", BLE_RESET_COMMAND);	//, power, BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -293,21 +314,21 @@ bool ble_restore_default_values(void) {
 }
 
 bool ble_broadcast_data(char *data) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s%s%s", BLE_SET_BROADCAST_DATA_COMMAND, data,
-			BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s%s%s", BLE_SET_BROADCAST_DATA_COMMAND, data,
+	BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -315,21 +336,21 @@ bool ble_broadcast_data(char *data) {
 }
 
 bool ble_set_broadcast_interval(int ms) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s%d%s", BLE_SET_BROADCAST_INTERVAL_COMMAND, ms,
-			BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s%d%s", BLE_SET_BROADCAST_INTERVAL_COMMAND, ms,
+	BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -337,21 +358,21 @@ bool ble_set_broadcast_interval(int ms) {
 }
 
 bool ble_reset_interval(int ms) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s%d%s", BLE_SET_BROADCAST_INTERVAL_COMMAND, ms,
-			BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s%d%s", BLE_SET_BROADCAST_INTERVAL_COMMAND, ms,
+	BLE_TERMINATOR);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 
@@ -359,23 +380,23 @@ bool ble_reset_interval(int ms) {
 }
 
 bool ble_low_power_sleep_mode(void) {
-	memset(pData, 0, MAX_SIZE);
-	sprintf(pData, "%s", BLE_LOW_POWER_MODE_COMMAND);	//, ms, BLE_TERMINATOR);
+	memset(ble_pData, 0, MAX_SIZE);
+	sprintf(ble_pData, "%s", BLE_LOW_POWER_MODE_COMMAND);	//, ms, BLE_TERMINATOR);
 	//	strcpy(pData, BLE_GET_MAC_COMMAND);
 
-	if (ble_send_command(pData) != true) {
+	if (ble_send_command(ble_pData) != true) {
 		return false;
 	}
 
-	memset(pData, 0, MAX_SIZE);
+	memset(ble_pData, 0, MAX_SIZE);
 
-	if (ble_receive_command(pData) != true) {
+	if (ble_receive_command(ble_pData) != true) {
 		return false;
 	}
 
 //	strcpy(buff, pData);
 
-	if (strcmp(pData, its_OK) != 0) {
+	if (strcmp(ble_pData, its_OK) != 0) {
 		return false;
 	}
 

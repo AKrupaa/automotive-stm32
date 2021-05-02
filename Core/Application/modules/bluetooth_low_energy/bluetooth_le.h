@@ -16,9 +16,13 @@
 //#include <stdlib.h>
 //#include <stdio.h>
 
+// old
 #define ble_turn_on_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_RESET)
 #define ble_turn_off_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET)
-#define MAX_SIZE  20*4
+
+//#define ble_turn_off_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_RESET)
+//#define ble_turn_on_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET)
+#define MAX_SIZE  8*4
 
 #define BLE_TERMINATOR "\r"
 #define BLE_OK "OK\r"
@@ -45,7 +49,6 @@
 // [Service UUID: 0x1234]
 //	for ANDROID WRITE 0x1235: Write without response
 
-
 typedef enum {
 
 	evgroup_ble_evbit_received = 0, evgroup_ble_evbit_N,
@@ -64,9 +67,13 @@ typedef enum {
 	transmit_power_minus_40_dBm,
 } ble_transmit_power_t;
 
+typedef enum {
+	ble_received = 0, ble_transmit,
+} ble_traffic;
+
 typedef struct {
-	char info[10];
-	uint32_t value;
+	char value[MAX_SIZE];
+	ble_traffic info;
 } xQueueBleData;
 
 /**
@@ -81,7 +88,7 @@ bool ble_send_command(char *command);
  * @param pData Received data
  * @return true when correctly
  */
-bool ble_receive_command(/*char command,*/ char *pData);
+bool ble_receive_command(/*char command,*/char *pData);
 
 /**
  *
@@ -89,6 +96,13 @@ bool ble_receive_command(/*char command,*/ char *pData);
  * @return true when correctly
  */
 bool ble_receive_data(char *pData);
+
+/**
+ *
+ * @param pData data to send
+ * @return true when correctly
+ */
+bool ble_send_data(char *pData);
 
 void ble_send_queue(xQueueBleData *data, ble_evgroup_bits_t evbit);
 
@@ -115,7 +129,7 @@ int ble_get_MAC_Address(void);
  * @param value MAC address
  * @return true
  */
-bool ble_set_MAC(char* value);
+bool ble_set_MAC(char *value);
 
 /**
  *

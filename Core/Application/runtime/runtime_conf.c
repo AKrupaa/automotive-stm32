@@ -7,6 +7,7 @@
 
 #include "runtime.h"
 #include "runtime_conf.h"
+#include "bluetooth_le.h"
 //#include "task_ble.h"
 //#include "task_eyes.h"
 //#include "task_memory.h"
@@ -60,7 +61,7 @@ rt_task_def_t const rt_task_def[rt_task_N] = {
 rt_queue_def_t const rt_queue_def[rt_queue_N] = {
 		{
 				.uxQueueLength = 5,
-				.uxItemSize = sizeof(int), /* insert here your size */
+				.uxItemSize = sizeof(xQueueBleData), /* insert here your size */
 				.timeout_enq = pdMS_TO_TICKS(100u),
 				.timeout_deq = portMAX_DELAY
 		},

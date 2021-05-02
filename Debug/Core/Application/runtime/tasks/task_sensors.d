@@ -35,6 +35,8 @@ Core/Application/runtime/tasks/task_sensors.o: \
  E:/workplace/STM32/Automotive/Core/Application/modules/servo/servo.h \
  E:/workplace/STM32/Automotive/Core/Application/modules/slotted_optocoupler/optocoupler.h \
  E:/workplace/STM32/Automotive/Core/Application/modules/ultrasound_sensor/ultrasound.h \
+ E:/workplace/STM32/Automotive/Core/Application/modules/bluetooth_low_energy/bluetooth_le.h \
+ ../Core/Inc/usart.h ../Core/Inc/main.h \
  E:/workplace/STM32/Automotive/Core/Application/runtime/runtime.h \
  E:/workplace/STM32/Automotive/Core/Application/runtime/runtime_conf.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
@@ -122,6 +124,12 @@ E:/workplace/STM32/Automotive/Core/Application/modules/servo/servo.h:
 E:/workplace/STM32/Automotive/Core/Application/modules/slotted_optocoupler/optocoupler.h:
 
 E:/workplace/STM32/Automotive/Core/Application/modules/ultrasound_sensor/ultrasound.h:
+
+E:/workplace/STM32/Automotive/Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/main.h:
 
 E:/workplace/STM32/Automotive/Core/Application/runtime/runtime.h:
 
