@@ -457,21 +457,22 @@ Discarded input sections
  .group         0x0000000000000000        0xc Core/Application/modules/eeprom/eeprom.o
  .group         0x0000000000000000        0xc Core/Application/modules/eeprom/eeprom.o
  .group         0x0000000000000000        0xc Core/Application/modules/eeprom/eeprom.o
+ .group         0x0000000000000000        0xc Core/Application/modules/eeprom/eeprom.o
  .text          0x0000000000000000        0x0 Core/Application/modules/eeprom/eeprom.o
  .data          0x0000000000000000        0x0 Core/Application/modules/eeprom/eeprom.o
  .bss           0x0000000000000000        0x0 Core/Application/modules/eeprom/eeprom.o
  .text.eeprom_init
-                0x0000000000000000        0xe Core/Application/modules/eeprom/eeprom.o
- .text.eeprom_write
-                0x0000000000000000       0x40 Core/Application/modules/eeprom/eeprom.o
+                0x0000000000000000       0x28 Core/Application/modules/eeprom/eeprom.o
  .text.eeprom_read
-                0x0000000000000000       0x40 Core/Application/modules/eeprom/eeprom.o
- .debug_info    0x0000000000000000      0xed4 Core/Application/modules/eeprom/eeprom.o
- .debug_abbrev  0x0000000000000000      0x1cd Core/Application/modules/eeprom/eeprom.o
+                0x0000000000000000       0x50 Core/Application/modules/eeprom/eeprom.o
+ .text.eeprom_write_page
+                0x0000000000000000       0x50 Core/Application/modules/eeprom/eeprom.o
+ .debug_info    0x0000000000000000      0xf4b Core/Application/modules/eeprom/eeprom.o
+ .debug_abbrev  0x0000000000000000      0x1de Core/Application/modules/eeprom/eeprom.o
  .debug_aranges
                 0x0000000000000000       0x30 Core/Application/modules/eeprom/eeprom.o
  .debug_ranges  0x0000000000000000       0x20 Core/Application/modules/eeprom/eeprom.o
- .debug_macro   0x0000000000000000      0x376 Core/Application/modules/eeprom/eeprom.o
+ .debug_macro   0x0000000000000000      0x37b Core/Application/modules/eeprom/eeprom.o
  .debug_macro   0x0000000000000000      0xa5a Core/Application/modules/eeprom/eeprom.o
  .debug_macro   0x0000000000000000       0x10 Core/Application/modules/eeprom/eeprom.o
  .debug_macro   0x0000000000000000       0x22 Core/Application/modules/eeprom/eeprom.o
@@ -539,10 +540,11 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 Core/Application/modules/eeprom/eeprom.o
  .debug_macro   0x0000000000000000      0x145 Core/Application/modules/eeprom/eeprom.o
  .debug_macro   0x0000000000000000      0x154 Core/Application/modules/eeprom/eeprom.o
- .debug_line    0x0000000000000000      0x920 Core/Application/modules/eeprom/eeprom.o
- .debug_str     0x0000000000000000    0x99d70 Core/Application/modules/eeprom/eeprom.o
+ .debug_macro   0x0000000000000000       0x22 Core/Application/modules/eeprom/eeprom.o
+ .debug_line    0x0000000000000000      0x92a Core/Application/modules/eeprom/eeprom.o
+ .debug_str     0x0000000000000000    0x99e48 Core/Application/modules/eeprom/eeprom.o
  .comment       0x0000000000000000       0x7c Core/Application/modules/eeprom/eeprom.o
- .debug_frame   0x0000000000000000       0x78 Core/Application/modules/eeprom/eeprom.o
+ .debug_frame   0x0000000000000000       0x74 Core/Application/modules/eeprom/eeprom.o
  .ARM.attributes
                 0x0000000000000000       0x33 Core/Application/modules/eeprom/eeprom.o
  .group         0x0000000000000000        0xc Core/Application/modules/hall/hall.o
@@ -1406,10 +1408,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x91 Core/Application/runtime/device_init/device_init_conf.o
  .debug_macro   0x0000000000000000       0x8d Core/Application/runtime/device_init/device_init_conf.o
  .debug_macro   0x0000000000000000       0xac Core/Application/runtime/device_init/device_init_conf.o
- .debug_macro   0x0000000000000000       0x10 Core/Application/runtime/device_init/device_init_conf.o
+ .debug_macro   0x0000000000000000       0x2e Core/Application/runtime/device_init/device_init_conf.o
  .debug_macro   0x0000000000000000       0xdc Core/Application/runtime/device_init/device_init_conf.o
  .debug_line    0x0000000000000000      0xd52 Core/Application/runtime/device_init/device_init_conf.o
- .debug_str     0x0000000000000000    0xa02a5 Core/Application/runtime/device_init/device_init_conf.o
+ .debug_str     0x0000000000000000    0xa0315 Core/Application/runtime/device_init/device_init_conf.o
  .comment       0x0000000000000000       0x7c Core/Application/runtime/device_init/device_init_conf.o
  .ARM.attributes
                 0x0000000000000000       0x33 Core/Application/runtime/device_init/device_init_conf.o
