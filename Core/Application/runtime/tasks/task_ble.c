@@ -62,7 +62,10 @@ void task_ble(void *pvParameters) {
 
 			if (receivedBleData.info == ble_transmit) {
 //				ble_pData = receivedBleData.value;
-
+				memset(ble_pData, 0, MAX_SIZE);
+//				strncpy(receivedBleData.value, ble_pData, MAX_SIZE);
+				strncpy(ble_pData, receivedBleData.value, MAX_SIZE);
+				ble_send_data(ble_pData);
 			}
 		}
 

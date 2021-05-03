@@ -54,7 +54,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void task_sensors(void *pvParameters) {
 	(void*) pvParameters;
 
-	uint32_t evgroup = 0;
+//	uint32_t evgroup = 0;
+
+// TODO: delete this line!
+//	magnetometer_init();
+	QMC5883L_Initialize(MODE_CONTROL_CONTINUOUS, OUTPUT_DATA_RATE_200HZ,
+			FULL_SCALE_2G, OVER_SAMPLE_RATIO_128);
+	QMC5883L_InterruptConfig(INTERRUPT_DISABLE);
 
 	for (;;) {
 		// ultrasound measurment
@@ -62,16 +68,22 @@ void task_sensors(void *pvParameters) {
 //		if ( ultrasound_done ) {
 //		}
 
-		evgroup = rt_evbitwait_any(rt_evgroup_sensors);
+//		evgroup = rt_evbitwait_any(rt_evgroup_sensors);
 
-		if (evgroup & (1 << evgroup_ultrasound_evbit_echo)) {
-			// obsluga sensora ultradzwiekowego
-			// policz odleglosc
-			// na podstawie na danych zareaguj :)
+//		if (evgroup & (1 << evgroup_ultrasound_evbit_echo)) {
+		// obsluga sensora ultradzwiekowego
+		// policz odleglosc
+		// na podstawie na danych zareaguj :)
 
-			// jakis tam bit do ustawienia, np skret w lewo - uzupelnic
-			rt_evbit_set(rt_evgroup_state_machine, (1 << 8));
-		}
+		// jakis tam bit do ustawienia, np skret w lewo - uzupelnic
+//			rt_evbit_set(rt_evgroup_state_machine, (1 << 8));
+//		}
+		int16_t temperature = 0;
+
+//		if (NORMAL == QMC5883L_DataIsReady()) {
+		temperature = QMC5883L_Read_Temperature();
+		temperature /= 10;
+//		}
 
 	}
 

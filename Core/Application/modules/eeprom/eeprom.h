@@ -8,7 +8,8 @@
 #ifndef APPLICATION_MODULES_EEPROM_EEPROM_H_
 #define APPLICATION_MODULES_EEPROM_EEPROM_H_
 
-#define EEPROM_MEMORY_ARRAY_ADDRESS 0b1010000
+#define EEPROM_MEMORY_ARRAY_ADDRESS 0x3C
+//#define EEPROM_MEMORY_ARRAY_ADDRESS 0x3D nwm, duzo tych adresow
 
 #include "stdbool.h"
 #include "stdint.h"
