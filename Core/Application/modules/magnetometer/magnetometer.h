@@ -25,7 +25,7 @@
 #define MAGNETOMETR_PERIOD_REGISTER 0x0B
 #define MAGNETOMETR_CHIP_ID_REGISTER 0x0D
 
-// https://github.com/mprograms/QMC5883LCompass
+//https://github.com/Farondis/QMC5883L-stm32-hal
 
 #define QMC5883L_ADDRESS  		(0x0D<<1)
 #define QMC5883L_I2C_PORT		&hi2c1

@@ -22,15 +22,14 @@
 //#define SERVO_PWM_HANDLER htim2
 //#define LEFT_PWM_HANDLER htim9
 //htim3 RIGHT ENGINE
+
+// TODO: check algorithm
+//https://github.com/japaric/motor-driver/blob/master/src/lib.rs
+
 bool h_bridge_init(void) {
-	;
-
-//	htim2->Instance->CCR1
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
-//	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 
-//	htim9.Instance->CCR2 = 0;
-//	htim3.Instance->CCR3 = 0;
 	return true;
 }
 
@@ -40,17 +39,6 @@ void h_bridge_set_left_duty(uint8_t percent) {
 
 	if (percent < 1)
 		percent = 0;
-
-	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
-			GPIO_PIN_SET);
-	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
-			GPIO_PIN_RESET);
-
-	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port,
-	OUT_INa_ENGINE_RIGHT_Pin, GPIO_PIN_SET);
-
-	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
-			GPIO_PIN_SET);
 
 	uint32_t value = percent * htim2.Init.Period / 100;
 //	htim2.Instance->CCR1 = value;
@@ -64,13 +52,61 @@ void h_bridge_set_right_duty(uint8_t percent) {
 	if (percent < 1)
 		percent = 0;
 
-	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port,
-	OUT_INa_ENGINE_RIGHT_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
-			GPIO_PIN_SET);
-
 	uint32_t value = percent * htim3.Init.Period / 100;
 //	htim3.Instance->CCR3 = value;
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, value);
+}
+
+void h_bridge_cw_left(void) {
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
+			GPIO_PIN_SET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
+			GPIO_PIN_RESET);
+}
+
+void h_bridge_cw_right(void) {
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port, OUT_INa_ENGINE_RIGHT_Pin,
+			GPIO_PIN_SET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+			GPIO_PIN_RESET);
+}
+
+void h_bridge_ccw_left(void) {
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
+			GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
+			GPIO_PIN_SET);
+}
+
+void h_bridge_ccw_right(void) {
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port, OUT_INa_ENGINE_RIGHT_Pin,
+			GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+			GPIO_PIN_SET);
+}
+
+/// Lets the motor coast
+void h_bridge_coast(void) {
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port, OUT_INa_ENGINE_RIGHT_Pin,
+			GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+			GPIO_PIN_RESET);
+
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
+			GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
+			GPIO_PIN_RESET);
+}
+
+void h_bridge_stop(void) {
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port, OUT_INa_ENGINE_RIGHT_Pin,
+			GPIO_PIN_SET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+			GPIO_PIN_SET);
+
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
+			GPIO_PIN_SET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
+			GPIO_PIN_SET);
 }
 
