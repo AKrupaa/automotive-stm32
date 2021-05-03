@@ -1,3 +1,9 @@
-h_bridge.c:25:6:h_bridge_init	8	static
-h_bridge.c:37:6:h_bridge_set_left_duty	24	static
-h_bridge.c:60:6:h_bridge_set_right_duty	24	static
+h_bridge.c:29:6:h_bridge_init	8	static
+h_bridge.c:36:6:h_bridge_set_left_duty	24	static
+h_bridge.c:48:6:h_bridge_set_right_duty	24	static
+h_bridge.c:60:6:h_bridge_cw_left	8	static
+h_bridge.c:67:6:h_bridge_cw_right	8	static
+h_bridge.c:74:6:h_bridge_ccw_left	8	static
+h_bridge.c:81:6:h_bridge_ccw_right	8	static
+h_bridge.c:89:6:h_bridge_coast	8	static
+h_bridge.c:101:6:h_bridge_stop	8	static
