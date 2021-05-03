@@ -99,32 +99,42 @@ int main(void) {
 	MX_TIM9_Init();
 	MX_USART3_UART_Init();
 	/* USER CODE BEGIN 2 */
-
-	// lewy silnik
-	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
-			GPIO_PIN_SET);
-	HAL_GPIO_WritePin(OUT_INnb_ENGINE_LEFT_GPIO_Port, OUT_INnb_ENGINE_LEFT_Pin,
-			GPIO_PIN_RESET);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-//	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0);
-
-	// prawy silnik
 	device_init();
-	h_bridge_init();
-	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port,
-			OUT_INa_ENGINE_RIGHT_GPIO_Port, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(OUT_INb_RIGHT_GPIO_Port, OUT_INb_RIGHT_Pin,
-			GPIO_PIN_RESET);
-	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+	// lewy silnik
+//	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
+//			GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
+//			GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(OUT_SEL0_ENGINE_LEFT_GPIO_Port, OUT_SEL0_ENGINE_LEFT_Pin,
+//			GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
+//			GPIO_PIN_RESET);
+//	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+//	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0);
+// prawy silnik
 
-	while (1) {
-		for (int i = 0; i < 10000; i++) {
-			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, i);
-			HAL_Delay(100);
-			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, i);
-		}
-	}
+//	h_bridge_init();
+//	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port,
+//			OUT_INa_ENGINE_RIGHT_GPIO_Port, GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+//			GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(OUT_SEL0_ENGINE_RIGHT_GPIO_Port,
+//			OUT_SEL0_ENGINE_RIGHT_Pin, GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+//			GPIO_PIN_RESET);
+//	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 
+//	while (1) {
+//		for (uint8_t i = 0; i < 100; i++) {
+////			h_bridge_set_right_duty(i);
+//			h_bridge_set_left_duty(i);
+//			HAL_Delay(100);
+//			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1599);
+//			HAL_Delay(100);
+//		}
+//	}
+//	h_bridge_set_left_duty(100);
+//	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 	/* USER CODE END 2 */
 
 	/* Init scheduler */

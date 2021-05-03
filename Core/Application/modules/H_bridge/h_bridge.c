@@ -43,14 +43,18 @@ void h_bridge_set_left_duty(uint8_t percent) {
 
 	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
 			GPIO_PIN_SET);
-	HAL_GPIO_WritePin(OUT_INnb_ENGINE_LEFT_GPIO_Port, OUT_INnb_ENGINE_LEFT_Pin,
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,
 			GPIO_PIN_RESET);
 
 	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port,
-			OUT_INa_ENGINE_RIGHT_GPIO_Port, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(OUT_INb_RIGHT_GPIO_Port, OUT_INb_RIGHT_Pin, GPIO_PIN_SET);
-	uint32_t value = percent * htim9.Init.Period / 100;
-	htim9.Instance->CCR2 = value;
+	OUT_INa_ENGINE_RIGHT_Pin, GPIO_PIN_SET);
+
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+			GPIO_PIN_SET);
+
+	uint32_t value = percent * htim2.Init.Period / 100;
+//	htim2.Instance->CCR1 = value;
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, value);
 }
 
 void h_bridge_set_right_duty(uint8_t percent) {
@@ -60,7 +64,13 @@ void h_bridge_set_right_duty(uint8_t percent) {
 	if (percent < 1)
 		percent = 0;
 
-	int value = percent * htim3.Init.Period / 100;
-	htim3.Instance->CCR3 = value;
+	HAL_GPIO_WritePin(OUT_INa_ENGINE_RIGHT_GPIO_Port,
+	OUT_INa_ENGINE_RIGHT_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(OUT_INb_ENGINE_RIGHT_GPIO_Port, OUT_INb_ENGINE_RIGHT_Pin,
+			GPIO_PIN_SET);
+
+	uint32_t value = percent * htim3.Init.Period / 100;
+//	htim3.Instance->CCR3 = value;
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, value);
 }
 
