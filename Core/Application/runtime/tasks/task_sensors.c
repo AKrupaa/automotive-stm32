@@ -19,7 +19,7 @@
 static uint32_t ultrasound_time = 0U;
 bool ultrasound_was = false;
 bool ultrasound_done = false;
-extern char ble_pData[MAX_SIZE];
+static char ble_pData[BLE_MAX_SIZE];
 
 // interrupt pin callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
@@ -40,14 +40,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 //	BLE INTERRUPT -> SOMETHING IS RECEIVED
 	if (GPIO_Pin & IRQ_BLE_Pin) {
-//		rt_evbit_set_from_ISR(rt_evgroup_ble, evgroup_ble_evbit_received);
-		ble_receive_data(ble_pData);
-		xQueueBleData ble_queue = { 0 };
-		strncpy(ble_queue.value, ble_pData, MAX_SIZE);
-		ble_queue.info = ble_received;
+		if (ble_receive_data(ble_pData)) {
+			xQueueBleData ble_queue = { 0 };
 
-		rt_enqueue_ISR(rt_queue_ble, &ble_queue);
-//		memset(ble_pData, 0, MAX_SIZE);
+			ble_queue.info = ble_received;
+
+			memcpy(&ble_queue.command, ble_pData, 1);
+			memcpy(&ble_queue.valueReg1, ble_pData + 1, 1);
+			memcpy(&ble_queue.valueReg2, ble_pData + 2, 1);
+			//		memcpy(&ble_queue.valueReg3, ble_pData + 3, 1);
+			//		memcpy(&ble_queue.valueReg4, ble_pData + 4, 1);
+
+			rt_enqueue_ISR(rt_queue_ble, &ble_queue);
+		}
 	}
 }
 
@@ -61,6 +66,10 @@ void task_sensors(void *pvParameters) {
 	QMC5883L_Initialize(MODE_CONTROL_CONTINUOUS, OUTPUT_DATA_RATE_200HZ,
 			FULL_SCALE_2G, OVER_SAMPLE_RATIO_128);
 	QMC5883L_InterruptConfig(INTERRUPT_DISABLE);
+
+	//Mode Register
+	//Continuous-Measurement Mode
+	QMC5883L_Write_Reg(0x02, 0x00);
 
 	for (;;) {
 		// ultrasound measurment
@@ -78,11 +87,35 @@ void task_sensors(void *pvParameters) {
 		// jakis tam bit do ustawienia, np skret w lewo - uzupelnic
 //			rt_evbit_set(rt_evgroup_state_machine, (1 << 8));
 //		}
-		int16_t temperature = 0;
+		int16_t X = 0;
+		int16_t Y = 0;
+		int16_t Z = 0;
+
+		uint8_t status = QMC5883L_Read_Reg(0x09);
+		uint8_t temp1 = 0;
+		uint8_t temp2 = 0;
+
+		temp1 = QMC5883L_Read_Reg(0x07);
+		temp2 = QMC5883L_Read_Reg(0x08);
+
+		uint16_t temp = ~((temp2 << 8) | temp1) + 1;
+		temp /= 100;
+
+		temp += 1;
+
+		if (status & (1 << 0)) {
+			QMC5883L_Read_Data(&X, &Y, &Z);
+		} else {
+			X = 0;
+			Y = 0;
+			Z = 0;
+		}
+
+		X++;
 
 //		if (NORMAL == QMC5883L_DataIsReady()) {
-		temperature = QMC5883L_Read_Temperature();
-		temperature /= 10;
+//		temperature = QMC5883L_Read_Temperature();
+//		temperature /= 10;
 //		}
 
 	}

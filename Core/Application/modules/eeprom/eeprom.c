@@ -35,7 +35,16 @@ bool eeprom_read(uint8_t *pBuffer, uint16_t ReadAddr, uint16_t *NumByteToRead) {
 }
 
 bool eeprom_write(uint8_t *pBuffer, uint16_t WriteAddr, uint16_t NumByteToWrite) {
+	uint8_t numofpage = 0, numofsingle = 0, count = 0;
+	uint16_t addr = 0;
+	uint8_t dataindex = 0;
+	HAL_StatusTypeDef status = HAL_OK;
 
+
+	addr = WriteAddr % EEPROM_PAGESIZE;
+	count = EEPROM_PAGESIZE - addr;
+	numofpage = NumByteToWrite / EEPROM_PAGESIZE;
+	numofsingle = NumByteToWrite % EEPROM_PAGESIZE;
 }
 
 bool eeprom_write_page(uint8_t *pBuffer, uint16_t WriteAddr,

@@ -100,30 +100,85 @@ int main(void) {
 	MX_USART3_UART_Init();
 	/* USER CODE BEGIN 2 */
 	device_init();
-
-//	uint8_t buff[4] = { 0 };
+//	h_bridge_init();
+//	h_bridge_cw_left();
+//	h_bridge_cw_right();
 //
-//	uint8_t aRxBuffer = 0;
-//	for (uint8_t I2C_ADDRESS = 0; I2C_ADDRESS < 255; I2C_ADDRESS++) {
-//		for (uint8_t REG_CHIP_ID = 0; REG_CHIP_ID < 255; REG_CHIP_ID++) {
+//	while (1) {
 //
-//			if (HAL_I2C_Mem_Read(&hi2c1, I2C_ADDRESS, REG_CHIP_ID,
-//			I2C_MEMADD_SIZE_8BIT, &aRxBuffer, 1, 100) != HAL_OK) {
-//				buff[1] = 1;
+//		for (int i = 0; i < 4; i++) {
+//
+//			if (i == 0) {
+//				h_bridge_ccw_left();
+//				h_bridge_ccw_left();
+//
+//				h_bridge_ccw_right();
+//				h_bridge_ccw_right();
+//			} else if (i == 1) {
+//
+//				h_bridge_cw_left();
+//				h_bridge_cw_left();
+//
+//				h_bridge_cw_right();
+//				h_bridge_cw_right();
+//
+//			} else if (i == 2) {
+//				h_bridge_coast();
 //			} else {
-//				buff[0] = aRxBuffer;
-//				if (I2C_ADDRESS == 0b0001101) {
-//					buff[0] = aRxBuffer;
-//				}
-//				if (I2C_ADDRESS == 0b0001101 << 1) {
-//					buff[0] = aRxBuffer;
-//				}
+//				h_bridge_stop();
+//			}
+//
+//			for (int percent = 0; percent <= 100; percent++) {
+//				h_bridge_set_left_duty(percent);
+//				h_bridge_set_left_duty(percent);
+//
+//				h_bridge_set_right_duty(percent);
+//				h_bridge_set_right_duty(percent);
+//				HAL_Delay(100);
 //			}
 //		}
-//
+
 //	}
 
-	// lewy silnik
+//	uint8_t buff[4] = { 0 };
+// 0x1E
+//	while (1) {
+//		uint8_t aRxBuffer = 0;
+//		for (uint8_t I2C_ADDRESS = 0; I2C_ADDRESS < 255; I2C_ADDRESS++) {
+//			for (uint8_t REG_CHIP_ID = 0; REG_CHIP_ID < 255; REG_CHIP_ID++) {
+//
+////				if (HAL_I2C_Mem_Read(&hi2c1, I2C_ADDRESS, REG_CHIP_ID,
+////				I2C_MEMADD_SIZE_8BIT, &aRxBuffer, 1, 100) != HAL_OK) {
+//				HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(&hi2c1, (0x1E<<1),
+//						1000, 100);
+//
+//				if (status == HAL_BUSY) {
+//					buff[0] = 0;
+//				} else if (status == HAL_ERROR) {
+//					buff[1] = 1;
+//				} else {
+//					// HAL_OK
+//					buff[2] = 2;
+//				}
+
+//				if (HAL_I2C_IsDeviceReady(hi2c, DevAddress, Trials, Timeout)(&hi2c1, I2C_ADDRESS, REG_CHIP_ID,
+//				I2C_MEMADD_SIZE_8BIT, &aRxBuffer, 1, 100) != HAL_OK) {
+//					buff[1] = 1;
+//				} else {
+//					buff[0] = aRxBuffer;
+//					if (I2C_ADDRESS == (0x0D << 1)) {
+//						buff[0] = aRxBuffer;
+//					}
+//					if (I2C_ADDRESS == 0x0D) {
+//						buff[0] = aRxBuffer;
+//					}
+//				}
+//			}
+//
+//		}
+//	}
+
+// lewy silnik
 //	HAL_GPIO_WritePin(OUT_INa_ENGINE_LEFT_GPIO_Port, OUT_INa_ENGINE_LEFT_Pin,
 //			GPIO_PIN_RESET);
 //	HAL_GPIO_WritePin(OUT_INb_ENGINE_LEFT_GPIO_Port, OUT_INb_ENGINE_LEFT_Pin,

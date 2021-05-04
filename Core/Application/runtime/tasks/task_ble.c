@@ -9,7 +9,7 @@
 #include "bluetooth_le.h"
 #include "state_machine.h"
 #include <stdio.h>
-extern char ble_pData[MAX_SIZE];
+//extern char ble_pData[BLE_MAX_SIZE];
 // working all the time, checking if something is received or sending data to android device
 void task_ble(void *pvParameters) {
 	(void*) pvParameters;
@@ -18,17 +18,18 @@ void task_ble(void *pvParameters) {
 //	const TickType_t xDelay1000ms = pdMS_TO_TICKS(5000);
 	bool status;
 	xQueueBleData receivedBleData = { 0 };
+	char ble_pData[BLE_MAX_SIZE] = { 0 };
 	for (;;) {
 
 //		vTaskDelay(xDelay1000ms);
 
-		status = rt_dequeue(rt_queue_ble, &receivedBleData);
+		status = rt_queue_peek(rt_queue_ble, &receivedBleData);
 
 		if (status) {
 			if (receivedBleData.info == ble_received) {
-				memcpy(ble_pData, receivedBleData.value, MAX_SIZE);
+//				memcpy(ble_pData, receivedBleData.value, BLE_MAX_SIZE);
 
-				switch (ble_pData[0]) {
+				switch (receivedBleData.command) {
 				case BLE_RECEIVED_DO_NOTHING:
 					rt_evbit_set(rt_evgroup_state_machine,
 							evgroup_state_m_do_nothing);
@@ -37,35 +38,36 @@ void task_ble(void *pvParameters) {
 					rt_evbit_set(rt_evgroup_state_machine,
 							evgroup_state_m_auto_manual);
 					break;
-				case BLE_RECEIVED_RIGHT:
+				case BLE_RECEIVED_MOVEMENT:
 					rt_evbit_set(rt_evgroup_state_machine,
-							evgroup_state_m_right);
-					break;
-				case BLE_RECEIVED_FORWARD:
-					rt_evbit_set(rt_evgroup_state_machine,
-							evgroup_state_m_forward);
-					break;
-				case BLE_RECEIVED_LEFT:
-					rt_evbit_set(rt_evgroup_state_machine,
-							evgroup_state_m_left);
-					break;
-				case BLE_RECEIVED_BACK:
-					rt_evbit_set(rt_evgroup_state_machine,
-							evgroup_state_m_back);
+							evgroup_state_m_movement);
 					break;
 				default:
-					memset(ble_pData, 0, MAX_SIZE);
+					// unknow -> free
+					rt_dequeue(rt_queue_ble, &receivedBleData);
 					break;
 				}
 
 			}
 
 			if (receivedBleData.info == ble_transmit) {
+
+//				memcpy(ble_pData, data + sizeof(Śmieci),4);
+
+				memcpy(ble_pData, &receivedBleData.command, 1);
+				memcpy(ble_pData + 1, &receivedBleData.valueReg1, 1);
+				memcpy(ble_pData + 2, &receivedBleData.valueReg2, 1);
+//				memcpy(ble_pData + 3, &receivedBleData.valueReg3, 1);
+//				memcpy(ble_pData + 4, &receivedBleData.valueReg4, 1);
+
+				ble_send_data(ble_pData, BLE_MAX_SIZE);
+
+//				memset (ble_pData, )
 //				ble_pData = receivedBleData.value;
-				memset(ble_pData, 0, MAX_SIZE);
+//				memset(ble_pData, 0, BLE_MAX_SIZE);
 //				strncpy(receivedBleData.value, ble_pData, MAX_SIZE);
-				strncpy(ble_pData, receivedBleData.value, MAX_SIZE);
-				ble_send_data(ble_pData);
+//				strncpy(ble_pData, receivedBleData.value, BLE_MAX_SIZE);
+//				ble_send_data(ble_pData);
 			}
 		}
 

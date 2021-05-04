@@ -15,7 +15,7 @@
 #define ble_turn_on_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_RESET)
 #define ble_turn_off_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET)
 
-#define MAX_SIZE  8*4
+#define BLE_MAX_SIZE  8*3
 
 #define BLE_TERMINATOR "\r"
 #define BLE_OK "OK\r"
@@ -44,10 +44,7 @@
 
 #define BLE_RECEIVED_DO_NOTHING 0x01
 #define BLE_RECEIVED_AUTO_MANUAL 0x02
-#define BLE_RECEIVED_RIGHT 0x04
-#define BLE_RECEIVED_FORWARD 0x08
-#define BLE_RECEIVED_LEFT 0x10
-#define BLE_RECEIVED_BACK 0x20
+#define BLE_RECEIVED_MOVEMENT 0x03
 
 typedef enum {
 
@@ -72,8 +69,12 @@ typedef enum {
 } ble_traffic;
 
 typedef struct {
-	char value[MAX_SIZE];
 	ble_traffic info;
+	char command;
+	char valueReg1; // MSB
+	char valueReg2;// LSB
+//	char valueReg3;
+//	char valueReg4; // LSB
 } xQueueBleData;
 
 /**
@@ -100,9 +101,10 @@ bool ble_receive_data(char *pData);
 /**
  *
  * @param pData data to send
+ * @param size od pData
  * @return true when correctly
  */
-bool ble_send_data(char *pData);
+bool ble_send_data(char *pData, uint16_t size);
 
 void ble_send_queue(xQueueBleData *data, ble_evgroup_bits_t evbit);
 

@@ -69,5 +69,6 @@ void rt_evbit_set_from_ISR(rt_evgroup_t Ev, uint32_t bit);
 bool rt_enqueue(rt_queue_t Q, void const *bf);
 bool rt_enqueue_ISR(rt_queue_t Q, void const *bf);
 bool rt_dequeue(rt_queue_t Q, void *bf);
+bool rt_queue_peek(rt_queue_t Q, void *bf);
 
 #endif /* APPLICATION_RUNTIME_RUNTIME_H_ */
