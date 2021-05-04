@@ -64,8 +64,7 @@ bool ble_receive_command(/*char command,*/char *command) {
 
 bool ble_send_data(char *pData, uint16_t size) {
 	ble_turn_on_transmittion;
-	if (HAL_UART_Transmit(&huart3, (uint8_t*) pData, size, 100)
-			!= HAL_OK) {
+	if (HAL_UART_Transmit(&huart3, (uint8_t*) pData, size, 100) != HAL_OK) {
 		ble_turn_off_transmittion;
 		return false;
 	}
@@ -75,12 +74,13 @@ bool ble_send_data(char *pData, uint16_t size) {
 
 bool ble_receive_data(char *pData) {
 	ble_turn_on_transmittion;
-	if (HAL_UART_Receive(&huart3, (uint8_t*) pData, BLE_MAX_SIZE, 1000)
-			!= HAL_OK) {
-		ble_turn_off_transmittion;
+	uint16_t size = sizeof(pData);
+
+	if (HAL_UART_Receive(&huart3, (uint8_t*) pData, size - 1, 1000) != HAL_OK) {
+//		ble_turn_off_transmittion;
 		return false;
 	}
-	ble_turn_off_transmittion;
+//	ble_turn_off_transmittion;
 	return true;
 }
 
@@ -384,7 +384,7 @@ bool ble_reset_interval(int ms) {
 
 bool ble_low_power_sleep_mode(void) {
 	memset(ble_pData, 0, BLE_MAX_SIZE);
-	sprintf(ble_pData, "%s", BLE_LOW_POWER_MODE_COMMAND);	//, ms, BLE_TERMINATOR);
+	sprintf(ble_pData, "%s", BLE_LOW_POWER_MODE_COMMAND);//, ms, BLE_TERMINATOR);
 	//	strcpy(pData, BLE_GET_MAC_COMMAND);
 
 	if (ble_send_command(ble_pData) != true) {

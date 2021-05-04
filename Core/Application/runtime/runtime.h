@@ -70,5 +70,7 @@ bool rt_enqueue(rt_queue_t Q, void const *bf);
 bool rt_enqueue_ISR(rt_queue_t Q, void const *bf);
 bool rt_dequeue(rt_queue_t Q, void *bf);
 bool rt_queue_peek(rt_queue_t Q, void *bf);
+bool rt_timer_start(rt_timer_t t, uint32_t timeout);
+bool rt_timer_start_ISR(rt_timer_t t, BaseType_t *pxHigherPriorityTaskWoken);
 
 #endif /* APPLICATION_RUNTIME_RUNTIME_H_ */

@@ -129,5 +129,12 @@ bool rt_queue_peek(rt_queue_t Q, void *bf) {
 	}
 
 	return false;
+}
 
+bool rt_timer_start(rt_timer_t t, uint32_t timeout) {
+	return xTimerStart(rt_timers[t], timeout);
+}
+
+bool rt_timer_start_ISR(rt_timer_t t, BaseType_t *pxHigherPriorityTaskWoken) {
+	return xTimerStartFromISR(rt_timers[t], pxHigherPriorityTaskWoken);
 }

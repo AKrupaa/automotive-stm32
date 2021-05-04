@@ -19,8 +19,7 @@
 static uint32_t ultrasound_time = 0U;
 bool ultrasound_was = false;
 bool ultrasound_done = false;
-static char ble_pData[BLE_MAX_SIZE];
-
+uint8_t pData[BLE_MAX_SIZE];
 // interrupt pin callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	IRQ_ULTRASOUND_ECHO_Pin
@@ -40,19 +39,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 //	BLE INTERRUPT -> SOMETHING IS RECEIVED
 	if (GPIO_Pin & IRQ_BLE_Pin) {
-		if (ble_receive_data(ble_pData)) {
-			xQueueBleData ble_queue = { 0 };
+		BaseType_t pxHigherPriorityTaskWoken = pdFALSE;
 
-			ble_queue.info = ble_received;
+//		ble_receive_data(pData);
+		pxHigherPriorityTaskWoken = pdTRUE;
+		rt_timer_start_ISR(rt_timer_BLE, &pxHigherPriorityTaskWoken);
+//			xTimerStartFromISR(rt_timers[T], pxHigherPriorityTaskWoken);
 
-			memcpy(&ble_queue.command, ble_pData, 1);
-			memcpy(&ble_queue.valueReg1, ble_pData + 1, 1);
-			memcpy(&ble_queue.valueReg2, ble_pData + 2, 1);
-			//		memcpy(&ble_queue.valueReg3, ble_pData + 3, 1);
-			//		memcpy(&ble_queue.valueReg4, ble_pData + 4, 1);
-
-			rt_enqueue_ISR(rt_queue_ble, &ble_queue);
-		}
 	}
 }
 

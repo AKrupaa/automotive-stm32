@@ -75,13 +75,12 @@ rt_queue_def_t const rt_queue_def[rt_queue_N] = {
 
 
 //rt_evgroup_t const rt_event_def[rt_event]
-
-rt_timer_def_t const rt_timer_def[rt_queue_N] = {
+rt_timer_def_t const rt_timer_def[rt_timer_N] = {
 		{
-				.pxCallbackFunction = "wskaznik na funckje jakas tam",
-				.pcTimerName = "jakas nazwa",
-				.uxAutoReload = true,
-				.xTimerPeriodInTicks = pdMS_TO_TICKS(10)
+				.pxCallbackFunction = timer_BLE,
+				.pcTimerName = "BLE CALLBACK ISR",
+				.uxAutoReload = pdFALSE,
+				.xTimerPeriodInTicks = pdMS_TO_TICKS(20)
 		},
 		{
 				.pxCallbackFunction = "wskaznik na funckje jakas tam2",
@@ -90,7 +89,6 @@ rt_timer_def_t const rt_timer_def[rt_queue_N] = {
 				.xTimerPeriodInTicks = pdMS_TO_TICKS(20)
 		},
 };
-
 
 //typedef struct xd{
 //	char b;

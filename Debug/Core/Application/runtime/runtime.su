@@ -6,3 +6,5 @@ runtime.c:84:6:rt_enqueue	24	static
 runtime.c:97:6:rt_enqueue_ISR	24	static
 runtime.c:110:6:rt_dequeue	24	static
 runtime.c:123:6:rt_queue_peek	24	static
+runtime.c:134:6:rt_timer_start	32	static
+runtime.c:138:6:rt_timer_start_ISR	32	static

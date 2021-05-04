@@ -72,7 +72,7 @@ typedef struct {
 	ble_traffic info;
 	char command;
 	char valueReg1; // MSB
-	char valueReg2;// LSB
+	char valueReg2; // LSB
 //	char valueReg3;
 //	char valueReg4; // LSB
 } xQueueBleData;
@@ -212,4 +212,7 @@ bool ble_reset_interval(int ms);
  * @return true
  */
 bool ble_low_power_sleep_mode(void);
+
+/// CALLBACK FROM ISR
+void timer_BLE(TimerHandle_t xTimer);
 #endif /* APPLICATION_MODULES_BLUETOOTH_LOW_ENERGY_BLUETOOTH_LE_H_ */

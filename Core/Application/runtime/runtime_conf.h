@@ -42,8 +42,7 @@ typedef enum rt_evgroup {
 /// RTOS event groups.
 typedef enum rt_timer {
 	rt_timer_0,
-	rt_timer_blabla = rt_timer_0,
-	rt_timer_blabla2,
+	rt_timer_BLE = rt_timer_0,
 	rt_timer_N
 } rt_timer_t;
 
