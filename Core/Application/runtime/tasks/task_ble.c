@@ -36,7 +36,7 @@ void timer_BLE(TimerHandle_t xTimer) {
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	__NOP();
+//	__NOP();
 //	char ble_pData[BLE_MAX_SIZE];
 	memset(ble_pData, 1, BLE_MAX_SIZE);
 	ble_receive_data(ble_pData);
@@ -51,9 +51,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	rt_enqueue_ISR(rt_queue_ble, &ble_queue);
 
 }
-void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart) {
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);/* {
 	__NOP();
-}
+}*/
 
 void task_ble(void *pvParameters) {
 	(void*) pvParameters;
