@@ -8,15 +8,36 @@
 //#include "task_ble.h"
 #include "bluetooth_le.h"
 #include "state_machine.h"
+#include "main.h"
 #include <stdio.h>
-// extern char ble_pData[BLE_MAX_SIZE];
+char ble_pData[BLE_MAX_SIZE];
 // working all the time, checking if something is received or sending data to android device
 
 /* ************************************************************************** */
 // callback
 /* ************************************************************************** */
 void timer_BLE(TimerHandle_t xTimer) {
-	char ble_pData[BLE_MAX_SIZE];
+
+	HAL_UART_Receive_DMA(&huart3, (uint8_t*) ble_pData, sizeof(ble_pData) -1);
+
+//	char ble_pData[BLE_MAX_SIZE];
+//	memset(ble_pData, 1, BLE_MAX_SIZE);
+//	ble_receive_data(ble_pData);
+//	xQueueBleData ble_queue = { 0 };
+//
+//	ble_queue.info = ble_received;
+//
+//	memcpy(&ble_queue.command, ble_pData, 1);
+//	memcpy(&ble_queue.valueReg1, ble_pData + 1, 1);
+//	memcpy(&ble_queue.valueReg2, ble_pData + 2, 1);
+//
+//	rt_enqueue_ISR(rt_queue_ble, &ble_queue);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	__NOP();
+//	char ble_pData[BLE_MAX_SIZE];
 	memset(ble_pData, 1, BLE_MAX_SIZE);
 	ble_receive_data(ble_pData);
 	xQueueBleData ble_queue = { 0 };
@@ -29,6 +50,9 @@ void timer_BLE(TimerHandle_t xTimer) {
 
 	rt_enqueue_ISR(rt_queue_ble, &ble_queue);
 
+}
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart) {
+	__NOP();
 }
 
 void task_ble(void *pvParameters) {

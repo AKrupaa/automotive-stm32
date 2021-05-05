@@ -1,2 +1,4 @@
-task_ble.c:18:6:timer_BLE	48	static
-task_ble.c:34:6:task_ble	48	static
+task_ble.c:19:6:timer_BLE	16	static
+task_ble.c:38:6:HAL_UART_RxCpltCallback	16	static,ignoring_inline_asm
+task_ble.c:42:6:HAL_UART_RxHalfCpltCallback	16	static,ignoring_inline_asm
+task_ble.c:46:6:task_ble	48	static
