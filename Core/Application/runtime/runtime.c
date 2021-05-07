@@ -124,7 +124,7 @@ bool rt_queue_peek(rt_queue_t Q, void *bf) {
 
 	QueueHandle_t Qh = rt_queues[Q];
 
-	if (xQueueReceive(Qh, bf, pdMS_TO_TICKS(portMAX_DELAY)) == pdPASS) {
+	if (xQueuePeek(Qh, bf, pdMS_TO_TICKS(portMAX_DELAY)) == pdPASS) {
 		return true;
 	}
 

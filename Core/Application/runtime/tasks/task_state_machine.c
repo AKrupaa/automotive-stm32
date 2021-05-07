@@ -17,7 +17,7 @@ void task_state_machine(void *pvParameters) {
 
 	uint32_t evgroup = 0;
 	bool tasks_disabled = false;
-	xQueueBleData receivedBleData = { 0 };
+//	xQueueBleData receivedBleData = { 0 };
 
 	for (;;) {
 
@@ -42,39 +42,11 @@ void task_state_machine(void *pvParameters) {
 		}
 		if (evgroup & (1 << evgroup_state_m_movement)) {
 
-			bool status = rt_dequeue(rt_queue_ble, &receivedBleData);
-			if (status) {
+//			bool status = rt_dequeue(rt_queue_ble, &receivedBleData);
+//			if (status) {
 
-				uint8_t left_engine = receivedBleData.valueReg1;
-				uint8_t right_engine = receivedBleData.valueReg2;
 
-				// 1	1	1	0	0	1	0	0
-				// ^
-				// cw
-
-				// 0	1	1	0	0	1	0	0
-				// ^
-				// ccw
-				// --- |        PERCENTAGE       |
-
-				// left engine
-				if (left_engine & (1 << 8)) {
-					h_bridge_cw_left();
-					h_bridge_set_left_duty(left_engine & 0b01111111);
-				} else {
-					h_bridge_ccw_left();
-					h_bridge_set_left_duty(right_engine & 0b01111111);
-				}
-
-				// right engine
-				if (right_engine & (1 << 8)) {
-					h_bridge_cw_right();
-					h_bridge_set_right_duty(right_engine & 0b01111111);
-				} else {
-					h_bridge_ccw_right();
-					h_bridge_set_right_duty(right_engine & 0b01111111);
-				}
-			}
+//			}
 		}
 	}
 }

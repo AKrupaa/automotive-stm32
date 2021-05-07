@@ -15,7 +15,7 @@
 #define ble_turn_on_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_RESET)
 #define ble_turn_off_transmittion HAL_GPIO_WritePin(OUT_BLE_EN_GPIO_Port, OUT_BLE_EN_Pin, GPIO_PIN_SET)
 
-#define BLE_MAX_SIZE  8*3
+#define BLE_MAX_SIZE  3
 
 #define BLE_TERMINATOR "\r"
 #define BLE_OK "OK\r"
@@ -82,7 +82,7 @@ typedef struct {
  * @param command what you want to send as string
  * @return true is correctly
  */
-bool ble_send_command(char *command);
+bool ble_send_command(char *command, uint16_t size);
 
 /**
  *
@@ -104,7 +104,7 @@ bool ble_receive_data(char *pData);
  * @param size od pData
  * @return true when correctly
  */
-bool ble_send_data(char *pData, uint16_t size);
+bool ble_send_data(char *pData, int size);
 
 void ble_send_queue(xQueueBleData *data, ble_evgroup_bits_t evbit);
 

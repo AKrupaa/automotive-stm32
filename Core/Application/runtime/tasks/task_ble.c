@@ -8,6 +8,7 @@
 //#include "task_ble.h"
 #include "bluetooth_le.h"
 #include "state_machine.h"
+#include "h_bridge.h"
 #include "main.h"
 #include <stdio.h>
 char ble_pData[BLE_MAX_SIZE];
@@ -17,29 +18,14 @@ char ble_pData[BLE_MAX_SIZE];
 // callback
 /* ************************************************************************** */
 void timer_BLE(TimerHandle_t xTimer) {
-
-	HAL_UART_Receive_DMA(&huart3, (uint8_t*) ble_pData, sizeof(ble_pData) -1);
-
-//	char ble_pData[BLE_MAX_SIZE];
-//	memset(ble_pData, 1, BLE_MAX_SIZE);
-//	ble_receive_data(ble_pData);
-//	xQueueBleData ble_queue = { 0 };
-//
-//	ble_queue.info = ble_received;
-//
-//	memcpy(&ble_queue.command, ble_pData, 1);
-//	memcpy(&ble_queue.valueReg1, ble_pData + 1, 1);
-//	memcpy(&ble_queue.valueReg2, ble_pData + 2, 1);
-//
-//	rt_enqueue_ISR(rt_queue_ble, &ble_queue);
-
+	HAL_UART_Receive_DMA(&huart3, (uint8_t*) ble_pData, BLE_MAX_SIZE);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 //	__NOP();
 //	char ble_pData[BLE_MAX_SIZE];
-	memset(ble_pData, 1, BLE_MAX_SIZE);
-	ble_receive_data(ble_pData);
+//	memset(ble_pData, 1, BLE_MAX_SIZE);
+//	ble_receive_data(ble_pData);
 	xQueueBleData ble_queue = { 0 };
 
 	ble_queue.info = ble_received;
@@ -51,10 +37,18 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	rt_enqueue_ISR(rt_queue_ble, &ble_queue);
 
 }
-void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);/* {
-	__NOP();
-}*/
 
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);/* {
+ __NOP();
+ }*/
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
+
+void HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef *huart);
+
+/* ************************************************************************** */
+// task
+/* ************************************************************************** */
 void task_ble(void *pvParameters) {
 	(void*) pvParameters;
 
@@ -63,11 +57,13 @@ void task_ble(void *pvParameters) {
 	bool status;
 	xQueueBleData receivedBleData = { 0 };
 	char ble_pData[BLE_MAX_SIZE] = { 0 };
+	uint8_t left_engine;
+	uint8_t right_engine;
 	for (;;) {
 
 //		vTaskDelay(xDelay1000ms);
 
-		status = rt_queue_peek(rt_queue_ble, &receivedBleData);
+		status = rt_dequeue(rt_queue_ble, &receivedBleData);
 
 		if (status) {
 			if (receivedBleData.info == ble_received) {
@@ -83,8 +79,40 @@ void task_ble(void *pvParameters) {
 							evgroup_state_m_auto_manual);
 					break;
 				case BLE_RECEIVED_MOVEMENT:
-					rt_evbit_set(rt_evgroup_state_machine,
-							evgroup_state_m_movement);
+//					rt_evbit_set(rt_evgroup_state_machine,
+//							evgroup_state_m_movement);
+
+					left_engine = receivedBleData.valueReg1;
+					right_engine = receivedBleData.valueReg2;
+
+					// 1	1	1	0	0	1	0	0
+					// ^
+					// cw
+
+					// 0	1	1	0	0	1	0	0
+					// ^
+					// ccw
+					// --- |        PERCENTAGE       |
+
+					// left engine
+					if (left_engine & (1 << 8)) {
+						h_bridge_ccw_left();
+						h_bridge_set_left_duty(left_engine & 0b01111111);
+					} else {
+						h_bridge_cw_left();
+						h_bridge_set_left_duty(left_engine & 0b01111111);
+					}
+
+					// right engine
+					if (right_engine & (1 << 8)) {
+						h_bridge_ccw_right();
+
+						h_bridge_set_right_duty(right_engine & 0b01111111);
+					} else {
+						h_bridge_cw_right();
+						h_bridge_set_right_duty(right_engine & 0b01111111);
+					}
+
 					break;
 				default:
 					// unknow -> free
@@ -96,22 +124,15 @@ void task_ble(void *pvParameters) {
 
 			if (receivedBleData.info == ble_transmit) {
 
-//				memcpy(ble_pData, data + sizeof(Śmieci),4);
-
+//				rt_dequeue(rt_queue_ble, &receivedBleData);
 				memcpy(ble_pData, &receivedBleData.command, 1);
 				memcpy(ble_pData + 1, &receivedBleData.valueReg1, 1);
 				memcpy(ble_pData + 2, &receivedBleData.valueReg2, 1);
-//				memcpy(ble_pData + 3, &receivedBleData.valueReg3, 1);
-//				memcpy(ble_pData + 4, &receivedBleData.valueReg4, 1);
 
-				ble_send_data(ble_pData, BLE_MAX_SIZE);
+//				ble_send_data(ble_pData, BLE_MAX_SIZE);
+				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pData,
+				BLE_MAX_SIZE);
 
-//				memset (ble_pData, )
-//				ble_pData = receivedBleData.value;
-//				memset(ble_pData, 0, BLE_MAX_SIZE);
-//				strncpy(receivedBleData.value, ble_pData, MAX_SIZE);
-//				strncpy(ble_pData, receivedBleData.value, BLE_MAX_SIZE);
-//				ble_send_data(ble_pData);
 			}
 		}
 

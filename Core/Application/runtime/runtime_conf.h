@@ -43,6 +43,7 @@ typedef enum rt_evgroup {
 typedef enum rt_timer {
 	rt_timer_0,
 	rt_timer_BLE = rt_timer_0,
+	rt_timer_jakis_tam,
 	rt_timer_N
 } rt_timer_t;
 
