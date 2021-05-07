@@ -25,7 +25,6 @@
 static const char its_OK[] = BLE_OK;
 /* file scope */
 //static char ble_pData[BLE_MAX_SIZE];
-
 /*
  * PRIVATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
@@ -63,7 +62,8 @@ bool ble_receive_command(/*char command,*/char *command) {
 
 bool ble_send_data(char *pData, int size) {
 	ble_turn_on_transmittion;
-	if (HAL_UART_Transmit(&huart3, (uint8_t*) pData, (uint16_t) size, 100) != HAL_OK) {
+	if (HAL_UART_Transmit(&huart3, (uint8_t*) pData, (uint16_t) size, 100)
+			!= HAL_OK) {
 		ble_turn_off_transmittion;
 		return false;
 	}
@@ -151,7 +151,8 @@ bool ble_set_MAC(char *value) {
 
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s%s%s", BLE_SET_MAC_COMMAND, value, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s%s%s", BLE_SET_MAC_COMMAND, value,
+			BLE_TERMINATOR);
 
 	if (ble_send_command(buff, size) != true) {
 		return false;
@@ -174,7 +175,8 @@ bool ble_set_BOUD(int value) {
 
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s%d%s", BLE_SET_BOUD_COMMAND, value, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s%d%s", BLE_SET_BOUD_COMMAND, value,
+			BLE_TERMINATOR);
 
 	if (ble_send_command(buff, size) != true) {
 		return false;
@@ -196,7 +198,7 @@ bool ble_set_BOUD(int value) {
 int ble_get_BOUD(void) {
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s", BLE_GET_BOUD_COMMAND);	//, value, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s", BLE_GET_BOUD_COMMAND);//, value, BLE_TERMINATOR);
 //	strcpy(pData, BLE_GET_MAC_COMMAND);
 
 	if (ble_send_command(buff, size) != true) {
@@ -215,7 +217,8 @@ int ble_get_BOUD(void) {
 bool ble_set_device_name(char *name) {
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s%s%s", BLE_SET_NAME_COMMAND, name, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s%s%s", BLE_SET_NAME_COMMAND, name,
+			BLE_TERMINATOR);
 
 	if (ble_send_command(buff, size) != true) {
 		return false;
@@ -238,9 +241,9 @@ bool ble_get_device_name(char *buff) {
 
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff2[20];
-	int size = sprintf(buff2, "%s", BLE_GET_NAME_COMMAND);	//, name, BLE_TERMINATOR);
+	int size = sprintf(buff2, "%s", BLE_GET_NAME_COMMAND);//, name, BLE_TERMINATOR);
 
-	if (ble_send_command(buff2,size) != true) {
+	if (ble_send_command(buff2, size) != true) {
 		return false;
 	}
 
@@ -284,7 +287,7 @@ bool ble_set_transmit_power(ble_transmit_power_t power) {
 bool ble_reset_module(void) {
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s", BLE_RESET_COMMAND);	//, power, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s", BLE_RESET_COMMAND);//, power, BLE_TERMINATOR);
 
 	if (ble_send_command(buff, size) != true) {
 		return false;
@@ -306,7 +309,7 @@ bool ble_reset_module(void) {
 bool ble_restore_default_values(void) {
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s", BLE_RESET_COMMAND);	//, power, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s", BLE_RESET_COMMAND);//, power, BLE_TERMINATOR);
 
 	if (ble_send_command(buff, size) != true) {
 		return false;
@@ -374,8 +377,8 @@ bool ble_set_broadcast_interval(int ms) {
 bool ble_reset_interval(int ms) {
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s%d%s", BLE_SET_BROADCAST_INTERVAL_COMMAND,
-			ms, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s%d%s", BLE_SET_BROADCAST_INTERVAL_COMMAND, ms,
+			BLE_TERMINATOR);
 
 	if (ble_send_command(buff, size) != true) {
 		return false;
@@ -397,7 +400,7 @@ bool ble_reset_interval(int ms) {
 bool ble_low_power_sleep_mode(void) {
 //	memset(ble_pData, 0, BLE_MAX_SIZE);
 	char buff[20];
-	int size = sprintf(buff, "%s", BLE_LOW_POWER_MODE_COMMAND);//, ms, BLE_TERMINATOR);
+	int size = sprintf(buff, "%s", BLE_LOW_POWER_MODE_COMMAND);	//, ms, BLE_TERMINATOR);
 	//	strcpy(pData, BLE_GET_MAC_COMMAND);
 
 	if (ble_send_command(buff, size) != true) {
