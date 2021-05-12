@@ -215,4 +215,5 @@ bool ble_low_power_sleep_mode(void);
 
 /// CALLBACK FROM ISR
 void timer_BLE(TimerHandle_t xTimer);
+void timer_sent_test_BLE(TimerHandle_t xTimer);
 #endif /* APPLICATION_MODULES_BLUETOOTH_LOW_ENERGY_BLUETOOTH_LE_H_ */

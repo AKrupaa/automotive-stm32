@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include "utility.h"
 char ble_pData[BLE_MAX_SIZE];
+char ble_pDataSend[BLE_MAX_SIZE];
+int temp = 0;
 // works only when BLE receive something -> void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 // working all the time, checking if something is received or sending data to android device
 
@@ -21,6 +23,32 @@ char ble_pData[BLE_MAX_SIZE];
 /* ************************************************************************** */
 void timer_BLE(TimerHandle_t xTimer) {
 	HAL_UART_Receive_DMA(&huart3, (uint8_t*) ble_pData, BLE_MAX_SIZE);
+}
+
+/// auto-reload - testing purpose
+void timer_sent_test_BLE(TimerHandle_t xTimer) {
+	ble_pDataSend[0] = 0x01;
+
+//	ble_pDataSend[2] = 0x03;
+
+	if (temp++ == 1) {
+		ble_pDataSend[1] = 0x02;
+		ble_pDataSend[2] = 0x03;
+		temp = 0;
+	} else {
+		ble_pDataSend[1] = 0x01;
+		ble_pDataSend[2] = 0x0D;
+	}
+
+	HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend, BLE_MAX_SIZE);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+	__NOP();
+}
+
+void HAL_UART_TxHalfCallback(UART_HandleTypeDef *huart) {
+	__NOP();
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
@@ -61,6 +89,7 @@ void task_ble(void *pvParameters) {
 	char ble_pData[BLE_MAX_SIZE] = { 0 };
 	uint8_t left_engine;
 	uint8_t right_engine;
+
 	for (;;) {
 
 //		vTaskDelay(xDelay1000ms);

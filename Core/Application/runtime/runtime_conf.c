@@ -83,10 +83,10 @@ rt_timer_def_t const rt_timer_def[rt_timer_N] = {
 				.xTimerPeriodInTicks = pdMS_TO_TICKS(20)
 		},
 		{
-				.pxCallbackFunction = "wskaznik na funckje jakas tam2",
-				.pcTimerName = "jakas nazwa2",
-				.uxAutoReload = true,
-				.xTimerPeriodInTicks = pdMS_TO_TICKS(20)
+				.pxCallbackFunction = timer_sent_test_BLE,
+				.pcTimerName = "BLE send test request",
+				.uxAutoReload = pdTRUE,
+				.xTimerPeriodInTicks = pdMS_TO_TICKS(2000)
 		},
 };
 
