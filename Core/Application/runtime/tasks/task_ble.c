@@ -11,7 +11,9 @@
 #include "h_bridge.h"
 #include "main.h"
 #include <stdio.h>
+#include "utility.h"
 char ble_pData[BLE_MAX_SIZE];
+// works only when BLE receive something -> void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 // working all the time, checking if something is received or sending data to android device
 
 /* ************************************************************************** */
@@ -94,23 +96,25 @@ void task_ble(void *pvParameters) {
 					// ccw
 					// --- |        PERCENTAGE       |
 
+					int left = u2_to_decimal(left_engine);
+					int right = u2_to_decimal(right_engine);
+
 					// left engine
-					if (left_engine & (1 << 8)) {
+					if (left < 0) {
 						h_bridge_ccw_left();
-						h_bridge_set_left_duty(left_engine & 0b01111111);
+						h_bridge_set_left_duty(-left);
 					} else {
 						h_bridge_cw_left();
-						h_bridge_set_left_duty(left_engine & 0b01111111);
+						h_bridge_set_left_duty(left);
 					}
 
 					// right engine
-					if (right_engine & (1 << 8)) {
+					if (right < 0) {
 						h_bridge_ccw_right();
-
-						h_bridge_set_right_duty(right_engine & 0b01111111);
+						h_bridge_set_right_duty(-right);
 					} else {
 						h_bridge_cw_right();
-						h_bridge_set_right_duty(right_engine & 0b01111111);
+						h_bridge_set_right_duty(right);
 					}
 
 					break;

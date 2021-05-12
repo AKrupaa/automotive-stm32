@@ -47,7 +47,8 @@ Core/Application/runtime/tasks/task_ble.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  E:/workplace/STM32/Automotive/Core/Application/modules/state_machine/state_machine.h \
- E:/workplace/STM32/Automotive/Core/Application/modules/H_bridge/h_bridge.h
+ E:/workplace/STM32/Automotive/Core/Application/modules/H_bridge/h_bridge.h \
+ E:/workplace/STM32/Automotive/Core/Application/utility/utility.h
 
 E:/workplace/STM32/Automotive/Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
 
@@ -148,3 +149,5 @@ E:/workplace/STM32/Automotive/Core/Application/runtime/runtime_conf.h:
 E:/workplace/STM32/Automotive/Core/Application/modules/state_machine/state_machine.h:
 
 E:/workplace/STM32/Automotive/Core/Application/modules/H_bridge/h_bridge.h:
+
+E:/workplace/STM32/Automotive/Core/Application/utility/utility.h:

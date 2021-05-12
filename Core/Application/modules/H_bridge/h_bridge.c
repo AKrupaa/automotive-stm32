@@ -30,10 +30,13 @@ bool h_bridge_init(void) {
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 
+	h_bridge_set_left_duty(0);
+	h_bridge_set_right_duty(0);
+
 	return true;
 }
 
-void h_bridge_set_left_duty(uint8_t percent) {
+void h_bridge_set_left_duty(int percent) {
 	if (percent > 100)
 		percent = 100;
 
@@ -45,7 +48,7 @@ void h_bridge_set_left_duty(uint8_t percent) {
 	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, value);
 }
 
-void h_bridge_set_right_duty(uint8_t percent) {
+void h_bridge_set_right_duty(int percent) {
 	if (percent > 100)
 		percent = 100;
 

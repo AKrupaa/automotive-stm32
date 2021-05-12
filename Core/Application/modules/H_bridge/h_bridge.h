@@ -21,13 +21,13 @@ bool h_bridge_init(void);
  *
  * @param percent PWM percentage fill
  */
-void h_bridge_set_left_duty(uint8_t percent);
+void h_bridge_set_left_duty(int percent);
 
 /**
  *
  * @param percent PWM percentage fill
  */
-void h_bridge_set_right_duty(uint8_t percent);
+void h_bridge_set_right_duty(int percent);
 
 void h_bridge_cw_left(void);
 

@@ -15,6 +15,7 @@
 "Core/Application/runtime/tasks/task_memory.o"
 "Core/Application/runtime/tasks/task_sensors.o"
 "Core/Application/runtime/tasks/task_state_machine.o"
+"Core/Application/utility/utility.o"
 "Core/Src/adc.o"
 "Core/Src/dma.o"
 "Core/Src/freertos.o"

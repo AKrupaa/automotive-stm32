@@ -28,6 +28,7 @@ Core/Application/modules/ultrasound_sensor \
 Core/Application/runtime/device_init \
 Core/Application/runtime \
 Core/Application/runtime/tasks \
+Core/Application/utility \
 Core/Src \
 Core/Startup \
 Drivers/STM32L1xx_HAL_Driver/Src \
