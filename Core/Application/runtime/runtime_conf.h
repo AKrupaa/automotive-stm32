@@ -45,7 +45,7 @@ typedef enum rt_timer {
 	rt_timer_0,
 	rt_timer_BLE = rt_timer_0,
 	rt_timer_temperature_measurement,
-//	rt_timer_ultrasound_sensor_trigger,
+	rt_timer_ultrasound_sensor_trigger,
 	rt_timer_N
 } rt_timer_t;
 

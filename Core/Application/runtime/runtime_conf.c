@@ -9,6 +9,7 @@
 #include "runtime_conf.h"
 #include "bluetooth_le.h"
 #include "temperature_measurement.h"
+#include "ultrasound.h"
 //#include "task_ble.h"
 //#include "task_eyes.h"
 //#include "task_memory.h"
@@ -89,12 +90,12 @@ rt_timer_def_t const rt_timer_def[rt_timer_N] = {
 				.uxAutoReload = pdTRUE,
 				.xTimerPeriodInTicks = pdMS_TO_TICKS(6000) // 6 sec
 		},
-//		{
-//				.pxCallbackFunction = timer_ultrasound_sensor_tigger,
-//				.pcTimerName = "trig sensor",
-//				.uxAutoReload = pdFalse,
-//				.xTimerPeriodInTicks = pdMS_TO_TICKS(4) // 6 sec
-//		},
+		{
+				.pxCallbackFunction = timer_ultrasound_sensor_tigger,
+				.pcTimerName = "trig sensor",
+				.uxAutoReload = pdTRUE,
+				.xTimerPeriodInTicks = pdMS_TO_TICKS(6) // 6 ms
+		},
 };
 
 //typedef struct xd{

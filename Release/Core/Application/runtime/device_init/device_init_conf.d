@@ -30,11 +30,6 @@ Core/Application/runtime/device_init/device_init_conf.o: \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h \
- ../Core/Application/runtime/device_init/device_init.h \
- ../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h \
- ../Core/Inc/usart.h ../Core/Inc/main.h \
- ../Core/Application/runtime/runtime.h \
- ../Core/Application/runtime/runtime_conf.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
@@ -42,11 +37,17 @@ Core/Application/runtime/device_init/device_init_conf.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
+ ../Core/Application/runtime/device_init/device_init.h \
+ ../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h \
+ ../Core/Inc/usart.h ../Core/Inc/main.h \
+ ../Core/Application/runtime/runtime.h \
+ ../Core/Application/runtime/runtime_conf.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Core/Application/modules/eeprom/eeprom.h \
  ../Core/Application/modules/H_bridge/h_bridge.h \
@@ -117,18 +118,6 @@ Core/Application/runtime/device_init/device_init_conf.o: \
 
 ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h:
 
-../Core/Application/runtime/device_init/device_init.h:
-
-../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
-
-../Core/Inc/usart.h:
-
-../Core/Inc/main.h:
-
-../Core/Application/runtime/runtime.h:
-
-../Core/Application/runtime/runtime_conf.h:
-
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 
 ../Core/Inc/FreeRTOSConfig.h:
@@ -143,15 +132,29 @@ Core/Application/runtime/device_init/device_init_conf.o: \
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
 
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
+
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 
+../Core/Application/runtime/device_init/device_init.h:
+
+../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/main.h:
+
+../Core/Application/runtime/runtime.h:
+
+../Core/Application/runtime/runtime_conf.h:
+
+../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
+
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-
-../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 

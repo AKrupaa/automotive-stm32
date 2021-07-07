@@ -43,7 +43,8 @@ Core/Application/runtime/tasks/task_eyes.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ ../Core/Inc/gpio.h ../Core/Inc/main.h ../Core/Inc/tim.h
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 
@@ -132,3 +133,9 @@ Core/Application/runtime/tasks/task_eyes.o: \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+
+../Core/Inc/gpio.h:
+
+../Core/Inc/main.h:
+
+../Core/Inc/tim.h:

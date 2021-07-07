@@ -35,7 +35,6 @@ Core/Application/runtime/tasks/task_sensors.o: \
  ../Core/Application/modules/servo/servo.h \
  ../Core/Application/modules/slotted_optocoupler/optocoupler.h \
  ../Core/Application/modules/ultrasound_sensor/ultrasound.h \
- ../Core/Application/modules/temperature_measurement/temperature_measurement.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
@@ -46,6 +45,7 @@ Core/Application/runtime/tasks/task_sensors.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
+ ../Core/Application/modules/temperature_measurement/temperature_measurement.h \
  ../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h \
  ../Core/Inc/usart.h ../Core/Inc/main.h \
  ../Core/Application/runtime/runtime.h \
@@ -54,7 +54,7 @@ Core/Application/runtime/tasks/task_sensors.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
- ../Core/Inc/adc.h
+ ../Core/Inc/adc.h ../Core/Inc/tim.h
 
 ../Core/Application/modules/H_bridge/h_bridge.h:
 
@@ -128,8 +128,6 @@ Core/Application/runtime/tasks/task_sensors.o: \
 
 ../Core/Application/modules/ultrasound_sensor/ultrasound.h:
 
-../Core/Application/modules/temperature_measurement/temperature_measurement.h:
-
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 
 ../Core/Inc/FreeRTOSConfig.h:
@@ -150,6 +148,8 @@ Core/Application/runtime/tasks/task_sensors.o: \
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 
+../Core/Application/modules/temperature_measurement/temperature_measurement.h:
+
 ../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
 
 ../Core/Inc/usart.h:
@@ -169,3 +169,5 @@ Core/Application/runtime/tasks/task_sensors.o: \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 
 ../Core/Inc/adc.h:
+
+../Core/Inc/tim.h:

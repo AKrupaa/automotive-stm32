@@ -12,6 +12,8 @@
 #include "stdint.h"
 #include "main.h"
 #include "stm32l1xx.h"
+#include "FreeRTOS.h"
+#include "timers.h"
 
 typedef enum {
 
@@ -26,5 +28,7 @@ bool ultrasound_init(void);
  * need to waits 10us
  */
 void ultrasound_trig(void);
+
+void timer_ultrasound_sensor_tigger(TimerHandle_t xTimer);
 
 #endif /* APPLICATION_MODULES_ULTRASOUND_SENSOR_ULTRASOUND_H_ */

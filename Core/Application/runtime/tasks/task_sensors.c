@@ -17,6 +17,7 @@
 #include "stdbool.h"
 #include "runtime.h"
 #include "adc.h"
+#include "tim.h"
 
 union {
 	uint32_t uint32;
@@ -36,13 +37,20 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin & IRQ_ULTRASOUND_ECHO_Pin) {
 
 		if (ultrasound_was == false) {
-			ultrasound_time = HAL_GetTick();
+			HAL_TIM_Base_Start(&htim4);
+//			ultrasound_time = HAL_GetTick();
 			ultrasound_was = true;
 		} else {
-			ultrasound_time = HAL_GetTick() - ultrasound_time;
-			ultrasound_was = false;
-			rt_evbit_set_from_ISR(rt_evgroup_sensors,
-					evgroup_ultrasound_evbit_echo);
+
+//			HAL_TIM_Base_Stop(&htim4);
+
+			uint16_t count = __HAL_TIM_GET_COUNTER(&htim4);
+
+//			(&htim4);
+//			ultrasound_time = HAL_GetTick() - ultrasound_time;
+//			ultrasound_was = false;
+//			rt_evbit_set_from_ISR(rt_evgroup_sensors,
+//					evgroup_ultrasound_evbit_echo);
 //			ultrasound_done = true;
 		}
 	}
@@ -114,7 +122,6 @@ void task_sensors(void *pvParameters) {
 	//Mode Register
 	//Continuous-Measurement Mode
 	QMC5883L_Write_Reg(0x02, 0x00);
-
 
 ///	 start temperature measurement every period of this timer
 	rt_timer_start(rt_timer_temperature_measurement, 100);
