@@ -33,7 +33,7 @@ typedef enum rt_queue {
 /// RTOS event groups.
 typedef enum rt_evgroup {
 	rt_evgroup_0,
-	rt_evgroup_sensors = 0,
+	rt_evgroup_sensors = rt_evgroup_0,
 	rt_evgroup_state_machine,
 	rt_evgroup_ble,
 	rt_evgroup_drive,
@@ -44,7 +44,8 @@ typedef enum rt_evgroup {
 typedef enum rt_timer {
 	rt_timer_0,
 	rt_timer_BLE = rt_timer_0,
-	rt_timer_jakis_tam,
+	rt_timer_temperature_measurement,
+//	rt_timer_ultrasound_sensor_trigger,
 	rt_timer_N
 } rt_timer_t;
 

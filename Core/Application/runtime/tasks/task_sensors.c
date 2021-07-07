@@ -29,6 +29,7 @@ bool ultrasound_was = false;
 bool ultrasound_done = false;
 uint8_t pData[BLE_MAX_SIZE];
 extern char temperature_measurement[SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY];
+
 // interrupt pin callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	IRQ_ULTRASOUND_ECHO_Pin
@@ -113,6 +114,10 @@ void task_sensors(void *pvParameters) {
 	//Mode Register
 	//Continuous-Measurement Mode
 	QMC5883L_Write_Reg(0x02, 0x00);
+
+
+///	 start temperature measurement every period of this timer
+	rt_timer_start(rt_timer_temperature_measurement, 100);
 
 	for (;;) {
 		// ultrasound measurment

@@ -23,3 +23,5 @@ void ultrasound_trig(void) {
 	HAL_GPIO_WritePin(OUT_ULTRASOUND_TRIG_GPIO_Port, OUT_ULTRASOUND_TRIG_Pin,
 			GPIO_PIN_RESET);
 }
+
+

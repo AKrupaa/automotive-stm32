@@ -13,10 +13,10 @@
 void task_memory(void *pvParameters) {
 
 	(void*) pvParameters;
-	rt_timer_start(rt_timer_jakis_tam, 300);
+//	rt_timer_start(rt_timer_jakis_tam, 300);
 	for (;;) {
 //		vTaskDelay(pdMS_TO_TICKS(1000));
-
+		taskYIELD();
 	}
 
 }

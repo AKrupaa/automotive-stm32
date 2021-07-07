@@ -1,1 +1,2 @@
-task_eyes.c:10:6:task_eyes	0	static
+task_eyes.c:16:6:timer_ultrasound_sensor_tigger	0	static
+task_eyes.c:20:6:task_eyes	0	static,ignoring_inline_asm
