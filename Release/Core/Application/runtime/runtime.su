@@ -1,0 +1,13 @@
+runtime.c:15:6:rt_init	24	static
+runtime.c:65:10:rt_evbitwait_any	16	static
+runtime.c:71:10:rt_evbitcheck_any	16	static
+runtime.c:77:10:rt_evbitclear	0	static
+runtime.c:86:12:rt_evbitclear_ISR	0	static
+runtime.c:94:6:rt_evbit_set	0	static
+runtime.c:100:6:rt_evbit_set_from_ISR	0	static
+runtime.c:107:6:rt_enqueue	8	static
+runtime.c:120:6:rt_enqueue_ISR	16	static
+runtime.c:133:6:rt_dequeue	8	static
+runtime.c:146:6:rt_queue_peek	8	static
+runtime.c:157:6:rt_timer_start	24	static
+runtime.c:161:6:rt_timer_start_ISR	24	static

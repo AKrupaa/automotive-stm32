@@ -36,10 +36,11 @@ typedef enum rt_evgroup {
 	rt_evgroup_sensors = 0,
 	rt_evgroup_state_machine,
 	rt_evgroup_ble,
+	rt_evgroup_drive,
 	rt_evgroup_N
 } rt_evgroup_t;
 
-/// RTOS event groups.
+/// RTOS timers.
 typedef enum rt_timer {
 	rt_timer_0,
 	rt_timer_BLE = rt_timer_0,

@@ -8,6 +8,7 @@
 #include "runtime.h"
 #include "runtime_conf.h"
 #include "bluetooth_le.h"
+#include "temperature_measurement.h"
 //#include "task_ble.h"
 //#include "task_eyes.h"
 //#include "task_memory.h"
@@ -83,10 +84,10 @@ rt_timer_def_t const rt_timer_def[rt_timer_N] = {
 				.xTimerPeriodInTicks = pdMS_TO_TICKS(20)
 		},
 		{
-				.pxCallbackFunction = timer_sent_test_BLE,
-				.pcTimerName = "BLE send test request",
+				.pxCallbackFunction = timer_trigger_temperature_measurement,
+				.pcTimerName = "trig temp. measurement",
 				.uxAutoReload = pdTRUE,
-				.xTimerPeriodInTicks = pdMS_TO_TICKS(2000)
+				.xTimerPeriodInTicks = pdMS_TO_TICKS(6000) // 6 sec
 		},
 };
 

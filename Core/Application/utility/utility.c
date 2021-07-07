@@ -6,6 +6,8 @@
  */
 
 #include "utility.h"
+#include <math.h>
+#include "stdlib.h"
 
 int u2_to_decimal(uint8_t u2) {
 
@@ -23,4 +25,18 @@ int u2_to_decimal(uint8_t u2) {
 		return (int) value;
 	}
 
+}
+
+uint16_t int16_to_u2(int16_t decimal) {
+	uint16_t u2 = 0;
+
+	if (decimal >= 0) {
+		u2 = (uint16_t) decimal;
+	} else {
+		u2 = (uint16_t) abs(decimal);
+		u2 = (uint16_t) ~u2;
+		u2 += 1;
+	}
+
+	return u2;
 }

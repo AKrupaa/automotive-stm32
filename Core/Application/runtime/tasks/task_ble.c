@@ -25,24 +25,37 @@ void timer_BLE(TimerHandle_t xTimer) {
 	HAL_UART_Receive_DMA(&huart3, (uint8_t*) ble_pData, BLE_MAX_SIZE);
 }
 
-/// auto-reload - testing purpose
-void timer_sent_test_BLE(TimerHandle_t xTimer) {
-	ble_pDataSend[0] = 0x01;
-
+// auto-reload - triggering temperature measurement inside MCU
+//void timer_trigger_temperature_measurement(TimerHandle_t xTimer) {
+//	HAL_ADC_ST
+//
+//
+//	ble_pDataSend[0] = 0x01;
+//
 //	ble_pDataSend[2] = 0x03;
-
-	if (temp++ == 1) {
-		ble_pDataSend[1] = 0x02;
-		ble_pDataSend[2] = 0x03;
-		temp = 0;
-	} else {
-		ble_pDataSend[1] = 0x01;
-		ble_pDataSend[2] = 0x0D;
-	}
-
-	HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend, BLE_MAX_SIZE);
-}
-
+//
+//	if (temp++ == 1) {
+//		ble_pDataSend[1] = 0x02;
+//		ble_pDataSend[2] = 0xBC;
+//		temp = 0;
+//	} else {
+//		ble_pDataSend[1] = 0x01;
+//		ble_pDataSend[2] = 0xAA;
+//	}
+//	xQueueBleData toBeTransmit_ble_pData = { 0 };
+//
+//	toBeTransmit_ble_pData.info = ble_transmit;
+//	toBeTransmit_ble_pData.command = 0x00;
+//	toBeTransmit_ble_pData.valueReg1 = ble_pDataSend[1];
+//	toBeTransmit_ble_pData.valueReg2 = ble_pDataSend[2];
+//
+//	rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+//
+//	HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend, BLE_MAX_SIZE);
+//
+//
+//}
+//
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	__NOP();
 }
@@ -72,9 +85,9 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);/* {
  __NOP();
  }*/
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
-
-void HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef *huart);
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+	__NOP();
+}
 
 /* ************************************************************************** */
 // task
@@ -157,14 +170,18 @@ void task_ble(void *pvParameters) {
 
 			if (receivedBleData.info == ble_transmit) {
 
-//				rt_dequeue(rt_queue_ble, &receivedBleData);
 				memcpy(ble_pData, &receivedBleData.command, 1);
 				memcpy(ble_pData + 1, &receivedBleData.valueReg1, 1);
 				memcpy(ble_pData + 2, &receivedBleData.valueReg2, 1);
 
+//				rt_dequeue(rt_queue_ble, &receivedBleData);
+
 //				ble_send_data(ble_pData, BLE_MAX_SIZE);
-				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pData,
-				BLE_MAX_SIZE);
+//				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pData,
+//				BLE_MAX_SIZE);
+
+				HAL_UART_Transmit(&huart3, (uint8_t*) ble_pData, BLE_MAX_SIZE,
+						10);
 
 			}
 		}

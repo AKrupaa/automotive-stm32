@@ -68,6 +68,29 @@ uint32_t rt_evbitwait_any(rt_evgroup_t Ev) {
 	return xEventGroupWaitBits(Evh, 0x00FFFFFFu, pdTRUE, pdFALSE, portMAX_DELAY);
 }
 
+uint32_t rt_evbitcheck_any(rt_evgroup_t Ev) {
+	EventGroupHandle_t Evh = rt_evgroups[Ev];
+
+	return xEventGroupWaitBits(Evh, 0x00FFFFFFu, pdFALSE, pdFALSE, 0);
+}
+
+uint32_t rt_evbitclear(rt_evgroup_t Ev, uint32_t bits_to_clear) {
+	EventGroupHandle_t Evh = rt_evgroups[Ev];
+
+//	uxBits =
+
+	return xEventGroupClearBits(Evh, // The event group being updated.
+			bits_to_clear);	// The bits being cleared.
+}
+
+BaseType_t rt_evbitclear_ISR( rt_evgroup_t Ev, uint32_t bits_to_clear) {
+	EventGroupHandle_t Evh = rt_evgroups[Ev];
+
+
+	return xEventGroupClearBitsFromISR(Evh, // The event group being updated.
+			bits_to_clear);	// The bits being cleared.
+}
+
 void rt_evbit_set(rt_evgroup_t Ev, uint32_t bit) {
 	EventBits_t msk = (1u << bit);
 	EventGroupHandle_t Evh = rt_evgroups[Ev];

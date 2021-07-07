@@ -39,8 +39,8 @@ Core/Src/freertos.o: ../Core/Src/freertos.c \
  ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- E:/workplace/STM32/Automotive/Core/Application/runtime/runtime.h \
- E:/workplace/STM32/Automotive/Core/Application/runtime/runtime_conf.h \
+ ../Core/Src/../Application/runtime/runtime.h \
+ ../Core/Src/../Application/runtime/runtime_conf.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
@@ -128,9 +128,9 @@ Core/Src/freertos.o: ../Core/Src/freertos.c \
 
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
 
-E:/workplace/STM32/Automotive/Core/Application/runtime/runtime.h:
+../Core/Src/../Application/runtime/runtime.h:
 
-E:/workplace/STM32/Automotive/Core/Application/runtime/runtime_conf.h:
+../Core/Src/../Application/runtime/runtime_conf.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 

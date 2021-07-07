@@ -26,6 +26,14 @@
 // TODO: check algorithm
 //https://github.com/japaric/motor-driver/blob/master/src/lib.rs
 
+typedef enum {
+
+	evgroup_drive_evbit_ban = 0,
+	evgroup_drive_evbit_permitted,
+	evgroup_drive_evbit_N,
+
+} drive_evgroup_bits_t;
+
 bool h_bridge_init(void) {
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);

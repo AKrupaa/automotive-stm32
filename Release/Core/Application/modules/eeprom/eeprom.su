@@ -1,0 +1,4 @@
+eeprom.c:11:6:eeprom_init	8	static
+eeprom.c:21:6:eeprom_read	24	static
+eeprom.c:37:6:eeprom_write	0	static
+eeprom.c:50:6:eeprom_write_page	24	static
