@@ -36,7 +36,7 @@ typedef enum rt_evgroup {
 	rt_evgroup_sensors = rt_evgroup_0,
 	rt_evgroup_state_machine,
 	rt_evgroup_ble,
-	rt_evgroup_drive,
+	rt_evgroup_ultrasound,
 	rt_evgroup_N
 } rt_evgroup_t;
 

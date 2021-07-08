@@ -48,7 +48,9 @@ Core/Application/runtime/tasks/task_ble.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Core/Application/modules/state_machine/state_machine.h \
  ../Core/Application/modules/H_bridge/h_bridge.h \
- ../Core/Application/utility/utility.h
+ ../Core/Application/utility/utility.h \
+ ../Core/Application/modules/ultrasound_sensor/ultrasound.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 
 ../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h:
 
@@ -151,3 +153,7 @@ Core/Application/runtime/tasks/task_ble.o: \
 ../Core/Application/modules/H_bridge/h_bridge.h:
 
 ../Core/Application/utility/utility.h:
+
+../Core/Application/modules/ultrasound_sensor/ultrasound.h:
+
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:

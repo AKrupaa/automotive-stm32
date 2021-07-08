@@ -64,10 +64,11 @@ extern TimerHandle_t rt_timers[rt_timer_N];
 
 void rt_init(void);
 uint32_t rt_evbitwait_any(rt_evgroup_t Ev);
-uint32_t rt_evbitclear(rt_evgroup_t Ev, uint32_t bits_to_clear);
-BaseType_t rt_evbitclear_ISR(rt_evgroup_t Ev, uint32_t bits_to_clear);
+uint32_t rt_evbit_check_any(rt_evgroup_t Ev);
+uint32_t rt_evbit_clear(rt_evgroup_t Ev, uint32_t bits_to_clear);
+BaseType_t rt_evbit_clear_ISR(rt_evgroup_t Ev, uint32_t bits_to_clear);
 void rt_evbit_set(rt_evgroup_t Ev, uint32_t bit);
-void rt_evbit_set_from_ISR(rt_evgroup_t Ev, uint32_t bit);
+void rt_evbit_set_ISR(rt_evgroup_t Ev, uint32_t bit);
 bool rt_enqueue(rt_queue_t Q, void const *bf);
 bool rt_enqueue_ISR(rt_queue_t Q, void const *bf);
 bool rt_dequeue(rt_queue_t Q, void *bf);

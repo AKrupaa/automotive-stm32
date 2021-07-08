@@ -23,7 +23,6 @@ void timer_ultrasound_sensor_tigger(TimerHandle_t xTimer) {
 	// set timer to 10 us, and start!
 	HAL_TIM_Base_Start_IT(&htim10);
 
-//	HAL_TIM
 	// after ... in another interrupt (htim10) clear gpio ultrasound trigger
 	//	void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 

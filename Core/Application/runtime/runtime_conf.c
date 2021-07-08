@@ -92,7 +92,7 @@ rt_timer_def_t const rt_timer_def[rt_timer_N] = {
 		},
 		{
 				.pxCallbackFunction = timer_ultrasound_sensor_tigger,
-				.pcTimerName = "trig sensor",
+				.pcTimerName = "trig ultrasound sensor",
 				.uxAutoReload = pdTRUE,
 				.xTimerPeriodInTicks = pdMS_TO_TICKS(6) // 6 ms
 		},

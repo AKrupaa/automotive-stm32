@@ -54,7 +54,8 @@ Core/Application/runtime/tasks/task_sensors.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
- ../Core/Inc/adc.h ../Core/Inc/tim.h
+ ../Core/Inc/adc.h ../Core/Inc/tim.h \
+ ../Core/Application/utility/utility.h
 
 ../Core/Application/modules/H_bridge/h_bridge.h:
 
@@ -171,3 +172,5 @@ Core/Application/runtime/tasks/task_sensors.o: \
 ../Core/Inc/adc.h:
 
 ../Core/Inc/tim.h:
+
+../Core/Application/utility/utility.h:

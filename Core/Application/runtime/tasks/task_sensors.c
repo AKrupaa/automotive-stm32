@@ -18,6 +18,7 @@
 #include "runtime.h"
 #include "adc.h"
 #include "tim.h"
+#include "utility.h"
 
 union {
 	uint32_t uint32;
@@ -25,9 +26,9 @@ union {
 	uint8_t uint8[4];
 } type_casting;
 
-static uint32_t ultrasound_time = 0U;
+//static uint32_t ultrasound_time = 0U;
 bool ultrasound_was = false;
-bool ultrasound_done = false;
+//bool ultrasound_done = false;
 uint8_t pData[BLE_MAX_SIZE];
 extern char temperature_measurement[SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY];
 
@@ -38,20 +39,42 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 		if (ultrasound_was == false) {
 			HAL_TIM_Base_Start(&htim4);
-//			ultrasound_time = HAL_GetTick();
 			ultrasound_was = true;
 		} else {
-
-//			HAL_TIM_Base_Stop(&htim4);
-
 			uint16_t count = __HAL_TIM_GET_COUNTER(&htim4);
+			HAL_TIM_Base_Stop(&htim4);
 
-//			(&htim4);
-//			ultrasound_time = HAL_GetTick() - ultrasound_time;
-//			ultrasound_was = false;
-//			rt_evbit_set_from_ISR(rt_evgroup_sensors,
-//					evgroup_ultrasound_evbit_echo);
-//			ultrasound_done = true;
+			/// 	clear 	(if > 30 cm) 	==> 	allowed to drive forward
+			/// 	set 	(if < 30 cm) 	==> 	forbidden to drive forward
+			if (count > ULTRASOUND_DIST_40CM_BITS) {
+				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else if (count > ULTRASOUND_DIST_35CM_BITS) {
+				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else if (count > ULTRASOUND_DIST_30CM_BITS) {
+				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else if (count > ULTRASOUND_DIST_25CM_BITS) {
+				rt_evbit_set_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else if (count > ULTRASOUND_DIST_20CM_BITS) {
+				rt_evbit_set_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else if (count > ULTRASOUND_DIST_15CM_BITS) {
+				rt_evbit_set_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else if (count > ULTRASOUND_DIST_10CM_BITS) {
+				rt_evbit_set_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else if (count > ULTRASOUND_DIST_5CM_BITS) {
+				rt_evbit_set_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			} else {
+				rt_evbit_set_ISR(rt_evgroup_ultrasound,
+						evgroup_ultrasound_evbit_move);
+			}
+			ultrasound_was = false;
 		}
 	}
 
@@ -67,6 +90,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 /// auto-reload - triggering temperature measurement inside MCU
+/// .xTimerPeriodInTicks = pdMS_TO_TICKS(6000) // 6 sec
 void timer_trigger_temperature_measurement(TimerHandle_t xTimer) {
 //	HAL_ADC_Start_DMA(&hadc, pData, Length)
 //	trigger_temperature_measurement_by_DMA();
@@ -200,6 +224,8 @@ void task_sensors(void *pvParameters) {
 			Y = 0;
 			Z = 0;
 		}
+
+		taskYIELD();
 
 //		if (NORMAL == QMC5883L_DataIsReady()) {
 //		temperature = QMC5883L_Read_Temperature();

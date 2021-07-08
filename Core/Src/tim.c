@@ -25,12 +25,12 @@
 // -------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------
 
-// htim4 -> 200 Hz -> max mean 5 ms, resolution = 5 ms / ((counter period) 39999) = 125 nanosekund
+// htim4 -> 200 Hz -> max mean 5 ms, resolution = 5 ms / ((counter period) 39999) = 125 nanosekund = 0,125 us
 // htim4 for counting to max 5 ms
 // calulcating time between IRQ_ULTRASOUND_ECHO_Pin RISING - FALLING EDGE
 // IS NOT AUTORELOAD
 
-// htim10 -> 100000 Hz -> max mean 10us, resolution = 10us / ((counter period) 319) = 31.25 nanoseconds
+// htim10 -> 100000 Hz -> max mean 10us, resolution = 10us / ((counter period) 319) = 31.25 nanoseconds = 0,03125 us
 // htim10 for counting to 10us and then overflow interrupt!
 // this is for turning off ultrasound trigger pin
 // NOT AUTORELOAD

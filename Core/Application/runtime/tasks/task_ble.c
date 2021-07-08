@@ -12,6 +12,7 @@
 #include "main.h"
 #include <stdio.h>
 #include "utility.h"
+#include "ultrasound.h"
 char ble_pData[BLE_MAX_SIZE];
 char ble_pDataSend[BLE_MAX_SIZE];
 int temp = 0;
@@ -95,11 +96,9 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
 void task_ble(void *pvParameters) {
 	(void*) pvParameters;
 
-//	int i = 0;
-//	const TickType_t xDelay1000ms = pdMS_TO_TICKS(5000);
 	bool status;
 	xQueueBleData receivedBleData = { 0 };
-	char ble_pData[BLE_MAX_SIZE] = { 0 };
+//	char ble_pData[BLE_MAX_SIZE] = { 0 };
 	uint8_t left_engine;
 	uint8_t right_engine;
 
@@ -146,8 +145,14 @@ void task_ble(void *pvParameters) {
 						h_bridge_ccw_left();
 						h_bridge_set_left_duty(-left);
 					} else {
-						h_bridge_cw_left();
-						h_bridge_set_left_duty(left);
+						// allowed to drive forward?
+						if (!(rt_evbit_check_any(rt_evgroup_ultrasound)
+								& (1 << evgroup_ultrasound_evbit_move))) {
+							// yes
+							h_bridge_cw_left();
+							h_bridge_set_left_duty(left);
+						}
+
 					}
 
 					// right engine
@@ -155,8 +160,13 @@ void task_ble(void *pvParameters) {
 						h_bridge_ccw_right();
 						h_bridge_set_right_duty(-right);
 					} else {
-						h_bridge_cw_right();
-						h_bridge_set_right_duty(right);
+						// allowed to drive forward?
+						if (!(rt_evbit_check_any(rt_evgroup_ultrasound)
+								& (1 << evgroup_ultrasound_evbit_move))) {
+							// yes
+							h_bridge_cw_right();
+							h_bridge_set_right_duty(right);
+						}
 					}
 
 					break;
@@ -170,19 +180,17 @@ void task_ble(void *pvParameters) {
 
 			if (receivedBleData.info == ble_transmit) {
 
-				memcpy(ble_pData, &receivedBleData.command, 1);
-				memcpy(ble_pData + 1, &receivedBleData.valueReg1, 1);
-				memcpy(ble_pData + 2, &receivedBleData.valueReg2, 1);
+				memcpy(ble_pDataSend, &receivedBleData.command, 1);
+				memcpy(ble_pDataSend + 1, &receivedBleData.valueReg1, 1);
+				memcpy(ble_pDataSend + 2, &receivedBleData.valueReg2, 1);
 
 //				rt_dequeue(rt_queue_ble, &receivedBleData);
 
-//				ble_send_data(ble_pData, BLE_MAX_SIZE);
-//				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pData,
-//				BLE_MAX_SIZE);
+//				HAL_UART_Transmit(&huart3, (uint8_t*) ble_pData, BLE_MAX_SIZE,
+//						10);
 
-				HAL_UART_Transmit(&huart3, (uint8_t*) ble_pData, BLE_MAX_SIZE,
-						10);
-
+				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend,
+				BLE_MAX_SIZE);
 			}
 		}
 
