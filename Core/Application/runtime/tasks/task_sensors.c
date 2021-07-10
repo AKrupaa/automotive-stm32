@@ -10,8 +10,8 @@
 #include "hall.h"
 #include "magnetometer.h"
 #include "servo/servo.h"
-#include "slotted_optocoupler/optocoupler.h"
-#include "ultrasound_sensor/ultrasound.h"
+#include "optocoupler.h"
+#include "ultrasound.h"
 #include "temperature_measurement.h"
 #include "bluetooth_le.h"
 #include "stdbool.h"
@@ -19,6 +19,9 @@
 #include "adc.h"
 #include "tim.h"
 #include "utility.h"
+#include <math.h>
+
+extern uint16_t ULTRASOUND_PROPER_DISTANCE_u16;
 
 union {
 	uint32_t uint32;
@@ -31,58 +34,28 @@ bool ultrasound_was = false;
 //bool ultrasound_done = false;
 uint8_t pData[BLE_MAX_SIZE];
 extern char temperature_measurement[SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY];
-void TIM_ResetCounter(TIM_TypeDef *TIMx) {
-	/* Check the parameters */
-	assert_param(IS_TIM_ALL_PERIPH(TIMx));
-
-	/* Reset the Counter Register value */
-	TIMx->CNT = 0;
-}
 // interrupt pin callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	IRQ_ULTRASOUND_ECHO_Pin
 	if (GPIO_Pin & IRQ_ULTRASOUND_ECHO_Pin) {
 
 		if (HAL_GPIO_ReadPin(IRQ_ULTRASOUND_ECHO_GPIO_Port,
-		IRQ_ULTRASOUND_ECHO_Pin)) {
-
-//			__HAL_TIM_SET_COUNTER(&htim4, 0);
-
-//			HAL_TIM_Base_Start(&htim4);
-			ultrasound_was = true;
+				IRQ_ULTRASOUND_ECHO_Pin)) {
+			TIM4->CNT = 0;
+			HAL_TIM_Base_Start(&htim4);
 		} else {
 			HAL_TIM_Base_Stop(&htim4);
-			uint16_t count = __HAL_TIM_GET_COUNTER(&htim4);
-			ultrasound_was = false;
+			uint16_t count = TIM4->CNT;
 
 			/// 	clear 	(if > 30 cm) 	==> 	allowed to drive forward
 			/// 	set 	(if < 30 cm) 	==> 	forbidden to drive forward
-			if (count > (uint16_t) ULTRASOUND_DIST_40CM_BITS) {
-				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
-						evgroup_ultrasound_evbit_move);
-			} else if (count > (uint16_t) ULTRASOUND_DIST_35CM_BITS) {
-				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
-						evgroup_ultrasound_evbit_move);
-			} else if (count > (uint16_t) ULTRASOUND_DIST_30CM_BITS) {
-				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
-						evgroup_ultrasound_evbit_move);
-			} else if (count > (uint16_t) ULTRASOUND_DIST_25CM_BITS) {
-				rt_evbit_set_ISR(rt_evgroup_ultrasound,
-						evgroup_ultrasound_evbit_move);
-			} else if (count > (uint16_t) ULTRASOUND_DIST_20CM_BITS) {
-				rt_evbit_set_ISR(rt_evgroup_ultrasound,
-						evgroup_ultrasound_evbit_move);
-			} else if (count > (uint16_t) ULTRASOUND_DIST_15CM_BITS) {
-				rt_evbit_set_ISR(rt_evgroup_ultrasound,
-						evgroup_ultrasound_evbit_move);
-			} else if (count > (uint16_t) ULTRASOUND_DIST_10CM_BITS) {
-				rt_evbit_set_ISR(rt_evgroup_ultrasound,
-						evgroup_ultrasound_evbit_move);
-			} else if (count > (uint16_t) ULTRASOUND_DIST_5CM_BITS) {
+
+//			uint16_t dis30 = (uint16_t) ULTRASOUND_PROPER_DISTANCE;
+			if (count > ULTRASOUND_PROPER_DISTANCE_u16) {
 				rt_evbit_set_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
 			} else {
-				rt_evbit_set_ISR(rt_evgroup_ultrasound,
+				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
 			}
 		}
@@ -104,8 +77,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void timer_trigger_temperature_measurement(TimerHandle_t xTimer) {
 //	HAL_ADC_Start_DMA(&hadc, pData, Length)
 //	trigger_temperature_measurement_by_DMA();
-	HAL_ADC_Start_DMA(&hadc, (uint32_t*) temperature_measurement,
-	SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY);
+//	HAL_ADC_Start_DMA(&hadc, (uint32_t*) temperature_measurement,
+//	SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY);
 
 //	ble_pDataSend[0] = 0x01;
 
@@ -134,12 +107,12 @@ void timer_trigger_temperature_measurement(TimerHandle_t xTimer) {
 // temperature measurement completed? enqueue bluetooth :-)
 /// sending raw data of temperature from MCU to BLE queue
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
-	xQueueBleData toBeTransmit_ble_pData = { 0 };
-	toBeTransmit_ble_pData.info = ble_transmit;
-	toBeTransmit_ble_pData.command = 0x00;
-	toBeTransmit_ble_pData.valueReg1 = ((uint8_t*) &temperature_measurement)[2]; // MSB
-	toBeTransmit_ble_pData.valueReg2 = ((uint8_t*) &temperature_measurement)[3]; // LSB
-	rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+//	xQueueBleData toBeTransmit_ble_pData = { 0 };
+//	toBeTransmit_ble_pData.info = ble_transmit;
+//	toBeTransmit_ble_pData.command = 0x00;
+//	toBeTransmit_ble_pData.valueReg1 = ((uint8_t*) &temperature_measurement)[2]; // MSB
+//	toBeTransmit_ble_pData.valueReg2 = ((uint8_t*) &temperature_measurement)[3]; // LSB
+//	rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
 }
 
 void task_sensors(void *pvParameters) {
@@ -208,13 +181,13 @@ void task_sensors(void *pvParameters) {
 
 			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[1];//((uint8_t*) &X)[0]; // MSB // 1111 1111
 			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[0];//((uint8_t*) &X)[1]; // LSB 1010 1010
-			rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+//			rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
 
 			toBeTransmit_ble_pData.command = BLE_TRANSMIT_Y;
 			type_casting.uint16[0] = int16_to_u2(Y);
 			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[1];
 			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[0];
-			rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+//			rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
 
 //			type_casting.uint32 = 0x000000;
 //			type_casting.uint8[0];
@@ -228,7 +201,7 @@ void task_sensors(void *pvParameters) {
 			type_casting.uint16[0] = int16_to_u2(Z);
 			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[1];
 			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[0];
-			rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+//			rt_enqueue(rt_queue_ble, &toBeTransmit_ble_pData);
 		} else {
 			X = 0;
 			Y = 0;

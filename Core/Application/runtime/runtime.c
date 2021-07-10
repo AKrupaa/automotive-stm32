@@ -74,21 +74,21 @@ uint32_t rt_evbit_check_any(rt_evgroup_t Ev) {
 	return xEventGroupWaitBits(Evh, 0x00FFFFFFu, pdFALSE, pdFALSE, 0);
 }
 
-uint32_t rt_evbit_clear(rt_evgroup_t Ev, uint32_t bits_to_clear) {
+uint32_t rt_evbit_clear(rt_evgroup_t Ev, uint32_t bit) {
 	EventGroupHandle_t Evh = rt_evgroups[Ev];
-
+	EventBits_t msk = (1u << bit);
 //	uxBits =
 
 	return xEventGroupClearBits(Evh, // The event group being updated.
-			bits_to_clear);	// The bits being cleared.
+			msk);	// The bits being cleared.
 }
 
-BaseType_t rt_evbit_clear_ISR( rt_evgroup_t Ev, uint32_t bits_to_clear) {
+BaseType_t rt_evbit_clear_ISR( rt_evgroup_t Ev, uint32_t bit) {
 	EventGroupHandle_t Evh = rt_evgroups[Ev];
-
+	EventBits_t msk = (1u << bit);
 
 	return xEventGroupClearBitsFromISR(Evh, // The event group being updated.
-			bits_to_clear);	// The bits being cleared.
+			msk);	// The bits being cleared.
 }
 
 void rt_evbit_set(rt_evgroup_t Ev, uint32_t bit) {
