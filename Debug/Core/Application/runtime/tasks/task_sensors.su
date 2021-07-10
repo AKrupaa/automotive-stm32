@@ -1,4 +1,4 @@
-task_sensors.c:38:6:HAL_GPIO_EXTI_Callback	24	static
-task_sensors.c:77:6:timer_trigger_temperature_measurement	16	static
-task_sensors.c:109:6:HAL_ADC_ConvCpltCallback	16	static
-task_sensors.c:118:6:task_sensors	32	static,ignoring_inline_asm
+task_sensors.c:39:6:HAL_GPIO_EXTI_Callback	32	static
+task_sensors.c:92:6:timer_trigger_temperature_measurement	16	static
+task_sensors.c:101:6:HAL_ADC_ConvCpltCallback	16	static
+task_sensors.c:110:6:task_sensors	32	static,ignoring_inline_asm

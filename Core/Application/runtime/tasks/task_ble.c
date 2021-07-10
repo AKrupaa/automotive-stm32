@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include "utility.h"
 #include "ultrasound.h"
-uint16_t ULTRASOUND_PROPER_DISTANCE_u16;
+volatile uint16_t ULTRASOUND_PROPER_DISTANCE_u16;
 char ble_pData[BLE_MAX_SIZE];
 char ble_pDataSend[BLE_MAX_SIZE];
 int temp = 0;
@@ -202,7 +202,7 @@ void task_ble(void *pvParameters) {
 				memcpy(ble_pDataSend + 2, &receivedBleData.valueReg2, 1);
 
 				HAL_UART_Transmit(&huart3, (uint8_t*) ble_pDataSend,
-				BLE_MAX_SIZE, 1);
+				BLE_MAX_SIZE, 2);
 
 //				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend, BLE_MAX_SIZE);
 			}

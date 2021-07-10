@@ -84,12 +84,12 @@ rt_timer_def_t const rt_timer_def[rt_timer_N] = {
 				.uxAutoReload = pdFALSE,
 				.xTimerPeriodInTicks = pdMS_TO_TICKS(20)
 		},
-		{
-				.pxCallbackFunction = timer_trigger_temperature_measurement,
-				.pcTimerName = "trig temp. measurement",
-				.uxAutoReload = pdTRUE,
-				.xTimerPeriodInTicks = pdMS_TO_TICKS(6000) // 6 sec
-		},
+//		{
+//				.pxCallbackFunction = timer_trigger_temperature_measurement,
+//				.pcTimerName = "trig temp. measurement",
+//				.uxAutoReload = pdTRUE,
+//				.xTimerPeriodInTicks = pdMS_TO_TICKS(6000) // 6 sec
+//		},
 		{
 				.pxCallbackFunction = timer_ultrasound_sensor_tigger,
 				.pcTimerName = "trig ultrasound sensor",

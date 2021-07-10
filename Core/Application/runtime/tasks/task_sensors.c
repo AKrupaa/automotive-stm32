@@ -21,7 +21,7 @@
 #include "utility.h"
 #include <math.h>
 
-extern uint16_t ULTRASOUND_PROPER_DISTANCE_u16;
+extern volatile uint16_t ULTRASOUND_PROPER_DISTANCE_u16;
 
 union {
 	uint32_t uint32;
@@ -33,6 +33,7 @@ union {
 bool ultrasound_was = false;
 //bool ultrasound_done = false;
 uint8_t pData[BLE_MAX_SIZE];
+volatile uint16_t counter = 0;
 extern char temperature_measurement[SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY];
 // interrupt pin callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
@@ -40,7 +41,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin & IRQ_ULTRASOUND_ECHO_Pin) {
 
 		if (HAL_GPIO_ReadPin(IRQ_ULTRASOUND_ECHO_GPIO_Port,
-				IRQ_ULTRASOUND_ECHO_Pin)) {
+		IRQ_ULTRASOUND_ECHO_Pin)) {
 			TIM4->CNT = 0;
 			HAL_TIM_Base_Start(&htim4);
 		} else {
@@ -58,6 +59,20 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
 			}
+
+			if (counter > 10) {
+				counter = 0;
+				xQueueBleData toBeTransmit_ble_pData = { 0 };
+				toBeTransmit_ble_pData.info = ble_transmit;
+				toBeTransmit_ble_pData.command =
+						(uint8_t) BLE_TRANSMIT_ULTRASOUND_VALUE;
+				toBeTransmit_ble_pData.valueReg1 = ((uint8_t*) &count)[0]; // LSB
+				toBeTransmit_ble_pData.valueReg2 = ((uint8_t*) &count)[1]; // MSB
+				rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+			}
+
+			counter++;
+
 		}
 	}
 
@@ -79,29 +94,6 @@ void timer_trigger_temperature_measurement(TimerHandle_t xTimer) {
 //	trigger_temperature_measurement_by_DMA();
 //	HAL_ADC_Start_DMA(&hadc, (uint32_t*) temperature_measurement,
 //	SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY);
-
-//	ble_pDataSend[0] = 0x01;
-
-//	ble_pDataSend[2] = 0x03;
-
-//	if (temp++ == 1) {
-//		ble_pDataSend[1] = 0x02;
-//		ble_pDataSend[2] = 0xBC;
-//		temp = 0;
-//	} else {
-//		ble_pDataSend[1] = 0x01;
-//		ble_pDataSend[2] = 0xAA;
-//	}
-//	xQueueBleData toBeTransmit_ble_pData = { 0 };
-
-//	toBeTransmit_ble_pData.info = ble_transmit;
-//	toBeTransmit_ble_pData.command = 0x00;
-//	toBeTransmit_ble_pData.valueReg1 = ble_pDataSend[1];
-//	toBeTransmit_ble_pData.valueReg2 = ble_pDataSend[2];
-
-//	rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
-
-//	HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend, BLE_MAX_SIZE);
 }
 
 // temperature measurement completed? enqueue bluetooth :-)
@@ -131,7 +123,7 @@ void task_sensors(void *pvParameters) {
 	QMC5883L_Write_Reg(0x02, 0x00);
 
 ///	 start temperature measurement every period of this timer
-	rt_timer_start(rt_timer_temperature_measurement, 100);
+//	rt_timer_start(rt_timer_temperature_measurement, 100);
 
 	for (;;) {
 		// ultrasound measurment

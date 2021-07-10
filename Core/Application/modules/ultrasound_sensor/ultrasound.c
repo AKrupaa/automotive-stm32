@@ -11,7 +11,7 @@
 #define US_ROUNDTRIP_CM 57      // Microseconds (uS) it takes sound to travel round-trip 1cm (2cm total), uses integer to save compiled code space. Default=57
 #define US_ROUNDTRIP_IN 146     // Microseconds (uS) it takes sound to travel round-trip 1 inch (2 inches total), uses integer to save compiled code space. Defalult=146
 
-uint16_t ULTRASOUND_PROPER_DISTANCE_u16 = (uint16_t) ULTRASOUND_DIST_40CM_BITS;
+volatile uint16_t ULTRASOUND_PROPER_DISTANCE_u16 = (uint16_t) ULTRASOUND_DIST_40CM_BITS;
 
 bool ultrasound_init(void) {
 	;
