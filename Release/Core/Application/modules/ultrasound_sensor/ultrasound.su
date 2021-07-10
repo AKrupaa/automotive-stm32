@@ -1,2 +1,2 @@
-ultrasound.c:14:6:ultrasound_init	0	static
+ultrasound.c:14:6:ultrasound_init	4	static
 ultrasound.c:19:6:ultrasound_trig	8	static

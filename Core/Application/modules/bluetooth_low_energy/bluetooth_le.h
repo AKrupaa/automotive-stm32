@@ -49,6 +49,7 @@
 #define BLE_TRANSMIT_X 0x05
 #define BLE_TRANSMIT_Y 0x06
 #define BLE_TRANSMIT_Z 0x07
+#define BLE_TRANSMIT_ULTRASOUND 0x08
 
 typedef enum {
 

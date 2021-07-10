@@ -39,8 +39,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/dma.h ../Core/Inc/i2c.h \
  ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Src/../Application/runtime/device_init/device_init.h \
- ../Core/Src/../Application/modules/H_bridge/h_bridge.h
+ ../Core/Application/runtime/device_init/device_init.h \
+ ../Core/Application/modules/H_bridge/h_bridge.h
 
 ../Core/Inc/main.h:
 
@@ -134,6 +134,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Core/Inc/gpio.h:
 
-../Core/Src/../Application/runtime/device_init/device_init.h:
+../Core/Application/runtime/device_init/device_init.h:
 
-../Core/Src/../Application/modules/H_bridge/h_bridge.h:
+../Core/Application/modules/H_bridge/h_bridge.h:

@@ -1,2 +1,2 @@
 servo.c:10:6:servo_init	8	static
-servo.c:17:6:servo_set_duty	0	static
+servo.c:17:6:servo_set_duty	24	static

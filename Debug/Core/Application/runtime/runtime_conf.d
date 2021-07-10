@@ -46,7 +46,10 @@ Core/Application/runtime/runtime_conf.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Core/Application/modules/bluetooth_low_energy/bluetooth_le.h \
  ../Core/Inc/main.h ../Core/Inc/usart.h ../Core/Inc/main.h \
- ../Core/Application/runtime/runtime.h
+ ../Core/Application/runtime/runtime.h \
+ ../Core/Application/modules/temperature_measurement/temperature_measurement.h \
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
+ ../Core/Application/modules/ultrasound_sensor/ultrasound.h
 
 ../Core/Application/runtime/runtime.h:
 
@@ -145,3 +148,9 @@ Core/Application/runtime/runtime_conf.o: \
 ../Core/Inc/main.h:
 
 ../Core/Application/runtime/runtime.h:
+
+../Core/Application/modules/temperature_measurement/temperature_measurement.h:
+
+../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
+
+../Core/Application/modules/ultrasound_sensor/ultrasound.h:

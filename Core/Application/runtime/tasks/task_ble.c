@@ -184,13 +184,11 @@ void task_ble(void *pvParameters) {
 				memcpy(ble_pDataSend + 1, &receivedBleData.valueReg1, 1);
 				memcpy(ble_pDataSend + 2, &receivedBleData.valueReg2, 1);
 
-//				rt_dequeue(rt_queue_ble, &receivedBleData);
 
-//				HAL_UART_Transmit(&huart3, (uint8_t*) ble_pData, BLE_MAX_SIZE,
-//						10);
+				HAL_UART_Transmit(&huart3, (uint8_t*) ble_pDataSend, BLE_MAX_SIZE,
+						10);
 
-				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend,
-				BLE_MAX_SIZE);
+//				HAL_UART_Transmit_DMA(&huart3, (uint8_t*) ble_pDataSend, BLE_MAX_SIZE);
 			}
 		}
 

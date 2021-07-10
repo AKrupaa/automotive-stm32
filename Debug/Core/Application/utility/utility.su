@@ -1,1 +1,2 @@
-utility.c:10:5:u2_to_decimal	24	static
+utility.c:12:5:u2_to_decimal	24	static
+utility.c:30:10:int16_to_u2	24	static

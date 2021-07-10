@@ -58,7 +58,6 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern DMA_HandleTypeDef hdma_adc;
 extern TIM_HandleTypeDef htim10;
 extern DMA_HandleTypeDef hdma_usart3_rx;
 extern DMA_HandleTypeDef hdma_usart3_tx;
@@ -179,17 +178,17 @@ void EXTI0_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles DMA1 channel1 global interrupt.
+  * @brief This function handles EXTI line1 interrupt.
   */
-void DMA1_Channel1_IRQHandler(void)
+void EXTI1_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
 
-  /* USER CODE END DMA1_Channel1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_adc);
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
 
-  /* USER CODE END DMA1_Channel1_IRQn 1 */
+  /* USER CODE END EXTI1_IRQn 1 */
 }
 
 /**

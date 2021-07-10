@@ -31,50 +31,60 @@ bool ultrasound_was = false;
 //bool ultrasound_done = false;
 uint8_t pData[BLE_MAX_SIZE];
 extern char temperature_measurement[SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY];
+void TIM_ResetCounter(TIM_TypeDef *TIMx) {
+	/* Check the parameters */
+	assert_param(IS_TIM_ALL_PERIPH(TIMx));
 
+	/* Reset the Counter Register value */
+	TIMx->CNT = 0;
+}
 // interrupt pin callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	IRQ_ULTRASOUND_ECHO_Pin
 	if (GPIO_Pin & IRQ_ULTRASOUND_ECHO_Pin) {
 
-		if (ultrasound_was == false) {
-			HAL_TIM_Base_Start(&htim4);
+		if (HAL_GPIO_ReadPin(IRQ_ULTRASOUND_ECHO_GPIO_Port,
+		IRQ_ULTRASOUND_ECHO_Pin)) {
+
+//			__HAL_TIM_SET_COUNTER(&htim4, 0);
+
+//			HAL_TIM_Base_Start(&htim4);
 			ultrasound_was = true;
 		} else {
-			uint16_t count = __HAL_TIM_GET_COUNTER(&htim4);
 			HAL_TIM_Base_Stop(&htim4);
+			uint16_t count = __HAL_TIM_GET_COUNTER(&htim4);
+			ultrasound_was = false;
 
 			/// 	clear 	(if > 30 cm) 	==> 	allowed to drive forward
 			/// 	set 	(if < 30 cm) 	==> 	forbidden to drive forward
-			if (count > ULTRASOUND_DIST_40CM_BITS) {
+			if (count > (uint16_t) ULTRASOUND_DIST_40CM_BITS) {
 				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
-			} else if (count > ULTRASOUND_DIST_35CM_BITS) {
+			} else if (count > (uint16_t) ULTRASOUND_DIST_35CM_BITS) {
 				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
-			} else if (count > ULTRASOUND_DIST_30CM_BITS) {
+			} else if (count > (uint16_t) ULTRASOUND_DIST_30CM_BITS) {
 				rt_evbit_clear_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
-			} else if (count > ULTRASOUND_DIST_25CM_BITS) {
+			} else if (count > (uint16_t) ULTRASOUND_DIST_25CM_BITS) {
 				rt_evbit_set_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
-			} else if (count > ULTRASOUND_DIST_20CM_BITS) {
+			} else if (count > (uint16_t) ULTRASOUND_DIST_20CM_BITS) {
 				rt_evbit_set_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
-			} else if (count > ULTRASOUND_DIST_15CM_BITS) {
+			} else if (count > (uint16_t) ULTRASOUND_DIST_15CM_BITS) {
 				rt_evbit_set_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
-			} else if (count > ULTRASOUND_DIST_10CM_BITS) {
+			} else if (count > (uint16_t) ULTRASOUND_DIST_10CM_BITS) {
 				rt_evbit_set_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
-			} else if (count > ULTRASOUND_DIST_5CM_BITS) {
+			} else if (count > (uint16_t) ULTRASOUND_DIST_5CM_BITS) {
 				rt_evbit_set_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
 			} else {
 				rt_evbit_set_ISR(rt_evgroup_ultrasound,
 						evgroup_ultrasound_evbit_move);
 			}
-			ultrasound_was = false;
 		}
 	}
 
@@ -143,8 +153,8 @@ void task_sensors(void *pvParameters) {
 			FULL_SCALE_2G, OVER_SAMPLE_RATIO_128);
 	QMC5883L_InterruptConfig(INTERRUPT_DISABLE);
 
-	//Mode Register
-	//Continuous-Measurement Mode
+//Mode Register
+//Continuous-Measurement Mode
 	QMC5883L_Write_Reg(0x02, 0x00);
 
 ///	 start temperature measurement every period of this timer

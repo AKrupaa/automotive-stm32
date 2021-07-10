@@ -1,7 +1,6 @@
-task_ble.c:24:6:timer_BLE	16	static
-task_ble.c:29:6:timer_sent_test_BLE	24	static
-task_ble.c:56:6:HAL_UART_TxCpltCallback	16	static,ignoring_inline_asm
-task_ble.c:60:6:HAL_UART_TxHalfCallback	16	static,ignoring_inline_asm
-task_ble.c:64:6:HAL_UART_RxCpltCallback	24	static
-task_ble.c:86:6:HAL_UART_ErrorCallback	16	static,ignoring_inline_asm
-task_ble.c:93:6:task_ble	40	static
+task_ble.c:25:6:timer_BLE	16	static
+task_ble.c:60:6:HAL_UART_TxCpltCallback	16	static,ignoring_inline_asm
+task_ble.c:64:6:HAL_UART_TxHalfCallback	16	static,ignoring_inline_asm
+task_ble.c:68:6:HAL_UART_RxCpltCallback	24	static
+task_ble.c:89:6:HAL_UART_ErrorCallback	16	static,ignoring_inline_asm
+task_ble.c:96:6:task_ble	32	static

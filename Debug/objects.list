@@ -5,6 +5,7 @@
 "Core/Application/modules/magnetometer/magnetometer.o"
 "Core/Application/modules/servo/servo.o"
 "Core/Application/modules/slotted_optocoupler/optocoupler.o"
+"Core/Application/modules/temperature_measurement/temperature_measurement.o"
 "Core/Application/modules/ultrasound_sensor/ultrasound.o"
 "Core/Application/runtime/device_init/device_init.o"
 "Core/Application/runtime/device_init/device_init_conf.o"

@@ -1,3 +1,3 @@
-hall.c:19:6:hall_init	0	static
-hall.c:24:15:hall_left_read_status	0	static
-hall.c:28:15:hall_right_read_status	0	static
+hall.c:19:6:hall_init	4	static
+hall.c:24:15:hall_left_read_status	8	static
+hall.c:28:15:hall_right_read_status	8	static

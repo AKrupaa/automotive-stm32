@@ -24,6 +24,7 @@ Core/Application/modules/hall \
 Core/Application/modules/magnetometer \
 Core/Application/modules/servo \
 Core/Application/modules/slotted_optocoupler \
+Core/Application/modules/temperature_measurement \
 Core/Application/modules/ultrasound_sensor \
 Core/Application/runtime/device_init \
 Core/Application/runtime \

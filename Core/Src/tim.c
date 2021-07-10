@@ -140,7 +140,7 @@ void MX_TIM4_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig = {0};
 
   htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 374;
+  htim4.Init.Prescaler = 3;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim4.Init.Period = 39999;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -213,7 +213,7 @@ void MX_TIM10_Init(void)
   htim10.Instance = TIM10;
   htim10.Init.Prescaler = 0;
   htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim10.Init.Period = 319;
+  htim10.Init.Period = 1599;
   htim10.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim10.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim10) != HAL_OK)

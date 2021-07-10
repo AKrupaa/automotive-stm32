@@ -1,6 +1,6 @@
-h_bridge.c:47:6:h_bridge_set_left_duty	0	static
-h_bridge.c:59:6:h_bridge_set_right_duty	0	static
 h_bridge.c:37:6:h_bridge_init	8	static
+h_bridge.c:47:6:h_bridge_set_left_duty	24	static
+h_bridge.c:59:6:h_bridge_set_right_duty	24	static
 h_bridge.c:71:6:h_bridge_cw_left	8	static
 h_bridge.c:78:6:h_bridge_cw_right	8	static
 h_bridge.c:85:6:h_bridge_ccw_left	8	static
