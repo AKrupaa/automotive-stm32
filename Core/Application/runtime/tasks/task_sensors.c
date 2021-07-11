@@ -60,7 +60,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 						evgroup_ultrasound_evbit_move);
 			}
 
-			if (counter > 10) {
+			if (counter > 8) {
 				counter = 0;
 				xQueueBleData toBeTransmit_ble_pData = { 0 };
 				toBeTransmit_ble_pData.info = ble_transmit;
@@ -110,10 +110,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 void task_sensors(void *pvParameters) {
 	(void*) pvParameters;
 
-//	uint32_t evgroup = 0;
-
-// TODO: delete this line!
-//	magnetometer_init();
 	QMC5883L_Initialize(MODE_CONTROL_CONTINUOUS, OUTPUT_DATA_RATE_200HZ,
 			FULL_SCALE_2G, OVER_SAMPLE_RATIO_128);
 	QMC5883L_InterruptConfig(INTERRUPT_DISABLE);
@@ -122,91 +118,47 @@ void task_sensors(void *pvParameters) {
 //Continuous-Measurement Mode
 	QMC5883L_Write_Reg(0x02, 0x00);
 
-///	 start temperature measurement every period of this timer
-//	rt_timer_start(rt_timer_temperature_measurement, 100);
-
 	for (;;) {
-		// ultrasound measurment
-//		ultrasound_trig();
-//		if ( ultrasound_done ) {
-//		}
 
-//		evgroup = rt_evbitwait_any(rt_evgroup_sensors);
-
-//		if (evgroup & (1 << evgroup_ultrasound_evbit_echo)) {
-		// obsluga sensora ultradzwiekowego
-		// policz odleglosc
-		// na podstawie na danych zareaguj :)
-
-		// jakis tam bit do ustawienia, np skret w lewo - uzupelnic
-//			rt_evbit_set(rt_evgroup_state_machine, (1 << 8));
-//		}
 		int16_t X = 0;
 		int16_t Y = 0;
 		int16_t Z = 0;
 
-		uint8_t status = QMC5883L_Read_Reg(0x09);
-		uint8_t temp1 = 0;
-		uint8_t temp2 = 0;
-
-		temp1 = QMC5883L_Read_Reg(0x07);
-		temp2 = QMC5883L_Read_Reg(0x08);
-
-		// u2 to decimal
-		uint16_t temp = ~((temp2 << 8) | temp1) + 1;
-		temp /= 100;
-
-		temp += 1;
-
-		if (status & (1 << 0)) {
+		static uint32_t PreviousTicks = 0U;
+		uint32_t CurrentTicks = (uint32_t) xTaskGetTickCount();
+		if ((CurrentTicks - PreviousTicks) >= 500u) { // 5 ms
+			PreviousTicks = (uint32_t) xTaskGetTickCount();
 			QMC5883L_Read_Data(&X, &Y, &Z);
-
 //			BLE_TRANSMIT_X
 //			BLE_TRANSMIT_Y
 //			BLE_TRANSMIT_Z
 
+			QMC5883L_Scale(&X, &Y, &Z);
+
 			xQueueBleData toBeTransmit_ble_pData = { 0 };
 			toBeTransmit_ble_pData.info = ble_transmit;
-			toBeTransmit_ble_pData.command = BLE_TRANSMIT_X;// 1111 1111 1010 1010
+			toBeTransmit_ble_pData.command = BLE_TRANSMIT_X;
 
-			type_casting.uint16[0] = int16_to_u2(X);
-
-			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[1];//((uint8_t*) &X)[0]; // MSB // 1111 1111
-			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[0];//((uint8_t*) &X)[1]; // LSB 1010 1010
-//			rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+			type_casting.uint16[0] = X; //int16_to_u2(X);
+			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[0]; //((uint8_t*) &X)[0]; // MSB // 1111 1111
+			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[1]; //((uint8_t*) &X)[1]; // LSB 1010 1010
+			rt_enqueue(rt_queue_ble, &toBeTransmit_ble_pData);
 
 			toBeTransmit_ble_pData.command = BLE_TRANSMIT_Y;
-			type_casting.uint16[0] = int16_to_u2(Y);
-			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[1];
-			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[0];
-//			rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
-
-//			type_casting.uint32 = 0x000000;
-//			type_casting.uint8[0];
-
-//			type_casting
-//			type_casting.uint16[0] = X;
-
-			//TODO: o tutaj skonczylem użyj unii, sprawdz debuggerem czy bd dzialac
+			type_casting.uint16[0] = Y; //int16_to_u2(Y);
+			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[0];
+			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[1];
+			rt_enqueue(rt_queue_ble, &toBeTransmit_ble_pData);
 
 			toBeTransmit_ble_pData.command = BLE_TRANSMIT_Z;
-			type_casting.uint16[0] = int16_to_u2(Z);
-			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[1];
-			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[0];
-//			rt_enqueue(rt_queue_ble, &toBeTransmit_ble_pData);
-		} else {
-			X = 0;
-			Y = 0;
-			Z = 0;
+			type_casting.uint16[0] = Z; //int16_to_u2(Z);
+			toBeTransmit_ble_pData.valueReg1 = type_casting.uint8[0];
+			toBeTransmit_ble_pData.valueReg2 = type_casting.uint8[1];
+			rt_enqueue(rt_queue_ble, &toBeTransmit_ble_pData);
+
 		}
-
-		taskYIELD();
-
-//		if (NORMAL == QMC5883L_DataIsReady()) {
-//		temperature = QMC5883L_Read_Temperature();
-//		temperature /= 10;
-//		}
 
 	}
 
+	taskYIELD();
 }

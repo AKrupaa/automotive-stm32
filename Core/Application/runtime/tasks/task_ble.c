@@ -15,7 +15,7 @@
 #include "ultrasound.h"
 volatile uint16_t ULTRASOUND_PROPER_DISTANCE_u16;
 char ble_pData[BLE_MAX_SIZE];
-char ble_pDataSend[BLE_MAX_SIZE];
+uint8_t ble_pDataSend[BLE_MAX_SIZE];
 int temp = 0;
 // works only when BLE receive something -> void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 // working all the time, checking if something is received or sending data to android device

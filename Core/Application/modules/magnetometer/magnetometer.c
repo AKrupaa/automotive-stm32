@@ -46,22 +46,22 @@ bool magnetometer_read(uint8_t reg_address, uint8_t *buff, uint16_t size) {
 	return true;
 }
 
-int magnetometer_get_X(void) {
+uint16_t magnetometer_get_X(void) {
 	uint8_t buff[2];
 	magnetometer_read(MAGNETOMETR_X_LSB_Register, buff, sizeof(buff));
-	return (int) ((buff[1] << 8) | buff[0]);
+	return (uint16_t) ((buff[1] << 8) | buff[0]);
 }
 
-int magnetometer_get_Y(void) {
+uint16_t magnetometer_get_Y(void) {
 	uint8_t buff[2];
 	magnetometer_read(MAGNETOMETR_Y_LSB_Register, buff, sizeof(buff));
-	return (int) ((buff[1] << 8) | buff[0]);
+	return (uint16_t) ((buff[1] << 8) | buff[0]);
 }
 
-int magnetometer_get_Z(void) {
+uint16_t magnetometer_get_Z(void) {
 	uint8_t buff[2];
 	magnetometer_read(MAGNETOMETR_Z_LSB_Register, buff, sizeof(buff));
-	return (int) ((buff[1] << 8) | buff[0]);
+	return (uint16_t) ((buff[1] << 8) | buff[0]);
 }
 
 int magnetometer_get_temperature(void) {
@@ -75,14 +75,14 @@ int magnetometer_get_temperature(void) {
 
 uint8_t QMC5883L_Read_Reg(uint8_t reg) {
 	uint8_t Buffer[1];
-	HAL_I2C_Mem_Read(QMC5883L_I2C_PORT, QMC5883L_ADDRESS, reg, 1, Buffer, 1,
+	HAL_I2C_Mem_Read(QMC5883L_I2C_PORT, 0x3D/*QMC5883L_ADDRESS*/, reg, 1, Buffer, 1,
 			10);
 	return Buffer[0];
 }
 
 void QMC5883L_Write_Reg(uint8_t reg, uint8_t data) {
 	uint8_t Buffer[2] = { reg, data };
-	HAL_I2C_Master_Transmit(QMC5883L_I2C_PORT, QMC5883L_ADDRESS, Buffer, 2, 10);
+	HAL_I2C_Master_Transmit(QMC5883L_I2C_PORT, 0x3C/*QMC5883L_ADDRESS*/, Buffer, 2, 10);
 }
 
 void QMC5883L_Read_Data(int16_t *MagX, int16_t *MagY, int16_t *MagZ) // (-32768 / +32768)
@@ -94,6 +94,15 @@ void QMC5883L_Read_Data(int16_t *MagX, int16_t *MagY, int16_t *MagZ) // (-32768 
 	*MagZ = ((int16_t) QMC5883L_Read_Reg(QMC5883L_DATA_READ_Z_LSB)
 			| (((int16_t) QMC5883L_Read_Reg(QMC5883L_DATA_READ_Z_MSB)) << 8));
 }
+
+
+void magnetometr_Read_Data(int16_t *MagX, int16_t *MagY, int16_t *MagZ) // (-32768 / +32768)
+{
+	*MagX = magnetometer_get_X();
+	*MagY = magnetometer_get_Y();
+	*MagZ = magnetometer_get_Z();
+}
+
 
 int16_t QMC5883L_Read_Temperature() {
 	return (((int16_t) QMC5883L_Read_Reg(QMC5883L_TEMP_READ_LSB))

@@ -29,7 +29,7 @@
 //https://github.com/Farondis/QMC5883L-stm32-hal
 
 //#define QMC5883L_ADDRESS  		(0x0D<<1)
-#define QMC5883L_ADDRESS  		(0x1E<<1)
+#define QMC5883L_ADDRESS  		0x1E
 #define QMC5883L_I2C_PORT		&hi2c1
 
 #define QMC5883L_DATA_READ_X_LSB	0x04
@@ -84,19 +84,19 @@ bool magnetometer_read(uint8_t reg_address, uint8_t *buff, uint16_t size);
  *
  * @return X value
  */
-int magnetometer_get_X(void);
+uint16_t magnetometer_get_X(void);
 
 /**
  *
  * @return Y value
  */
-int magnetometer_get_Y(void);
+uint16_t magnetometer_get_Y(void);
 
 /**
  *
  * @return Z value
  */
-int magnetometer_get_Z(void);
+uint16_t magnetometer_get_Z(void);
 
 /**
  *
@@ -155,5 +155,6 @@ void QMC5883L_InterruptConfig(_qmc5883l_INT INT);
 void QMC5883L_ResetCalibration(void);
 float QMC5883L_Heading(int16_t Xraw, int16_t Yraw, int16_t Zraw);
 void QMC5883L_Scale(int16_t *X, int16_t *Y, int16_t *Z);
+void magnetometr_Read_Data(int16_t *MagX, int16_t *MagY, int16_t *MagZ);
 
 #endif /* APPLICATION_MODULES_MAGNETOMETER_MAGNETOMETER_H_ */
