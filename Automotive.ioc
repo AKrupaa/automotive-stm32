@@ -1,8 +1,9 @@
 #MicroXplorer Configuration settings - do not modify
 ADC.Channel-0\#ChannelRegularConversion=ADC_CHANNEL_1
-ADC.IPParameters=Rank-0\#ChannelRegularConversion,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag
+ADC.IPParameters=Rank-0\#ChannelRegularConversion,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag,Resolution
 ADC.NbrOfConversionFlag=1
 ADC.Rank-0\#ChannelRegularConversion=1
+ADC.Resolution=ADC_RESOLUTION_8B
 ADC.SamplingTime-0\#ChannelRegularConversion=ADC_SAMPLETIME_4CYCLES
 Dma.Request0=USART3_RX
 Dma.Request1=USART3_TX
@@ -104,6 +105,7 @@ Mcu.UserConstants=
 Mcu.UserName=STM32L162RDTx
 MxCube.Version=5.6.0
 MxDb.Version=DB.5.0.60
+NVIC.ADC1_IRQn=true\:5\:0\:false\:false\:true\:true\:true\:true
 NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
 NVIC.DMA1_Channel2_IRQn=true\:6\:0\:true\:false\:true\:true\:false\:true
 NVIC.DMA1_Channel3_IRQn=true\:5\:0\:true\:false\:true\:true\:false\:true
