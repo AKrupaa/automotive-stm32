@@ -20,6 +20,7 @@
 #include "tim.h"
 #include "utility.h"
 #include <math.h>
+#include "adc.h"
 
 extern volatile uint16_t ULTRASOUND_PROPER_DISTANCE_u16;
 
@@ -96,6 +97,16 @@ void timer_trigger_temperature_measurement(TimerHandle_t xTimer) {
 //	SIZE_OF_TEMPERATURE_MEASURMENT_ARRAY);
 }
 
+uint32_t fun(uint32_t ac) {
+	ac += 1;
+	return ac;
+}
+
+typedef enum {
+	adc_phototransitor_front = 0, adc_phototransistor_back, adc_N,
+} selectADC_t;
+
+volatile selectADC_t selectADC = adc_phototransitor_front;
 // temperature measurement completed? enqueue bluetooth :-)
 /// sending raw data of temperature from MCU to BLE queue
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
@@ -105,6 +116,26 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 //	toBeTransmit_ble_pData.valueReg1 = ((uint8_t*) &temperature_measurement)[2]; // MSB
 //	toBeTransmit_ble_pData.valueReg2 = ((uint8_t*) &temperature_measurement)[3]; // LSB
 //	rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
+	uint8_t raw_value = (uint8_t) HAL_ADC_GetValue(hadc);
+	xQueueBleData toBeTransmit_ble_pData = { 0 };
+	toBeTransmit_ble_pData.info = ble_transmit;
+	toBeTransmit_ble_pData.valueReg1 = raw_value;
+	toBeTransmit_ble_pData.valueReg2 = 0x00;
+
+	switch (selectADC) {
+	case adc_phototransitor_front:
+		toBeTransmit_ble_pData.command =
+		BLE_TRANSMIT_PHOTOTRANSISTOR_FRONT_VALUE;
+		break;
+	case adc_phototransistor_back:
+		toBeTransmit_ble_pData.command =
+		BLE_TRANSMIT_PHOTOTRANSISTOR_BACK_VALUE;
+		break;
+	default:
+		return;
+	}
+
+	rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
 }
 
 void task_sensors(void *pvParameters) {
@@ -117,6 +148,7 @@ void task_sensors(void *pvParameters) {
 //Mode Register
 //Continuous-Measurement Mode
 	QMC5883L_Write_Reg(0x02, 0x00);
+//	uint8_t whereADC = 0;
 
 	for (;;) {
 
@@ -124,10 +156,11 @@ void task_sensors(void *pvParameters) {
 		int16_t Y = 0;
 		int16_t Z = 0;
 
-		static uint32_t PreviousTicks = 0U;
+		static uint32_t PreviousTicksMagnetometer = 0U;
+		static uint32_t PreviousTicksADC = 0U;
 		uint32_t CurrentTicks = (uint32_t) xTaskGetTickCount();
-		if ((CurrentTicks - PreviousTicks) >= 500u) { // 5 ms
-			PreviousTicks = (uint32_t) xTaskGetTickCount();
+		if ((CurrentTicks - PreviousTicksMagnetometer) >= 500u) { // 5 ms
+			PreviousTicksMagnetometer = (uint32_t) xTaskGetTickCount();
 			QMC5883L_Read_Data(&X, &Y, &Z);
 //			BLE_TRANSMIT_X
 //			BLE_TRANSMIT_Y
@@ -158,10 +191,44 @@ void task_sensors(void *pvParameters) {
 
 		}
 
+		if ((CurrentTicks - PreviousTicksADC) >= 200u) { // 200 ms
+			PreviousTicksADC = (uint32_t) xTaskGetTickCount();
 
+			if (selectADC == adc_phototransitor_front) {
+				ADC_ChannelConfTypeDef sConfig = { 0 };
+				/** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+				 */
+				sConfig.Channel = ADC_CHANNEL_1; // photo back1
+				//	sConfig.Channel = ADC_CHANNEL_7; // photo front
+				sConfig.Rank = ADC_REGULAR_RANK_1;
+				sConfig.SamplingTime = ADC_SAMPLETIME_4CYCLES;
+				if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK) {
+					Error_Handler();
+				}
+				HAL_ADC_ConfigChannel(&hadc, &sConfig);
+			}
 
+			if (selectADC == adc_phototransistor_back) {
+				ADC_ChannelConfTypeDef sConfig = { 0 };
+				/** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+				 */
+//					sConfig.Channel = ADC_CHANNEL_1; // photo back1
+				sConfig.Channel = ADC_CHANNEL_7; // photo front
+				sConfig.Rank = ADC_REGULAR_RANK_1;
+				sConfig.SamplingTime = ADC_SAMPLETIME_4CYCLES;
+				if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK) {
+					Error_Handler();
+				}
+				HAL_ADC_ConfigChannel(&hadc, &sConfig);
+			}
 
+			HAL_ADC_Start_IT(&hadc);
+			selectADC++;
+			if (selectADC == adc_N) {
+				selectADC = 0;
+			}
+		}
+		taskYIELD();
 	}
 
-	taskYIELD();
 }
