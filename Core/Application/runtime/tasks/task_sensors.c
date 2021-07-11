@@ -75,6 +75,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			counter++;
 
 		}
+
 	}
 
 //	BLE INTERRUPT -> SOMETHING IS RECEIVED
@@ -110,12 +111,6 @@ volatile selectADC_t selectADC = adc_phototransitor_front;
 // temperature measurement completed? enqueue bluetooth :-)
 /// sending raw data of temperature from MCU to BLE queue
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
-//	xQueueBleData toBeTransmit_ble_pData = { 0 };
-//	toBeTransmit_ble_pData.info = ble_transmit;
-//	toBeTransmit_ble_pData.command = 0x00;
-//	toBeTransmit_ble_pData.valueReg1 = ((uint8_t*) &temperature_measurement)[2]; // MSB
-//	toBeTransmit_ble_pData.valueReg2 = ((uint8_t*) &temperature_measurement)[3]; // LSB
-//	rt_enqueue_ISR(rt_queue_ble, &toBeTransmit_ble_pData);
 	uint8_t raw_value = (uint8_t) HAL_ADC_GetValue(hadc);
 	xQueueBleData toBeTransmit_ble_pData = { 0 };
 	toBeTransmit_ble_pData.info = ble_transmit;
@@ -158,6 +153,7 @@ void task_sensors(void *pvParameters) {
 
 		static uint32_t PreviousTicksMagnetometer = 0U;
 		static uint32_t PreviousTicksADC = 0U;
+		static uint32_t PreviousTicksGPIOPooling = 0U;
 		uint32_t CurrentTicks = (uint32_t) xTaskGetTickCount();
 		if ((CurrentTicks - PreviousTicksMagnetometer) >= 500u) { // 5 ms
 			PreviousTicksMagnetometer = (uint32_t) xTaskGetTickCount();
@@ -206,6 +202,23 @@ void task_sensors(void *pvParameters) {
 					Error_Handler();
 				}
 				HAL_ADC_ConfigChannel(&hadc, &sConfig);
+			}
+
+			if ((CurrentTicks - PreviousTicksGPIOPooling) >= 200u) {
+				PreviousTicksGPIOPooling = (uint32_t) xTaskGetTickCount();
+
+				xQueueBleData toBeTransmit_ble_pData = { 0 };
+				toBeTransmit_ble_pData.info = ble_transmit;
+				toBeTransmit_ble_pData.command = BLE_TRANSMIT_HALL_FRONT_VALUE;
+				toBeTransmit_ble_pData.valueReg2 = 0x00;
+				if (HAL_GPIO_ReadPin(IN_HALL_FRONT_GPIO_Port,
+				IN_HALL_FRONT_Pin)) {
+					toBeTransmit_ble_pData.valueReg1 = 0x00;
+				} else {
+					toBeTransmit_ble_pData.valueReg1 = 0x01;
+				}
+
+				rt_enqueue(rt_queue_ble, &toBeTransmit_ble_pData);
 			}
 
 			if (selectADC == adc_phototransistor_back) {
