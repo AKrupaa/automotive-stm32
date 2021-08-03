@@ -1,56 +1,43 @@
-# automotive-stm32
-## Za każdym razem, gdy zaczynamy pracę robimy:
-```
-git checkout main
-git pull origin main
-```
-tworzymy nowy branch
-```
-git checkout -b add_linting
-```
-Stworzy to nowy branch o nazwie `add_linting`
+# Automotive-stm32
+## Student project
+### [Complementary project](https://github.com/AKrupaa/Automotive-apk)
 
-Pracujemy, pracujemy... i gdy SKOŃCZYSZ SWOJĄ PRACE:
+### Preview
+![](/images/demo.png)   ![](/images/car-demo.png) <br>
+[Youtube sample 1](https://youtu.be/acJ9b4zpFhg)
+[Youtube sample 2](https://youtu.be/u2U2tENVD00)
 
-Przenosimy gałąź do zdalnego repo czyli githuba
-```
-git push origin add_linting
-```
-## Tworzymy rządanie
-Korzystając ze swojej gałęzi funkcji na github, przejdź do projektu na github. Na stronie głównej powinieneś zobaczyć nowy mały pasek narzędzi, który pokazuje twoją gałąź funkcji i pyta, czy chcesz utworzyć z niej żądanie ściągnięcia.
-![screen shot 2015-05-27 at 10 28 45 am](https://cloud.githubusercontent.com/assets/9369/7843160/ae17dcf2-045c-11e5-9f12-db8f4b197137.png)
+## Usage
+Allows to communicate via BLE with Android device to control the movement and logging most of the data to file
 
-## Znajdowanie żądań
-![screen_shot_2015-05-27_at_8_57_48_am](https://cloud.githubusercontent.com/assets/9369/7841032/f1f4e220-044e-11e5-9f6e-c6aa19430457.png)
+## Description
+#### EN below
+#### PL:
+Założenia projektowe:
+1. Pojazd musi się poruszać autonomicznie, może być kontrolowany zdalnie  bez wglądu na trasę (kontrola w oparciu o dane z sensorów) lub z wglądem na trasę.
+2. Pojazd musi być zabezpieczony przed przypadkowym, bądź celowym wprowadzeniem na przeszkodę. 
+3. Pojazd będzie poruszał się po powierzchni płaskiej około 12 x 20 płytek (płytka 33 x 33 cm). Powierzchnia będzie ograniczona taśmą aluminiową naklejoną na powierzchnię.
+4. Całkowite opuszczenie ograniczonego terenu skutkuje powrotem na START i ponownym rozpoczęciem przejazdu.
+5. W trakcie prezentacji, pojazd będzie miał za zadanie przejechać od STARTU do METY omijając minimum 3 przeszkody w postaci kartonowych ścian (grubość ścian około 10 cm , wysokość około 20 cm, ściany w kolorach jasnych) w myśl zasady „Im szybciej tym lepiej”. Czas przejazdu nie może być jednak dłuższy niż 5 min (podana wartość jest orientacyjna).
+6. Lokalizacje STARTU oraz METY będą ustalone i oznaczone znacznikiem  w postaci magnesu. Informacja o bokach, na których będą znajdowały się START i META zostaną podane na 10 dni przed pokazem.
+7. System ma za zadanie zbierać dane dot. czasu przejazdu + minimum jeden dodatkowy parametr.
+8. W najprostszym rozwiązaniu zebrane dane muszą być przesłane po przejechaniu „zadanej” trasy na telefon komórkowy i dołączone do raportu końcowego.
+9. Platforma mikroprocesorowa STM32.
+10. Pojazd nie może mieć wystających części poza obrys podwozia.
 
-Przejrzyj, skomentuj, poczekaj na reakcje tłumu...
+#### EN:
+Design assumptions:
+1. The vehicle must be autonomous, it can be controlled remotely without the view of the route (control based on data from sensors) or with the view of the route.
+2. The vehicle must be secured against accidentally or intentionally entering an obstacle.
+3. The vehicle will run on a flat surface of approximately 12 x 20 tiles (33 x 33 cm tile). The area will be limited by aluminum tape stuck to the surface.
+4. The complete leaving of the restricted area results in the return to START and the re-start of the journey.
+5. During the presentation, the vehicle will have to drive from START to FINISH, avoiding at least 3 obstacles in the form of cardboard walls (wall thickness about 10 cm, height about 20 cm, light-colored walls) in accordance with the principle "The sooner the better" . The travel time, however, cannot be longer than 5 minutes (the given value is approximate).
+6. The START and FINISH locations will be fixed and marked with a marker in the form of a magnet. Information about the sides on which the START and FINISH will be located will be announced 10 days before the show.
+7. The system's task is to collect data on travel time + at least one additional parameter.
+8. In the simplest solution, the collected data must be sent to the mobile phone after completing the "set" route and attached to the final report.
+9. STM32 microprocessor platform.
+10. The vehicle must not have any protruding parts beyond the contour of the chassis.
 
-## Merging
-Po kilku wiadomościach powinniśmy dojść do pożądanego +1 - co oznacza, że nadszedł czas, aby to połączyć.
-Najpierw upewnij się, że masz najnowszą wersję master w lokalnym repozytorium.
-```
-git checkout main
-git pull origin main
-```
-Następnie przełącz się z powrotem do gałęzi funkcji i scal z mainem
-```
-git checkout add_linting
-git merge main
-```
-Modyfikuj kod, aż wszystkie konflikty zostaną rozwiązane. Następnie dodaj te pliki.
-```
-git add somefile.js
-```
-Reszta procesu scalania jest już w fazie przejściowej - więc teraz można zatwierdzić scalanie
-```
-git commit -m 'merged main'
-```
-I przełącz się z powrotem na maina, aby przyspieszyć tę zmianę
-```
-git checkout main
-git merge --no-ff add_linting
-git push origin master
-```
-## Usuwanie gałęzi
-Tak czy inaczej, po scaleniu gałęzi do maina możemy usunąć zdalną gałąź - dzięki temu nasz projekt github będzie czysty.
-![screen shot 2015-05-27 at 9 45 03 am](https://cloud.githubusercontent.com/assets/9369/7841987/339751e4-0455-11e5-8e5f-d2f0f3c4f3f9.png)
+## What did I use?
+
+[FreeRTOS](https://www.freertos.org/) - Real-time operating system for microcontrollers
